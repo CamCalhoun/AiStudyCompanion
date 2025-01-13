@@ -66,7 +66,7 @@ Create a Python virtual environment named `venv` in the `backend` directory.
 - **For Windows:**
 
   ```bash
-  venv\Scripts/activate
+  venv/Scripts/activate
   ```
 
   On Windows, the `source` command is not needed, and the script is located in `venv\Scripts\`.
@@ -134,7 +134,7 @@ cd backend
 - **For Windows:**
 
   ```bash
-  venv\Scripts/activate
+  venv/Scripts/activate
   ```
 
   On Windows, the `source` command is not needed, and the script is located in `venv\Scripts\`.
