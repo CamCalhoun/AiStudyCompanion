@@ -1,0 +1,55 @@
+
+# General system files
+.DS_Store
+Thumbs.db
+*.log
+*.lock
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Node.js (Vite + React Frontend)
+node_modules/
+dist/
+.vite/
+
+# TailwindCSS
+tailwindcss.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Python (FastAPI Backend)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.env
+instance/
+env/
+venv/
+venv.bak/
+
+# Editor & IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Deployment
+*.pid
+*.seed
+*.backup
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Docker
+*.dockerignore
+docker-compose.override.yml
+.docker/
