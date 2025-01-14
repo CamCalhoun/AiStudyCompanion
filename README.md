@@ -1,7 +1,7 @@
 
 # Project Setup Guide
 
-This guide will walk you through setting up the development environment on your machine. The numbered steps are the exact commands you need to run, with explanations provided below each.
+This guide will walk you through setting up the development environment on your machine. The numbered headings are the steps you need to take, with explanations and exact commands provided below each.
 
 ---
 
