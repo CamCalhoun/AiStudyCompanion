@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from subject import Subject
 import os
 
+load_dotenv()
 class Chatbot:
     def __init__(self):
         #Client between user and OpenAI
