@@ -29,22 +29,24 @@ class Math(Subject):
     }
 
         
-    def getPossible_Subtopics(self, topic):
+    def get_possible_subtopics(self, topic):
         if topic in self.math_topics.keys():
             possible_subtopics = self.math_topics.values(topic)
             return possible_subtopics
         else:
             print("topic not found")
     
-    def setSubtopic(self, subtopic):
+    def set_subtopic(self, subtopic):
         if subtopic in self.math_topics.values():
            self.subtopic=subtopic
         else:
             print("subtopic not found")
             
     #example current 
-    current_prompt : str = subjectPrompts[subjectElo, subtopic]
+    def set_current_prompt(self):
+        self.current_prompt : str = self.subjectPrompts[self.subjectElo, self.subtopic]
 
-
+    def get_current_prompt(self):
+        return self.current_prompt
     
 

@@ -1,7 +1,7 @@
 #Class Demo Week 3
 
 from chatbot import Chatbot
-from english import English
+from english_subject import English
 from user import User
 
 #english subject object
