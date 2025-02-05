@@ -34,8 +34,8 @@ while not quit:
 
     #Set Elo
     if (menuChoice == 1):
-        print("enter value between 0 and 1600\n")
-        #menuChoice = int(input("User: "))
+        print("enter value to add or subtract to elo\n")
+        menuChoice = int(input("User: "))
         englishSubject.changeElo(menuChoice)
     #Print current prompt
     elif (menuChoice == 2):
