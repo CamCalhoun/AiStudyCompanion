@@ -18,6 +18,3 @@ class Subject(BaseModel):
         validBreakpoints = [bp for bp in self.subjectBreakpoints if bp <= self.subjectElo]
         self.current_prompt = self.subjectPrompts.get(max(validBreakpoints, default=0), "")
 
-
-
-
