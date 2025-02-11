@@ -3,6 +3,17 @@ from typing import List
 from pydantic import BaseModel
 from subject import Subject
 
+""" Design Doc
+
+Class name: User
+
+Class description: The User class will house a given users tracked subjects, as well as functionality pertaining to user information.
+
+Class data members: trackedSubjects
+
+Class member functions: addSubject(), removeSubject(), importData(), exportData()
+"""
+
 class User(BaseModel):
     # do we want to track userName?
     # we could use this in our front end to make it feel more interactive
