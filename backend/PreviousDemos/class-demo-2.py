@@ -36,7 +36,7 @@ while not quit:
     if (menuChoice == 1):
         print("enter value to add or subtract to elo\n")
         menuChoice = int(input("User: "))
-        englishSubject.changeElo(menuChoice)
+        englishSubject.setSubjectElo(menuChoice)
     #Print current prompt
     elif (menuChoice == 2):
         print(englishSubject.current_prompt + "\n")
