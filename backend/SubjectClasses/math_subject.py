@@ -24,7 +24,7 @@ class Math(Subject):
     topic="algebra"
     subtopic="solving equations"
 
-    math_topics: Dict[str,List[str]] = {
+    mathTopics: Dict[str,List[str]] = {
         "basic math": ["addition", "subtraction", "multiplication", "division"],
         "pre-algebra": ["fractions", "decimals", "negative numbers", "order of operations"],
         "algebra": ["solving equations", "graphing linear equations", "polynomials", "quadratic equations"],
@@ -44,23 +44,23 @@ class Math(Subject):
 
         
     def get_possible_subtopics(self, topic):
-        if topic in self.math_topics.keys():
-            possible_subtopics = self.math_topics.values(topic)
+        if topic in self.mathTopics.keys():
+            possible_subtopics = self.mathTopics.values(topic)
             return possible_subtopics
         else:
             print("topic not found")
     
     def set_subtopic(self, subtopic):
-        if subtopic in self.math_topics.values():
+        if subtopic in self.mathTopics.values():
            self.subtopic=subtopic
         else:
             print("subtopic not found")
             
     #example current 
     def set_current_prompt(self):
-        self.current_prompt : str = self.subjectPrompts[self.subjectElo, self.subtopic]
+        self.currentPrompt : str = self.subjectPrompts[self.subjectElo, self.subtopic]
 
     def get_current_prompt(self):
-        return self.current_prompt
+        return self.currentPrompt
     
 

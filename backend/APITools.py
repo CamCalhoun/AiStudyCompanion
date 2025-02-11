@@ -1,6 +1,7 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from subject import Subject
+import re
 import os
 
 """ Design Doc
@@ -26,8 +27,6 @@ class Chatbot:
                 "You are an educational assistant that provides multiple-choice questions "
                 "to help users learn different subjects. Each question should have exactly four "
                 "answer choices labeled A, B, C, and D, and you must indicate the correct answer clearly. "
-                "After the user responds, check their answer and provide feedback. If they are incorrect, "
-                "explain why and then ask if they would like another question."
             )},
         ]
     
@@ -51,4 +50,35 @@ class Chatbot:
         )
         #print chatbot response
         print(f'Open AI: {response_content}\n')
-        
+       
+    def generateQuestion(self, topic: str, difficulty:str):
+        prompt = (
+            f"Generate a {difficulty}-level multiple-choice question about {topic}. "
+            "The format should be:\n"
+            "Question: <Insert question here>\n"
+            "A) <Option A>\n"
+            "B) <Option B>\n"
+            "C) <Option C>\n"
+            "D) <Option D>\n"
+            "Answer: <Correct answer letter>"
+        )
+
+        # Get response from GPT
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=self.context+ [{"role": "user", "content": prompt}],
+        )
+
+        response_content = response.choices[0].message.content
+
+        #extracts the correct answer using regex
+        match = re.search(r'Answer:\s*([A-D])', response_content)
+        correct_answer = match.group(1) if match else None  # Ensure we capture the answer
+
+        return response_content, correct_answer
+    
+    def checkAnswer(self, user_answer: str, correct_answer: str):
+        if user_answer.strip().upper() == correct_answer:
+            return "Correct!"
+        else:
+            return f"Incorrect. The correct answer is {correct_answer}."
