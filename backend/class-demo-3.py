@@ -5,6 +5,7 @@ from SubjectClasses.english_subject import English
 from SubjectClasses.geography_subject import Geography
 from SubjectClasses.computerScience_subject import ComputerScience
 from SubjectClasses.history_subject import History
+from SubjectClasses.math_subject import Math
 from user import User
 
 testUser = User()
@@ -12,6 +13,7 @@ testUser.addSubject(English())
 testUser.addSubject(Geography())
 testUser.addSubject(ComputerScience())
 testUser.addSubject(History())
+testUser.addSubject(Math())
 
 #english subject object
 currentSubject = testUser.subjects["English"]
@@ -45,7 +47,7 @@ while not quit:
 
     #Set Elo
     if (menuChoice == 1):
-        print("\nChoose a subject:\nEnglish: 1\nGeography: 2\nComputer Science: 3\nHistory: 4\n")
+        print("\nChoose a subject:\nEnglish: 1\nGeography: 2\nComputer Science: 3\nHistory: 4\nMath: 5\n")
         subjectChoice = int(input("User: "))
         if (subjectChoice == 1):
             currentSubject = testUser.subjects["English"]
@@ -55,6 +57,8 @@ while not quit:
             currentSubject = testUser.subjects["Computer Science"]
         elif (subjectChoice == 4):
             currentSubject = testUser.subjects["History"]
+        elif (subjectChoice == 5):
+            currentSubject = testUser.subjects["Math"]
         else:
             print("Invalid input\n")
 

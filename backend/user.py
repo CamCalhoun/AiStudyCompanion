@@ -6,6 +6,7 @@ from SubjectClasses.english_subject import English
 from SubjectClasses.geography_subject import Geography
 from SubjectClasses.computerScience_subject import ComputerScience
 from SubjectClasses.history_subject import History
+from SubjectClasses.math_subject import Math
 
 """ Design Doc
 
@@ -56,6 +57,8 @@ class User(BaseModel):
                     subject = ComputerScience(**item)
                 elif subject_name == "History":
                     subject = History(**item)
+                elif subject_name == "Math":
+                    subject = Math(**item)
                 else:
                     raise ValueError("Unkown Subject")
                 

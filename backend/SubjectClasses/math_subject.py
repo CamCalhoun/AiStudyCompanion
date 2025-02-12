@@ -1,30 +1,17 @@
-from subject import Subject
-from typing import List, Dict
 
-""" Design Doc
-Class name: Math
+from typing import List, Dict, ClassVar
+from pydantic import BaseModel
 
-Class description: The Math class is a derived class of Subjects. 
-                   This allows Math to house all methods and attributes defined in Subjects, 
-                   as well as override them to fit the needs of this specific subject. 
-                   Math will be an instantiable class that can be stored in the users record of tracked subjects.
-
-Class data members: subjectName, subjectElo, subjectBreakpoints subjectPrompts
-
-Class member functions: setSubjectName(), getSubjectName(), setSubjectElo(), 
-                        getSubjectElo(), setSubjectBreakpoints(), getSubjectBreakpoints(), 
-                        setSubjectPrompts(), getSubjectPrompts()
-"""
-
-class Math(Subject):
+class Math(BaseModel):  # Use BaseModel if you want to leverage Pydantic
     # Override subject variables
-    subjectName: str = 'Mathematics'
+    subjectName: str = 'Math'
     subjectElo: int = 800
-    subjectBreakpoints: List[int] = [0, 800, 1600]
-    topic="algebra"
-    subtopic="solving equations"
+    topic: str = "algebra"
+    subtopic: str = "solving equations"
 
-    mathTopics: Dict[str,List[str]] = {
+    # Class level attributes
+    subjectBreakpoints: ClassVar[List[int]] = [0, 800, 1600]
+    mathTopics: ClassVar[Dict[str, List[str]]] = {
         "basic math": ["addition", "subtraction", "multiplication", "division"],
         "pre-algebra": ["fractions", "decimals", "negative numbers", "order of operations"],
         "algebra": ["solving equations", "graphing linear equations", "polynomials", "quadratic equations"],
@@ -34,33 +21,27 @@ class Math(Subject):
         "statistics": ["mean, median, mode", "probability", "standard deviation", "hypothesis testing"],
         "linear algebra": ["vectors", "matrices", "determinants", "eigenvalues and eigenvectors"]
     }
-
-    
-    subjectPrompts: Dict[int, str] = {
+    subjectPrompts: ClassVar[Dict[int, str]] = {
         0: 'Create a basic math multiple-choice question related to {topic} for elementary level.',
         800: 'Create a math multiple-choice question related to {topic} for high school level. Provide the question and options, and wait for the user to respond. If correct, say "Correct"; otherwise, explain why it is incorrect and ask if they want another question.',
         1600: 'Create an advanced level math multiple-choice question related to {topic} for college level. Provide the question and options, and wait for the user to respond. If correct, say "Correct"; otherwise, explain why it is incorrect and ask if they want another question.'
     }
 
-        
-    def get_possible_subtopics(self, topic):
-        if topic in self.mathTopics.keys():
-            possible_subtopics = self.mathTopics.values(topic)
-            return possible_subtopics
-        else:
-            print("topic not found")
-    
-    def set_subtopic(self, subtopic):
-        if subtopic in self.mathTopics.values():
-           self.subtopic=subtopic
-        else:
-            print("subtopic not found")
-            
-    #example current 
-    def set_current_prompt(self):
-        self.currentPrompt : str = self.subjectPrompts[self.subjectElo, self.subtopic]
+    # Instance level initialization
+    currentPrompt: str = ""
 
-    def get_current_prompt(self):
-        return self.currentPrompt
-    
+    def __init__(self):
+        # Pydantic will handle the fields, so we don't need to set them in __init__ for validation
+        super().__init__()  # Call Pydantic's init if you want to use its functionality
+        
+        # Call the method to update the prompt
+        self.updatePrompt()
+
+    def updatePrompt(self):
+        # Find the highest valid breakpoint that is <= subjectElo
+        validBreakpoints = [bp for bp in self.subjectBreakpoints if bp <= self.subjectElo]
+        closestBreakpoint = max(validBreakpoints, default=0)
+
+        # Get the corresponding prompt and format it with the topic
+        self.currentPrompt = self.subjectPrompts.get(closestBreakpoint, "").format(topic=self.topic)
 
