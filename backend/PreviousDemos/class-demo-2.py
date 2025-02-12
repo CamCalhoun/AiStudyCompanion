@@ -20,7 +20,7 @@ quit = False
 loop = False
 
 #set the current current prompt to reflect subject initally
-englishSubject.current_prompt = englishSubject.subjectPrompts[englishSubject.subjectElo]
+englishSubject.currentPrompt = englishSubject.subjectPrompts[englishSubject.subjectElo]
 #demoUser.addSubject(englishSubject)
 
 print("ASC English Subject Class Demo")
@@ -39,12 +39,12 @@ while not quit:
         englishSubject.setSubjectElo(menuChoice)
     #Print current prompt
     elif (menuChoice == 2):
-        print(englishSubject.current_prompt + "\n")
+        print(englishSubject.currentPrompt + "\n")
     #Start Chat
     elif (menuChoice == 3):
         loop = True
         print("Enter q to quit")
-        sillybot.chat(englishSubject.current_prompt)
+        sillybot.chat(englishSubject.currentPrompt)
     #quit program
     elif (menuChoice == 4):
         quit = True

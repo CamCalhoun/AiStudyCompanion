@@ -72,7 +72,7 @@ class Subject(BaseModel):
     def updatePrompt(self):
         # Find highest available breakpoint, and set corresponding prompt
         validBreakpoints = [bp for bp in self.subjectBreakpoints if bp <= self.subjectElo]
-        self.current_prompt = self.subjectPrompts.get(max(validBreakpoints, default=0), "")
+        self.currentPrompt = self.subjectPrompts.get(max(validBreakpoints, default=0), "")
 
 
 

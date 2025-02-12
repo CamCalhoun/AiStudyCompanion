@@ -1,7 +1,11 @@
 import json
-from typing import List
+from typing import Dict
 from pydantic import BaseModel
 from subject import Subject
+from SubjectClasses.english_subject import English
+from SubjectClasses.geography_subject import Geography
+from SubjectClasses.computerScience_subject import ComputerScience
+from SubjectClasses.history_subject import History
 
 """ Design Doc
 
@@ -19,26 +23,41 @@ class User(BaseModel):
     # we could use this in our front end to make it feel more interactive
     # "Hi userName, welcome back" etc
     # userName: str
-    subjects: List[Subject] = []
+    subjects: Dict[str, Subject] = {}
     
     def addSubject(self, subject: Subject):
-        if not any(s.subjectName == subject.subjectName for s in self.subjects):
-            self.subjects.append(subject)
+        subject_name = subject.subjectName
+        if subject_name not in self.subjects:
+            self.subjects[subject_name] = subject
         else:
             print(f"Subject '{subject.subjectName}' is already being tracked.")
 
     def removeSubject(self, subjectName: str):
-        self.subjects = [s for s in self.subjects if s.subjectName != subjectName]
+        if subjectName in self.subjects:
+            del self.subjects[subjectName]
+        else:
+            print("Subject not found")
 
     def exportSubjects(self, filename: str):
         with open(filename, "w") as f:
-            json.dump([subject.model_dump() for subject in self.subjects], f, indent=4)
+            json.dump([subject.model_dump() for subject in self.subjects.values()], f, indent=4)
 
     def importSubjects(self, filename: str):
         with open(filename, "r") as f:
             data = json.load(f)
             for item in data:
-                subject=Subject(**item)
-                self.addSubject(subject)
+                subject_name = item.get("subjectName")
 
+                if subject_name == "English":
+                    subject = English(**item)
+                elif subject_name == "Geography":
+                    subject = Geography(**item)
+                elif subject_name == "ComputerScience":
+                    subject = ComputerScience(**item)
+                elif subject_name == "History":
+                    subject = History(**item)
+                else:
+                    raise ValueError("Unkown Subject")
+                
+                self.addSubject(subject)
 
