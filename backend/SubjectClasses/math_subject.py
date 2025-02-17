@@ -1,8 +1,8 @@
 
 from typing import List, Dict, ClassVar
-from pydantic import BaseModel
+from subject import Subject
 
-class Math(BaseModel):  # Use BaseModel if you want to leverage Pydantic
+class Math(Subject):
     # Override subject variables
     subjectName: str = 'Math'
     subjectElo: int = 800
