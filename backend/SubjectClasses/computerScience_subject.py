@@ -23,9 +23,9 @@ class ComputerScience(Subject):
     subjectElo : int = 800
     subjectBreakpoints: List[int] = [0, 800, 1600]
     subjectPrompts: Dict[int, str] = {
-        0: 'Create a multiple choice question for someone who is at middle school level of intelligence pretaining to computer science.',
-        800: 'Create a multiple choice question for someone who is at highschool school level of intelligence pretaining to computer science. You will provide the question and choices to the user and wait for them to respond in the next message. If they choose the correct option, say Correct. If not, say Incorrect explain why and then prompt for if the user wants another question.',
-        1600: 'Create a multiple choice question for someone who is at college school level of intelligence pretaining to computer science. You will provide the question and choices to the user and wait for them to respond in the next message. If they choose the correct option, say Correct. If not, say Incorrect explain why and then prompt for if the user wants another question.'
+        0: 'Middle school level Computer Science',
+        800: 'Highschool level Computer Science',
+        1600: 'College level Computer Science'
     }
     currentPrompt : str = subjectPrompts[800]
     

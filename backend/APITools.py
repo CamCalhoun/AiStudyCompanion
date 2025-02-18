@@ -31,6 +31,7 @@ class Chatbot:
                 "NONE is not a valid answer. "
                 "You must indicate the correct answer clearly "
                 "and provide an explanation for why the answer is correct."
+                "For this explanation, please surround the entire explanation in {}."
                 "A format for your response will be described. Do not respond with anything other than the exact format."
                 "The format of your response must be as follows:\n"
                 "Question: <Insert question here>\n"
@@ -39,7 +40,7 @@ class Chatbot:
                 "C) <Option C>\n"
                 "D) <Option D>\n"
                 "Answer: <Correct answer letter>\n"
-                "Explanation: <Detailed explanation of why the correct answer is correct and why the others are not>"
+                "Explanation: {<Detailed explanation of why the correct answer is correct and why the others are not>}"
             )},
         ]
     
@@ -56,7 +57,7 @@ class Chatbot:
         response_content = response.choices[0].message.content
         
         # Commented out statement for testing raw output
-        # print(f"\nRaw Response Content:\n{response_content}")
+        print(f"\nRaw Response Content:\n{response_content}")
 
         # Extract the correct answer using regex
         match = re.search(r'Answer:\s*([A-D])', response_content)
@@ -75,7 +76,7 @@ class Chatbot:
         user_answer = self.get_user_answer(choices)
         
         # Extract the explanation in case the user answers wrong, and remove it from the displayed question.
-        explanation_match = re.search(r'Explanation:\s*(.*)', response_content, re.DOTALL)
+        explanation_match = re.search(r'Explanation:\s*{\s*(.*?)\s*}', response_content, re.DOTALL)
         explanation = explanation_match.group(1).strip() if explanation_match else "No explanation provided."
 
         # Check if the answer is correct

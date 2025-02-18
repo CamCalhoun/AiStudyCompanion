@@ -22,9 +22,9 @@ class Math(Subject):
         "linear algebra": ["vectors", "matrices", "determinants", "eigenvalues and eigenvectors"]
     }
     subjectPrompts: ClassVar[Dict[int, str]] = {
-        0: 'Create a basic math multiple-choice question related to {topic} for elementary level.',
-        800: 'Create a math multiple-choice question related to {topic} for high school level. Provide the question and options, and wait for the user to respond. If correct, say "Correct"; otherwise, explain why it is incorrect and ask if they want another question.',
-        1600: 'Create an advanced level math multiple-choice question related to {topic} for college level. Provide the question and options, and wait for the user to respond. If correct, say "Correct"; otherwise, explain why it is incorrect and ask if they want another question.'
+        0: 'Beginner level {topic}',
+        800: 'Intermediate level {topic}',
+        1600: 'Advanced level {topic}'
     }
 
     # Instance level initialization
