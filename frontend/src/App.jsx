@@ -1,18 +1,21 @@
-import React from 'react';
-import './App.css';
-import FruitList from './components/Fruits';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-const App = () => {
+function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Fruit Management App</h1>
-      </header>
-      <main>
-        <FruitList />
-      </main>
-    </div>
-  );
-};
+    <>
+      <div className="grid grid-rows-[35.28%_64.72%] h-screen">
+        <div className="grid grid-rows-2 h-full">
+          <div className="bg-white"></div>
+          <div className="bg-pwblue"></div>
+        </div>
+        <div className="bg-white"></div>
+      </div>
+    </>
+  )
+}
 
-export default App;
+export default App
