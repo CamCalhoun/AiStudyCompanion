@@ -2,42 +2,67 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles.css'
 import Button from '../components/Button.jsx'
-import Card from '../components/Card.jsx'
+import TopBar from '../components/TopBar.jsx'
 function About() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <>
-            <div className="grid grid-rows-[35.28%_64.72%] h-screen bg-bgwhite">
-                <div className="grid grid-rows-2 h-full">
-                    <div className="p-1 flex items-center justify-between text-8xl font-semibold">
-                        <h1>
-                            <span className="text-shadow text-pwblue">AI Study</span>
-                            <span className="text-shadow text-pwred"> Companion</span>
-                        </h1>
-                        <img
-                            src="pennwest-california.png"
-                            className=""
-                        />
-                    </div>
-                    <div className="p-1 flex items-center text-8xl font-semibold bg-pwblue">
-                        <h1 className="text-white">About ASC</h1>
-                    </div>
-                </div>
+            {/* Full Page Layout */}
+            <div className="bg-bgwhite min-h-screen">
+                <TopBar title="About ASC" />
+                {/* Scrollable Content */}
+                <div className="p-10 max-w-3xl mx-auto">
+                    <h2 className="text-3xl font-bold mb-4">What is AI Study Companion?</h2>
+                    <p className="text-lg mb-4">
+                        AI Study Companion (ASC) is a collaborative project spawned from PennWest California's Senior Project: Software Engineering course.
+                        This project is headed by four Computer Science students of PennWest California:</p>
+                    <ul className="list-disc pl-6 text-lg space-y-2 mb-4">
+                        <li>Cameron Calhoun</li>
+                        <li>Gage Keslar</li>
+                        <li>Jonathan Buckel</li>
+                        <li>Seth Morgan</li>
+                    </ul>
+                    <p className="text-lg mb-4">
+                        AI Study Companion is a website built to utilize the latest large language model capabilities to provide a convenient
+                        solution to studying given subjects. AI Study Companion provides users with a set of subjects in which they can interactively test their skills in
+                        with ASC adjusting the difficulty based on your individual progress.
+                    </p>
 
-                <div className="grid grid-cols-[53.75%_46.25%]">
-                    <div className="flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
-                            <Button text="Back" onClick={() => navigate("/")} />
-                        </div>
+                    <h2 className="text-3xl font-bold mt-8 mb-4">Why Use AI Study Companion?</h2>
+                    <ul className="list-disc pl-6 text-lg space-y-2">
+                        <li>Personalized learning paths based on your progress.</li>
+                        <li>Instant explanations and interactive problem-solving.</li>
+                        <li>Access to a vast library of study materials.</li>
+                        <li>Time-efficient and engaging study sessions.</li>
+                    </ul>
+
+                    <h2 className="text-3xl font-bold mt-8 mb-4">How It Works</h2>
+                    <p className="text-lg mb-4">
+                        Simply visit the website, select your subject of interest, and start interacting with AI to get
+                        step-by-step guidance. The more you use the tool, the better it adapts to your learning style.
+                        Need to study on the go? Just export your progress to a portable file and import it on any other machine.
+                    </p>
+
+                    {/* Extra content to allow scrolling */}
+                    <div className="mt-10 space-y-6">
+                        {[...Array(10)].map((_, i) => (
+                            <p key={i} className="text-lg">
+                                This is a sample paragraph to add more content for scrolling. The AI Study Companion is
+                                continuously evolving to provide better assistance. Keep scrolling to test the sticky
+                                behavior of the blue top bar.
+                            </p>
+                        ))}
                     </div>
-                    <div className='flex items-center justify-center'>
-                        <Card text="Make a selection on the left to begin!" />
+
+                    {/* Back Button */}
+                    <div className="mt-10 flex justify-center">
+                        <Button text="Back" onClick={() => navigate("/")} />
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default About
+export default About;
