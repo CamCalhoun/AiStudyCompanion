@@ -10,9 +10,12 @@ function Home() {
 
     return (
         <>
-            <div className="grid grid-rows-[auto_2fr] h-screen bg-bgwhite">
+            {/* Full Page Layout */}
+            <div className="grid grid-rows-[auto_auto_1fr] min-h-screen">
                 <TopBar title="Welcome" />
+                {/* Buttons + Card */}
                 <div className="grid grid-cols-[53.75%_46.25%]">
+                    {/* Buttons */}
                     <div className="flex items-center justify-center">
                         <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
                             <Button text="Study" />
@@ -23,6 +26,7 @@ function Home() {
                             <Button text="About" onClick={() => navigate("/about")} />
                         </div>
                     </div>
+                    {/* Card */}
                     <div className='flex items-center justify-center'>
                         <Card text="Make a selection on the left to begin!" />
                     </div>
