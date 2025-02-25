@@ -29,23 +29,17 @@ npm run dev
 
 Run `npm run dev` to verify that the dependencies installed correctly. This is also how you will run the frontend.
 
-### 4. Return to the root directory
-
-```bash
-cd ..
-```
-
 ---
 
 ## Backend Setup
 
-### 5. Navigate to the backend directory
+### 4. Navigate to the backend directory
 
 ```bash
-cd backend
+cd server
 ```
 
-### 6. Create a Python virtual environment
+### 5. Create a Python virtual environment
 
 ```bash
 python -m venv venv
@@ -53,7 +47,7 @@ python -m venv venv
 
 Create a Python virtual environment named `venv` in the `backend` directory.
 
-### 7. Activate the virtual environment
+### 6. Activate the virtual environment
 
 - **For Linux or macOS:**
 
@@ -71,7 +65,7 @@ Create a Python virtual environment named `venv` in the `backend` directory.
 
   On Windows, the `source` command is not needed, and the script is located in `venv\Scripts\`.
 
-### 8. Install backend dependencies
+### 7. Install backend dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -79,7 +73,7 @@ pip install -r requirements.txt
 
 Install the required Python packages listed in `requirements.txt` into the virtual environment.
 
-### 9. Verify backend installation
+### 8. Verify backend installation
 
 ```bash
 python main.py
@@ -118,7 +112,7 @@ npm run dev
 ### 3. Navigate to the backend directory
 
 ```bash
-cd backend
+cd frontend/server
 ```
 
 ### 4. Activate the virtual environment
