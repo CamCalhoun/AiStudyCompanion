@@ -14,7 +14,7 @@
     {
       "source": "/api/(.*)",
       "destination": "/server/main.py"
-    }
+    },
     {
       "source": "/(.*)",
       "destination": "/"
