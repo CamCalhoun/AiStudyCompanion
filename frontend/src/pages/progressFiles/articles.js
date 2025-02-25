@@ -1,5 +1,5 @@
 const articles = {
-    about: `
+  about: `
   <div class="article-typography">
   <h1>About ASC</h1>
   <h2>What is ASC?</h2>
@@ -18,7 +18,7 @@ const articles = {
     </ul>
     <p>All members are students of Pennsylvania Western University studying Computer Science.</p>
   <h2>Gantt Chart</h2>
-    <h3>Updated 1/24/24</h3>
+    <h3>Updated 2/18/25</h3>
     
 <iframe 
   class="w-full h-[1000px] max-w-screen-lg mx-auto rounded-lg shadow-lg"
@@ -26,14 +26,14 @@ const articles = {
   title="Gantt Chart - Senior Project"
 ></iframe></div>
     `,
-    week1: `
+  week1: `
   <div class="article-typography">
   <h1>Week 1</h1>
   <h2>Summary:</h2>
     <p>Week 1 was entirely lectures, and thus no report was completed. Reports begin in week 2.</p>
 </div>
   `,
-    week2: `
+  week2: `
   <div class="article-typography">
   <h1>Week 2</h1>
   <h2>Summary:</h2>
@@ -67,7 +67,7 @@ const articles = {
     </ul>
   </div>
   `,
-    week3: `
+  week3: `
   <div class="article-typography">
   <h1>Week 3</h1>
   <h2>Summary:</h2>
@@ -102,7 +102,7 @@ const articles = {
     </ul>
   </div>
   `,
-    week4: `
+  week4: `
   <div class="article-typography">
   
   <h1>Week 4</h1>
@@ -136,7 +136,7 @@ const articles = {
     </ul>
 </div>
   `,
-    week5: `
+  week5: `
   <div class="article-typography">
   <h1>Week 5</h1>
   <h2>Summary:</h2>
@@ -169,6 +169,38 @@ const articles = {
       <li>Seth Morgan - Reformatted to fit design specifications, restricted chatbot</li>
       <li>Jonathan Buckel - Communicated some ideas, helped reformat classes</li>
     </ul>
+  </div>
+  `,
+  week6: `
+  <div class="article-typography">
+  <h1>Week 6</h1>
+  <h2>Summary:</h2>
+    <p>This week had focus on further backend improvements including, separating user input and AI, fixing our prompts to limit token usage / more concise questions and answer options, improving our math subject class, and beginning our front end design. The user will now no longer be able to put answers no longer pertaining to the question. Instead they are limited to the labeled options. The subject class no longer sends a prompt with formatting instructions, subject, and skill level. All the subject needs to do is send the subject and skill level and OpenAI will generate the question. Our math class only generates the questions and tools implemented will ensure a correct answer. Finally, the construction of our front end has started. The main menu and subject menu has been designed but lack complete functionality as of right now.</p>
+  <h2>What was Accomplished:</h2>
+    <ul>
+      <li>Fixed amount of tokens being set to OpenAI</li>
+      <li>Removing AI and user interaction</li>
+      <li>Removing redundant code</li>
+    </ul>
+  <h2>Problems Encountered:</h2>
+    <ul>
+      <li>Math Subject Class</li>
+    </ul>
+  <h2>Plans to Overcome Problems:</h2>
+    <p>We always planned to keep OpenAI from answering math questions. This was due to the fact that ChatGPT has always had unreliable answers to math questions. Using sympy, we can have ChatGPT make the questions and then create the answers using that tool.</p>
+  <h2>Plans for this Week:</h2>
+    <ul>
+      <li>Continue work on Frontend</li>
+      <li>Put Frontend online</li>
+    </ul>
+  <h2>Member Contributions:</h2>
+    <ul>
+      <li>Cameron Calhoun - Separated the logic and AI, Created frontend design, reorganized prompts, contributed to math subject class</li>
+      <li>Gage Keslar - Weekly Report, PowerPoint presentation</li>
+      <li>Seth Morgan - Contributed to math subejct class</li>
+      <li>Jonathan Buckel - Communicated some ideas, Sympy research</li>
+    </ul>
+
   </div>
   `
 }
