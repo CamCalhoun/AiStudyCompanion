@@ -9,3 +9,31 @@
 .text-shadow {
       text-shadow: 0px 4px 4px rgba(0,0,0,.25);
 }
+
+.article-typography {
+  @apply max-w-screen-lg mx-auto text-gray-900;
+}
+
+.article-typography h1 {
+  @apply text-4xl font-extrabold mb-4;
+}
+
+.article-typography h2 {
+  @apply text-2xl font-semibold mt-6 mb-3;
+}
+
+.article-typography h3 {
+  @apply text-xl font-medium mt-4 mb-3;
+}
+
+.article-typography p {
+  @apply text-lg leading-relaxed mb-4;
+}
+
+.article-typography ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.article-typography iframe {
+  @apply w-full h-80 max-w-screen-lg mx-auto rounded-lg shadow-lg;
+}
