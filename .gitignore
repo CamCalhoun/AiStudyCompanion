@@ -53,3 +53,4 @@ coverage/
 *.dockerignore
 docker-compose.override.yml
 .docker/
+.vercel
