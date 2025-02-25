@@ -16,7 +16,7 @@
       "destination": "/server/main.py"
     }
     {
-      "source": "/(.*)", 
+      "source": "/(.*)",
       "destination": "/"
     }
   ]
