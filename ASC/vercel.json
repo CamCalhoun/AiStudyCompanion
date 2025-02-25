@@ -6,14 +6,14 @@
       "config": { "distDir": "dist" }
     },
     {
-      "src": "/server/main.py",
+      "src": "server/main.py",
       "use": "@vercel/python"
     }
   ],
-  "rewrites":  [
+  "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server/main.py"
+      "destination": "/server/main"
     },
     {
       "source": "/(.*)",
@@ -21,6 +21,4 @@
     }
   ]
 }
-
-
 

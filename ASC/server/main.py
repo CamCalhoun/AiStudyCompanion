@@ -1,3 +1,4 @@
+import mangum
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,4 +22,4 @@ app.add_middleware(
 async def hello():
     return {"message": "Hello from FastAPI!"}
 
-handler = app
+handler = mangum.Mangum(app)
