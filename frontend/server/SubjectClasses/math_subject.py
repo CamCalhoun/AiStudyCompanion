@@ -5,26 +5,29 @@ from subject import Subject
 class Math(Subject):
     # Override subject variables
     subjectName: str = 'Math'
-    subjectElo: int = 800
+    subjectElo: int = 600
     topic: str = "algebra"
-    subtopic: str = "solving equations"
+    subtopic: str = "any"
 
     # Class level attributes
-    subjectBreakpoints: ClassVar[List[int]] = [0, 800, 1600]
+    subjectBreakpoints: ClassVar[List[int]] = [0, 200, 400, 600, 1000, 1400]
     mathTopics: ClassVar[Dict[str, List[str]]] = {
-        "basic math": ["addition", "subtraction", "multiplication", "division"],
-        "pre-algebra": ["fractions", "decimals", "negative numbers", "order of operations"],
-        "algebra": ["solving equations", "graphing linear equations", "polynomials", "quadratic equations"],
-        "trigonometry": ["sine and cosine", "tangent", "trigonometric identities", "unit circle"],
-        "precalculus": ["limits", "sequences and series", "functions", "conic sections"],
-        "calculus": ["derivatives", "integrals", "chain rule", "limits"],
-        "statistics": ["mean, median, mode", "probability", "standard deviation", "hypothesis testing"],
-        "linear algebra": ["vectors", "matrices", "determinants", "eigenvalues and eigenvectors"]
+        "basic math": ["any","addition", "subtraction", "multiplication", "division"],
+        "pre-algebra": ["any","fractions", "decimals", "negative numbers", "order of operations"],
+        "algebra": ["any","solving equations", "graphing linear equations", "polynomials", "quadratic equations"],
+        "trigonometry": ["any","sine and cosine", "tangent", "trigonometric identities", "unit circle"],
+        "precalculus": ["any","limits", "sequences and series", "functions", "conic sections"],
+        "calculus": ["any","derivatives", "integrals", "chain rule", "limits"],
+        "statistics": ["any","mean, median, mode", "probability", "standard deviation", "hypothesis testing"],
+        "linear algebra": ["any","vectors", "matrices", "determinants", "eigenvalues and eigenvectors"]
     }
     subjectPrompts: ClassVar[Dict[int, str]] = {
-        0: 'Beginner level {topic}',
-        800: 'Intermediate level {topic}',
-        1600: 'Advanced level {topic}'
+        0: 'Very Basic level {topic} problem about {subtopic}',
+        200: 'Basic level {topic} problem about {subtopic}',
+        400: ' Pre-Intermediate level {topic} problem about {subtopic}',
+        600: 'Intermediate level {topic} problem about {subtopic}',
+        1000: 'Advanced level {topic} problem about{subtopic}',
+        1400: 'Expert level {topic} problem about {subtopic}'
     }
 
     # Instance level initialization
@@ -45,3 +48,20 @@ class Math(Subject):
         # Get the corresponding prompt and format it with the topic
         self.currentPrompt = self.subjectPrompts.get(closestBreakpoint, "").format(topic=self.topic)
 
+    def setSubtopic(self, subtopicName):
+        for key, value in self.mathTopics.items():
+            if subtopicName == value: #if we have a valid subtopic
+                self.subtopic=value
+                self.topic=key 
+                return
+            elif subtopicName == key: #"Subtopic entered was actually a topic. So we set the topic with the given name and subtopic set to default 'any'
+                self.topic=key
+                self.subtopic="any"
+                return
+        # If the subtopic is not in the values or keys of mathTopics
+        print("Error: subtopic chosen is not valid.")
+
+        
+
+                
+            
