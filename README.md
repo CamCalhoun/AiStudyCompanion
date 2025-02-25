@@ -10,7 +10,7 @@ This guide will walk you through setting up the development environment on your 
 ### 1. Navigate to the frontend directory
 
 ```bash
-cd frontend
+cd ASC
 ```
 
 ### 2. Install dependencies
@@ -96,7 +96,7 @@ This section details running the project with dependencies installed.
 ### 1. Navigate to the frontend directory
 
 ```bash
-cd frontend
+cd ASC
 ```
 
 ### 2. Start the development server
@@ -112,7 +112,7 @@ npm run dev
 ### 3. Navigate to the backend directory
 
 ```bash
-cd frontend/server
+cd ASC/server
 ```
 
 ### 4. Activate the virtual environment
