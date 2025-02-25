@@ -20,6 +20,7 @@ app.add_middleware(
 
 @app.get("/api/hello")
 async def hello():
+    print("made it to api request")
     return {"message": "Hello from FastAPI!"}
 
 handler = mangum.Mangum(app)
