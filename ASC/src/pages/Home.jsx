@@ -10,18 +10,33 @@ function Home() {
     const navigate = useNavigate()
 
     const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [delayed, setDelayed] = useState(false)
 
     useEffect(() => {
-        axios.get("https://aistudycompanion.onrender.com/api/hello").then((response) => {
-            setMessage(response.data.message)
-        })
+        setLoading(true)
+        setDelayed(false)
+
+        const delayTimer = setTimeout(() => setDelayed(true), 5000)
+
+        axios.get("https://aistudycompanion.onrender.com/api/hello")
+            .then((response) => {
+                setMessage(response.data.message)
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error)
+            })
+            .finally(() => {
+                clearTimeout(delayTimer)
+                setLoading(false)
+            })
     }, [])
 
     return (
         <>
             {/* Full Page Layout */}
             <div className="grid grid-rows-[auto_auto_1fr] min-h-screen">
-                <TopBar title={`Welcome ${message}`} />
+                <TopBar title={`Welcome ${loading ? (delayed ? "Server is waking up... Please wait." : "Loading...") : message}`} />
                 {/* Buttons + Card */}
                 <div className="grid grid-cols-[53.75%_46.25%]">
                     {/* Buttons */}
