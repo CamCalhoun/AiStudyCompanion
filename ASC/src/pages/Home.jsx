@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../styles.css'
 import Button from '../components/Button.jsx'
@@ -8,11 +9,19 @@ import TopBar from '../components/TopBar.jsx'
 function Home() {
     const navigate = useNavigate()
 
+    const [message, setMessage] = useState("")
+
+    useEffect(() => {
+        axios.get("https://aistudycompanion.onrender.com/api/hello").then((response) => {
+            setMessage(response.data.message)
+        })
+    }, [])
+
     return (
         <>
             {/* Full Page Layout */}
             <div className="grid grid-rows-[auto_auto_1fr] min-h-screen">
-                <TopBar title="Welcome" />
+                <TopBar title={`Welcome ${message}`} />
                 {/* Buttons + Card */}
                 <div className="grid grid-cols-[53.75%_46.25%]">
                     {/* Buttons */}
