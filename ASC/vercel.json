@@ -6,14 +6,15 @@
       "config": { "distDir": "dist" }
     },
     {
-      "src": "/server/main.py",
+      "src": "server/main.py",
       "use": "@vercel/python"
     }
   ],
-  "rewrites":  [
-    {"source": "/(.*)", "destination": "/"}
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }
-
-
 
