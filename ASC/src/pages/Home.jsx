@@ -12,7 +12,7 @@ function Home() {
     const [message, setMessage] = useState("")
 
     useEffect(() => {
-        axios.get("/api/hello").then((response) => {
+        axios.get("https://aistudycompanion.onrender.com/api/hello").then((response) => {
             setMessage(response.data.message)
         })
     }, [])

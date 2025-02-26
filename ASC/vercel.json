@@ -12,10 +12,6 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/server/main"
-    },
-    {
       "source": "/(.*)",
       "destination": "/"
     }
