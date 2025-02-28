@@ -39,9 +39,8 @@ class User(BaseModel):
         else:
             print("Subject not found")
 
-    def exportSubjects(self, filename: str):
-        with open(filename, "w") as f:
-            json.dump([subject.model_dump() for subject in self.subjects.values()], f, indent=4)
+    def exportSubjects(self):
+        return [subject.model_dump() for subject in self.subjects.values()]
 
     def importSubjects(self, filename: str):
         with open(filename, "r") as f:
