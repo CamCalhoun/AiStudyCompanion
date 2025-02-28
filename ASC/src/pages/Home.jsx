@@ -17,7 +17,7 @@ function Home() {
     const LOCAL_BASE_URL = "http://127.0.0.1:8000"
     const PROD_BASE_URL = "https://aistudycompanion.onrender.com"
     // Change the line below depending on prod or dev
-    const BASE_URL = LOCAL_BASE_URL
+    const BASE_URL = PROD_BASE_URL
 
     const API_HELLO = `${BASE_URL}/api/hello`
     const API_EXPORT = `${BASE_URL}/api/export`
