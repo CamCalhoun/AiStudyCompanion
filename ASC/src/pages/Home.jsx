@@ -13,13 +13,56 @@ function Home() {
     const [loading, setLoading] = useState(true)
     const [delayed, setDelayed] = useState(false)
 
+    // PROD URL AND DEV URL
+    const LOCAL_BASE_URL = "http://127.0.0.1:8000"
+    const PROD_BASE_URL = "https://aistudycompanion.onrender.com"
+    // Change the line below depending on prod or dev
+    const BASE_URL = PROD_BASE_URL
+
+    const API_HELLO = `${BASE_URL}/api/hello`
+    const API_EXPORT = `${BASE_URL}/api/export`
+
+    const handleExport = async () => {
+        try {
+            // get data as blob from api
+            const response = await axios.get(API_EXPORT, {
+                responseType: "blob",
+            })
+            // additional check in case empty data gets thru
+            if (response.data.size === 0) {
+                alert("No subjects to export!")
+                return
+            }
+            // create new blob from raw data
+            const blob = new Blob([response.data], { type: "application/json" })
+
+            // create url for blob
+            const url = window.URL.createObjectURL(blob)
+            // give it an element, click it to download it, then unload it
+            const a = document.createElement("a")
+            a.href = url
+            a.download = "subjects.json"
+            a.style.display = "none"
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+            // free url memory
+            window.URL.revokeObjectURL(url)
+        } catch (error) {
+            // use optional chaining to grab an error message if there is one
+            // if there is not, just push the default error
+            console.error("ERROR exporting subjects: ", error)
+            alert(error.response?.data?.error || "Failed to export subjects.")
+        }
+    }
+
     useEffect(() => {
         setLoading(true)
         setDelayed(false)
 
         const delayTimer = setTimeout(() => setDelayed(true), 5000)
 
-        axios.get("https://aistudycompanion.onrender.com/api/hello")
+        axios.get(API_HELLO)
             .then((response) => {
                 setMessage(response.data.message)
             })
@@ -45,7 +88,7 @@ function Home() {
                             <Button text="Study" />
                             <Button text="Flashcards" />
                             <Button text="Import" />
-                            <Button text="Export" />
+                            <Button text="Export" onClick={handleExport} />
                             <Button text="Subjects" />
                             <Button text="About" onClick={() => navigate("/about")} />
                         </div>
