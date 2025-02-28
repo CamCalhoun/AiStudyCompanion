@@ -15,7 +15,7 @@ testUser = User()
 # testUser.addSubject(Geography())
 # testUser.addSubject(ComputerScience())
 # testUser.addSubject(History())
-#
+
 
 app = FastAPI()
 
