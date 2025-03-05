@@ -42,9 +42,7 @@ class User(BaseModel):
     def exportSubjects(self):
         return [subject.model_dump() for subject in self.subjects.values()]
 
-    def importSubjects(self, filename: str):
-        with open(filename, "r") as f:
-            data = json.load(f)
+    def importSubjects(self, data: list[dict]):
             for item in data:
                 subject_name = item.get("subjectName")
 
@@ -52,14 +50,14 @@ class User(BaseModel):
                     subject = English(**item)
                 elif subject_name == "Geography":
                     subject = Geography(**item)
-                elif subject_name == "ComputerScience":
+                elif subject_name == "Computer Science":
                     subject = ComputerScience(**item)
                 elif subject_name == "History":
                     subject = History(**item)
                 elif subject_name == "Math":
                     subject = Math(**item)
                 else:
-                    raise ValueError("Unkown Subject")
+                    raise ValueError("Unknown Subject")
                 
                 self.addSubject(subject)
 
