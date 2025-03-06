@@ -56,6 +56,28 @@ function Home() {
         }
     }
 
+    const handleImport = async (event) => {
+        const file = event.target.files[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+            try {
+                const jsonData = JSON.parse(e.target.result)
+
+                const response = await axios.post(`${BASE_URL}/api/import`, jsonData, {
+                    headers: { "Content-Type": "application/json" }
+                })
+
+                alert(response.data.message || "Subjects successfully imported!")
+            } catch (error) {
+                console.error("ERROR importing data: ", error)
+                alert("Failed to import subjects.")
+            }
+        }
+        reader.readAsText(file)
+    }
+
     useEffect(() => {
         setLoading(true)
         setDelayed(false)
@@ -87,7 +109,18 @@ function Home() {
                         <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
                             <Button text="Study" />
                             <Button text="Flashcards" />
-                            <Button text="Import" />
+                            <div>
+                                <input
+                                    type="file"
+                                    accept=".json"
+                                    onChange={handleImport}
+                                    style={{ display: "none" }}
+                                    id="importFile"
+                                />
+                                <label htmlFor="importFile">
+                                    <Button text="Import" />
+                                </label>
+                            </div>
                             <Button text="Export" onClick={handleExport} />
                             <Button text="Subjects" />
                             <Button text="About" onClick={() => navigate("/about")} />
