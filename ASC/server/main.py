@@ -39,19 +39,4 @@ async def hello():
     print("made it to api request")
     return {"message": "Hello from FastAPI!"}
 
-@app.get("/api/export")
-async def export():
-    if not user.subjects:
-        return JSONResponse(content={"error": "No subjects to export"}, status_code=400)
-    user_data = user.exportSubjects()
-    return JSONResponse(content=user_data, media_type="application/json")
 
-@app.post("/api/import")
-async def importSubjects(subjects: list[dict]):
-    if not subjects:
-        raise HTTPException(status_code=400, detail="No subjects found in the file.")
-    try:
-        user.importSubjects(subjects)
-        return {"message": "Subjects imported successfully!"}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail = str(e))
