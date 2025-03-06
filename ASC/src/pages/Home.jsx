@@ -22,23 +22,19 @@ function Home() {
     const API_HELLO = `${BASE_URL}/api/hello`
     const API_EXPORT = `${BASE_URL}/api/export`
 
-    const handleExport = async () => {
+    const handleExport = () => {
         try {
-            // get data as blob from api
-            const response = await axios.get(API_EXPORT, {
-                responseType: "blob",
-            })
-            // additional check in case empty data gets thru
-            if (response.data.size === 0) {
+            const storedData = sessionStorage.getItem("importedSubjects")
+
+            if (!storedData) {
                 alert("No subjects to export!")
                 return
             }
-            // create new blob from raw data
-            const blob = new Blob([response.data], { type: "application/json" })
 
-            // create url for blob
+
+            const blob = new Blob([storedData], { type: "application/json" })
             const url = window.URL.createObjectURL(blob)
-            // give it an element, click it to download it, then unload it
+
             const a = document.createElement("a")
             a.href = url
             a.download = "subjects.json"
@@ -49,11 +45,29 @@ function Home() {
             // free url memory
             window.URL.revokeObjectURL(url)
         } catch (error) {
-            // use optional chaining to grab an error message if there is one
-            // if there is not, just push the default error
             console.error("ERROR exporting subjects: ", error)
-            alert(error.response?.data?.error || "Failed to export subjects.")
+            alert("Failed to export subjects.")
         }
+    }
+
+    const handleImport = async (event) => {
+        const file = event.target.files[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            try {
+                const jsonData = JSON.parse(e.target.result)
+
+                sessionStorage.setItem("importedSubjects", JSON.stringify(jsonData))
+
+                alert("Subjects successfully imported!")
+            } catch (error) {
+                console.error("ERROR importing data: ", error)
+                alert("Failed to import subjects.")
+            }
+        }
+        reader.readAsText(file)
     }
 
     useEffect(() => {
@@ -87,7 +101,18 @@ function Home() {
                         <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
                             <Button text="Study" />
                             <Button text="Flashcards" />
-                            <Button text="Import" />
+                            <div>
+                                <input
+                                    type="file"
+                                    accept=".json"
+                                    onChange={handleImport}
+                                    style={{ display: "none" }}
+                                    id="importFile"
+                                />
+                                <label htmlFor="importFile">
+                                    <Button text="Import" />
+                                </label>
+                            </div>
                             <Button text="Export" onClick={handleExport} />
                             <Button text="Subjects" />
                             <Button text="About" onClick={() => navigate("/about")} />

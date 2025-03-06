@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -10,14 +10,15 @@ from SubjectClasses.history_subject import History
 from user import User
 
 
-testUser = User()
-# testUser.addSubject(English())
-# testUser.addSubject(Geography())
-# testUser.addSubject(ComputerScience())
-# testUser.addSubject(History())
-
-
 app = FastAPI()
+
+user = User()
+
+# user.addSubject(English())
+# user.addSubject(Geography())
+# user.addSubject(ComputerScience())
+# user.addSubject(History())
+#
 
 origins = [
     "http://localhost:5173",
@@ -38,9 +39,4 @@ async def hello():
     print("made it to api request")
     return {"message": "Hello from FastAPI!"}
 
-@app.get("/api/export")
-async def export():
-    if not testUser.subjects:
-        return JSONResponse(content={"error": "No subjects to export"}, status_code=400)
-    user_data = testUser.exportSubjects()
-    return JSONResponse(content=user_data, media_type="application/json")
+
