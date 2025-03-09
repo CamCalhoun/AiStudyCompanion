@@ -24,6 +24,7 @@ origins = [
     "http://localhost:5173",
     'https://awc-staging.vercel.app',
     'https://ai-study-companion-pwc.vercel.app',
+    'https://aistudycompanion.onrender.com/'
 ]
 
 app.add_middleware(
