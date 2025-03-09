@@ -9,11 +9,11 @@ function About() {
     return (
         <>
             {/* Full Page Layout */}
-            <div className="grid grid-rows-[auto_auto_1fr] min-h-screen">
+            <div className="grid grid-rows-[auto_1fr] min-h-screen">
                 <TopBar title="About ASC" />
                 <div>
                     {/* About Article */}
-                    <div className="p-10 max-w-3xl mx-auto">
+                    <div className="p-10 max-w-6xl mx-auto">
                         <h2 className="text-3xl font-bold mb-4">What is AI Study Companion?</h2>
                         <p className="text-lg mb-4">
                             AI Study Companion (ASC) is a collaborative project spawned from PennWest California's Senior Project: Software Engineering course.
