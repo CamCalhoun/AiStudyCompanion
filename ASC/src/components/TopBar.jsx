@@ -1,20 +1,22 @@
+import NavBar from "./NavBar"
 function TopBar({ title }) {
     return (
-        <>
-            {/* White bar (scrolls away) */}
-            <div className="p-1 flex items-center justify-between text-8xl font-semibold">
-                <h1>
+        <div className="sticky top-0 z-10">
+            {/* White bar */}
+            <div className="p-1 flex h-24 items-center justify-between text-4xl font-semibold">
+                <h1 className="w-1/3">
                     <span className="text-shadow text-pwblue">AI Study</span>
                     <span className="text-shadow text-pwred"> Companion</span>
                 </h1>
-                <img src="pennwest-california.png" className="" />
+                <h1 className="text-pwblue w-1/3 text-center">{title}</h1>
+                <div className="w-1/3">
+                    <img src="pennwest-california.png" className="h-30 ml-auto" />
+                </div>
             </div>
 
-            {/* Blue bar (sticky at the top) */}
-            <div className="px-1 py-9 flex items-center text-8xl font-semibold bg-pwblue sticky top-0 z-10">
-                <h1 className="text-white">{title}</h1>
-            </div>
-        </>
+            {/* Blue bar */}
+            <NavBar />
+        </div>
     )
 }
 
