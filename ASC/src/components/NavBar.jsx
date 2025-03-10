@@ -1,5 +1,6 @@
 import NavButton from "./NavButton"
 import { useNavigate } from "react-router-dom"
+import { handleExport, handleImport } from "../utils/fileHandlers"
 function NavBar() {
     const navigate = useNavigate()
     return (
@@ -9,8 +10,8 @@ function NavBar() {
                 <NavButton text="Study" />
                 <NavButton text="Flashcards" />
                 <NavButton text="Subjects" onClick={() => navigate("/subjects")} />
-                <NavButton text="Import" />
-                <NavButton text="Export" />
+                <NavButton text="Import" onClick={handleImport} />
+                <NavButton text="Export" onClick={handleExport} />
                 <NavButton text="About" onClick={() => navigate("/about")} />
             </div>
         </div>
