@@ -49,18 +49,7 @@ function Home() {
                         <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
                             <Button text="Study" />
                             <Button text="Flashcards" />
-                            <div>
-                                <input
-                                    type="file"
-                                    accept=".json"
-                                    onChange={handleImport}
-                                    style={{ display: "none" }}
-                                    id="importFile"
-                                />
-                                <label htmlFor="importFile">
-                                    <Button text="Import" />
-                                </label>
-                            </div>
+                            <Button text="Import" onClick={handleImport} />
                             <Button text="Export" onClick={handleExport} />
                             <Button text="Subjects" onClick={() => navigate("/subjects")} />
                             <Button text="About" onClick={() => navigate("/about")} />

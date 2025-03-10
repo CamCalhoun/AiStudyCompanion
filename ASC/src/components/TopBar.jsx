@@ -3,7 +3,7 @@ function TopBar({ title }) {
     return (
         <div className="sticky top-0 z-10">
             {/* White bar */}
-            <div className="p-1 flex h-24 items-center justify-between text-4xl font-semibold">
+            <div className="bg-bgwhite p-1 flex h-24 items-center justify-between text-4xl font-semibold">
                 <h1 className="w-1/3">
                     <span className="text-shadow text-pwblue">AI Study</span>
                     <span className="text-shadow text-pwred"> Companion</span>
