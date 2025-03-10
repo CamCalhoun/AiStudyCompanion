@@ -26,6 +26,11 @@ class User(BaseModel):
     # userName: str
     subjects: Dict[str, Subject] = {}
     
+    def __init__(self, **kwargs):
+        # Start with an empty subjects dictionary
+        super().__init__(**kwargs)
+        self.subjects = {}
+
     def addSubject(self, subject: Subject):
         subject_name = subject.subjectName
         if subject_name not in self.subjects:
@@ -40,7 +45,9 @@ class User(BaseModel):
             print("Subject not found")
 
     def exportSubjects(self):
-        return [subject.model_dump() for subject in self.subjects.values()]
+        exportedData = [subject.model_dump() for subject in self.subjects.values()]
+        self.subjects.clear()
+        return exportedData
 
     def importSubjects(self, data: list[dict]):
             for item in data:
