@@ -28,30 +28,31 @@ export const handleExport = () => {
 
 
 export const handleImport = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
 
     input.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
+        const file = event.target.files[0]
+        if (!file) return
 
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onload = (e) => {
             try {
-                const jsonData = JSON.parse(e.target.result);
-                sessionStorage.setItem("importedSubjects", JSON.stringify(jsonData));
-                alert("Subjects successfully imported!");
+                const jsonData = JSON.parse(e.target.result)
+                sessionStorage.setItem("importedSubjects", JSON.stringify(jsonData))
+                window.dispatchEvent(new Event("subjectsUpdated"))
+                alert("Subjects successfully imported!")
             } catch (error) {
-                console.error("ERROR importing data: ", error);
-                alert("Failed to import subjects.");
+                console.error("ERROR importing data: ", error)
+                alert("Failed to import subjects.")
             }
-        };
-        reader.readAsText(file);
+        }
+        reader.readAsText(file)
 
-        input.remove();
-    });
+        input.remove()
+    })
 
-    input.click();
+    input.click()
 };
 
