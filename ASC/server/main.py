@@ -9,6 +9,8 @@ from SubjectClasses.history_subject import History
 
 from user import User
 
+from typing import List, Dict
+import json
 
 app = FastAPI()
 
@@ -39,4 +41,21 @@ async def hello():
     print("made it to api request")
     return {"message": "Hello from FastAPI!"}
 
+@app.post("/api/add_subject")
+async def add_subject(subjects: list[dict], newSubject: str):
+    user.importSubjects(subjects)
+    match newSubject:
+        case "English":
+            user.addSubject(English())
+        case "Geography":
+            user.addSubject(Geography())
+        case "Computer Science":
+            user.addSubject(ComputerScience())
+        case "History":
+            user.addSubject(History())
+        case _:
+            print("Subject not found")
+
+    updated_subjects = user.exportSubjects()
+    return {"subjects": updated_subjects}
 
