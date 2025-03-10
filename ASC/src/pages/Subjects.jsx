@@ -17,14 +17,16 @@ function About() {
         }
 
         const currentSubjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || []
-        const subjects = Array.isArray(currentSubjects) ? currentSubjects : []
         console.log("Current subjects from sessionStorage:", subjects)
         console.log("New Subject:", newSubject)
 
         try {
-            const response = await axios.post(API_ADD_SUBJECT, {
-                subjects: subjects,
-                newSubject: newSubject,
+            const payload = {
+                subjects: currentSubjects,
+                newSubject: newSubject
+            }
+            const response = await axios.post(API_ADD_SUBJECT, payload, {
+                headers: { "Content-Type": "application/json" }
             })
 
             sessionStorage.setItem("importedSubjects", JSON.stringify(response.data.subjects))
