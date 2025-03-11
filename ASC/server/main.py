@@ -8,7 +8,9 @@ from SubjectClasses.computerScience_subject import ComputerScience
 from SubjectClasses.history_subject import History
 
 from user import User
-
+from pydantic import BaseModel
+from typing import List, Dict
+import json
 
 app = FastAPI()
 
@@ -34,9 +36,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class AddSubjectPayload(BaseModel):
+    subjects: List[Dict]
+    newSubject: str
+
 @app.get("/api/hello")
 async def hello():
     print("made it to api request")
     return {"message": "Hello from FastAPI!"}
 
+@app.post("/api/add_subject")
+async def add_subject(payload: AddSubjectPayload):
+    subjects = payload.subjects
+    newSubject = payload.newSubject
+
+    user.importSubjects(subjects)
+    match newSubject:
+        case "English":
+            user.addSubject(English())
+        case "Geography":
+            user.addSubject(Geography())
+        case "Computer Science":
+            user.addSubject(ComputerScience())
+        case "History":
+            user.addSubject(History())
+        case _:
+            print("Subject not found")
+
+    updated_subjects = user.exportSubjects()
+    return {"subjects": updated_subjects}
 

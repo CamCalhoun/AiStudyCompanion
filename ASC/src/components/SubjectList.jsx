@@ -4,23 +4,30 @@ import Subject from './Subject'
 function SubjectList() {
     const [subjects, setSubjects] = useState([])
 
-    useEffect(() => {
+    const loadSubjects = () => {
         const storedData = sessionStorage.getItem("importedSubjects")
+        setSubjects(storedData ? JSON.parse(storedData) : [])
+    }
 
-        if (storedData) {
-            const parsedData = JSON.parse(storedData)
-            setSubjects(parsedData)
-        } else {
-            console.log("No subjects found in sessionStorage")
-        }
+    useEffect(() => {
+        loadSubjects()
+
+        const handleUpdate = () => loadSubjects()
+
+        window.addEventListener("subjectsUpdated", handleUpdate)
+        return () => window.removeEventListener("subjectsUpdated", handleUpdate)
     }, [])
 
+    const updateSubjects = (updatedSubjects) => {
+        setSubjects(updatedSubjects)
+        sessionStorage.setItem("importedSubjects", JSON.stringify(updatedSubjects))
+    }
     return (
         <div>
             <h2 className="text-3xl text-center font-bold mb-4">Tracked subjects:</h2>
             <div className="bg-blue-100 w-full h-full">
                 {subjects.length > 0 && (
-                    <div className="border-4 border-pwred font-semibold text-4xl flex justify-between p-4">
+                    <div className="border-4 border-pwblue font-bold text-4xl mb-2 flex justify-between p-4">
                         <span className="w-1/3">Subject:</span>
                         <span className="w-1/3 text-center">Ranking</span>
                         <span className="w-1/3 text-right">Delete</span>
