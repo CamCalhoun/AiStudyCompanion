@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Subject from './Subject'
 
-function SubjectList() {
+function SubjectList({ onSubjectSelect }) {
     const [subjects, setSubjects] = useState([])
 
-    const loadSubjects = () => {
-        const storedData = sessionStorage.getItem("importedSubjects")
-        setSubjects(storedData ? JSON.parse(storedData) : [])
-    }
+
 
     useEffect(() => {
+        const loadSubjects = () => {
+            const storedData = sessionStorage.getItem("importedSubjects")
+            setSubjects(storedData ? JSON.parse(storedData) : [])
+        }
+
         loadSubjects()
 
         const handleUpdate = () => loadSubjects()
@@ -18,10 +20,6 @@ function SubjectList() {
         return () => window.removeEventListener("subjectsUpdated", handleUpdate)
     }, [])
 
-    const updateSubjects = (updatedSubjects) => {
-        setSubjects(updatedSubjects)
-        sessionStorage.setItem("importedSubjects", JSON.stringify(updatedSubjects))
-    }
     return (
         <div>
             <h2 className="text-3xl text-center font-bold mb-4">Tracked subjects:</h2>
@@ -41,6 +39,7 @@ function SubjectList() {
                             key={index}
                             name={subject.subjectName}
                             rank={subject.subjectElo}
+                            onCheckboxChange={onSubjectSelect}
                         />
                     ))
                 )}
