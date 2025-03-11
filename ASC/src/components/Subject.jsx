@@ -3,7 +3,7 @@ import '../styles.css'
 function Subject({ name, rank }) {
     return (
         <div>
-            <div className='border-4 border-pwred font-semibold text-4xl flex justify-between
+            <div className='border-4 border-pwred mb-2 font-semibold text-4xl flex justify-between
                             p-4'>
                 <span className='w-1/3'>{name}</span>
                 <span className='w-1/3 text-center'>{rank}</span>
