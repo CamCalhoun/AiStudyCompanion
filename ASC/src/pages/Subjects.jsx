@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import '../styles.css'
 import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
@@ -7,8 +6,26 @@ import SubjectList from '../components/SubjectList.jsx'
 import { API_ADD_SUBJECT } from '../config/api';
 import axios from 'axios';
 
-function About() {
-    const navigate = useNavigate();
+function Subjects() {
+    const [selectedSubjects, setSelectedSubjects] = useState(new Set())
+
+    const handleSubjectSelection = (subjectName, isChecked) => {
+        setSelectedSubjects(prev => {
+            const newSelection = new Set(prev);
+            isChecked ? newSelection.add(subjectName) : newSelection.delete(subjectName);
+            return newSelection;
+        });
+    }
+
+    const handleRemoveSubjects = () => {
+        let subjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || [];
+        subjects = subjects.filter(sub => !selectedSubjects.has(sub.subjectName));
+
+        sessionStorage.setItem("importedSubjects", JSON.stringify(subjects));
+        setSelectedSubjects(new Set()); // Clear selection after removal
+        window.dispatchEvent(new Event("subjectsUpdated"));
+    };
+
 
     const handleAddSubject = async (newSubject) => {
         if (!selectedSubject) {
@@ -17,7 +34,7 @@ function About() {
         }
 
         const currentSubjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || []
-        console.log("Current subjects from sessionStorage:", subjects)
+        console.log("Current subjects from sessionStorage:", currentSubjects)
         console.log("New Subject:", newSubject)
 
         try {
@@ -31,10 +48,13 @@ function About() {
 
             sessionStorage.setItem("importedSubjects", JSON.stringify(response.data.subjects))
             console.log("Subjects updated:", response.data.subjects)
+
+            window.dispatchEvent(new Event("subjectsUpdated"))
         } catch (error) {
             console.error("Error adding subject:", error)
         }
     }
+
 
     const [selectedSubject, setSelectedSubject] = useState("")
     const handleSubjectChange = (event) => {
@@ -48,7 +68,7 @@ function About() {
                 <div>
                     {/* Subjects */}
                     <div className="p-10 max-w-6xl mx-auto">
-                        <SubjectList />
+                        <SubjectList onSubjectSelect={handleSubjectSelection} />
                         {/* Buttons */}
                         <div className="mt-10 grid grid-cols-2 gap-4 items-center ">
                             <div className='flex justify-center items-center'>
@@ -69,7 +89,9 @@ function About() {
                                     </select>
                                 </form>
                             </div>
-                            <Button text="Remove Subject" />
+                            <Button
+                                text="Remove Subject"
+                                onClick={handleRemoveSubjects} />
                         </div>
                     </div>
                 </div>
@@ -78,4 +100,4 @@ function About() {
     );
 }
 
-export default About;
+export default Subjects;
