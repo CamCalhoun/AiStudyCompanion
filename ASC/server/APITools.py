@@ -57,37 +57,40 @@ class Chatbot:
         response_content = response.choices[0].message.content
         
         # Commented out statement for testing raw output
-        print(f"\nRaw Response Content:\n{response_content}")
-
-        # Extract the correct answer using regex
-        match = re.search(r'Answer:\s*([A-D])', response_content)
-        correct_answer = match.group(1) if match else None
-
-        # Remove the answer line for the displayed question
-        displayed_question = re.sub(r'\nAnswer:.*', '', response_content)
-        displayed_question = re.sub(r'\nExplanation:.*', '', displayed_question)
-
-        print(f"\nOpenAI Response:\n{displayed_question}")
-
-        # Extract the answer choices using regex
-        choices = re.findall(r'([A-D])\)\s(.+)', displayed_question)
-
-        # Prompt the user for their answer
-        user_answer = self.get_user_answer(choices)
-        
-        # Extract the explanation in case the user answers wrong, and remove it from the displayed question.
-        explanation_match = re.search(r'Explanation:\s*{\s*(.*?)\s*}', response_content, re.DOTALL)
-        explanation = explanation_match.group(1).strip() if explanation_match else "No explanation provided."
-
-        # Check if the answer is correct
-        if user_answer == correct_answer:
-            print("Correct!")
-        else:
-            print(f"Incorrect! The correct answer was {correct_answer}")
-            print(f"Explanation: {explanation}")
-
+        # print(f"\nRaw Response Content:\n{response_content}")
+        #
+        # # Extract the correct answer using regex
+        # match = re.search(r'Answer:\s*([A-D])', response_content)
+        # correct_answer = match.group(1) if match else None
+        #
+        # # Remove the answer line for the displayed question
+        # displayed_question = re.sub(r'\nAnswer:.*', '', response_content)
+        # displayed_question = re.sub(r'\nExplanation:.*', '', displayed_question)
+        #
+        # print(f"\nOpenAI Response:\n{displayed_question}")
+        #
+        # # Extract the answer choices using regex
+        # choices = re.findall(r'([A-D])\)\s(.+)', displayed_question)
+        #
+        # # Prompt the user for their answer
+        # user_answer = self.get_user_answer(choices)
+        #
+        # # Extract the explanation in case the user answers wrong, and remove it from the displayed question.
+        # explanation_match = re.search(r'Explanation:\s*{\s*(.*?)\s*}', response_content, re.DOTALL)
+        # explanation = explanation_match.group(1).strip() if explanation_match else "No explanation provided."
+        #
+        # # Check if the answer is correct
+        # if user_answer == correct_answer:
+        #     print("Correct!")
+        # else:
+        #     print(f"Incorrect! The correct answer was {correct_answer}")
+        #     print(f"Explanation: {explanation}")
+        #
         # Append response to the context
+
         self.context.append({"role": "assistant", "content": response_content})
+
+        return response_content
 
     def get_user_answer(self, choices):
         valid_responses = {"A", "B", "C", "D"}
