@@ -7,7 +7,7 @@ function NavBar() {
         <div className="bg-pwblue h-16 flex justify-center">
             <div className="flex justify-center gap-1/2 w-full">
                 <NavButton text="Home" onClick={() => navigate("/")} />
-                <NavButton text="Study" />
+                <NavButton text="Study" onClick={() => navigate("/study")} />
                 <NavButton text="Flashcards" />
                 <NavButton text="Subjects" onClick={() => navigate("/subjects")} />
                 <NavButton text="Import" onClick={handleImport} />
