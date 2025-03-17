@@ -11,11 +11,14 @@ from user import User
 from pydantic import BaseModel
 from typing import List, Dict
 import json
+from APITools import Chatbot
+import copy
 
 app = FastAPI()
 
 user = User()
 
+chatbot = Chatbot()
 # user.addSubject(English())
 # user.addSubject(Geography())
 # user.addSubject(ComputerScience())
@@ -40,10 +43,11 @@ class AddSubjectPayload(BaseModel):
     subjects: List[Dict]
     newSubject: str
 
-@app.get("/api/hello")
-async def hello():
-    print("made it to api request")
-    return {"message": "Hello from FastAPI!"}
+class QuestionPayload(BaseModel):
+    subjects: List[Dict]
+    curSubject: str
+    newChat: bool
+
 
 @app.post("/api/add_subject")
 async def add_subject(payload: AddSubjectPayload):
@@ -65,4 +69,49 @@ async def add_subject(payload: AddSubjectPayload):
 
     updated_subjects = user.exportSubjects()
     return {"subjects": updated_subjects}
+
+@app.post("/api/generate_question")
+async def generate_question(payload: QuestionPayload):
+    # Assign values from payload
+    global chatbot
+    subjects = payload.subjects
+    curSubject = payload.curSubject
+    newChat = payload.newChat
+
+    # Store user data in a User object
+    user.importSubjects(subjects)
+    
+    # Store current subject, elo, and set prompt
+    currentSubject = user.subjects[curSubject]
+    currentSubject.updatePrompt()
+
+
+    # If this is a new chat, create a new instance of chatbot
+    # removing context from old chat.
+    if newChat:
+        chatbot = Chatbot()
+
+    response = chatbot.generateQuestion(currentSubject.currentPrompt)
+
+    userIfWrong = copy.deepcopy(user)
+    ifWrongSubject = userIfWrong.subjects[curSubject]
+
+    ifWrongSubject.setSubjectElo(-20)
+    currentSubject.setSubjectElo(20)
+
+    updated_subjects_right = user.exportSubjects()
+    updated_subjects_wrong = userIfWrong.exportSubjects()
+
+    return {
+        "ai_response": response, 
+        "subjects_right": updated_subjects_right, 
+        "subjects_wrong": updated_subjects_wrong, 
+        "newChatState": False 
+    }
+
+@app.get("/api/hello")
+async def hello():
+    print("made it to api request")
+    return {"message": "Hello from FastAPI!"}
+
 

@@ -3,15 +3,26 @@ import { useNavigate } from "react-router-dom";
 import '../styles.css'
 import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
+import axios from 'axios';
+import { API_GENERATE_QUESTION } from '../config/api';
 function Study() {
+    const navigate = useNavigate()
+
     const [selectedSubject, setSelectedSubject] = useState("")
     const handleSubjectChange = (event) => {
         setSelectedSubject(event.target.value);
+        handleNewChatState(true)
     };
+
+    const [newChat, setNewChat] = useState(Boolean)
+    const handleNewChatState = (set) => {
+        setNewChat(set)
+    }
 
     const [subjects, setSubjects] = useState([])
 
-
+    const [question, setQuestion] = useState("")
+    const [answers, setAnswers] = useState([])
 
     useEffect(() => {
         const loadSubjects = () => {
@@ -26,6 +37,73 @@ function Study() {
         window.addEventListener("subjectsUpdated", handleUpdate)
         return () => window.removeEventListener("subjectsUpdated", handleUpdate)
     }, [])
+
+    const handleGenerateQuestion = async (selectedSubject) => {
+        if (!selectedSubject) {
+            console.error("No subject selected!")
+            return
+        }
+
+        const currentSubjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || []
+        try {
+            const payload = {
+                subjects: currentSubjects,
+                curSubject: selectedSubject,
+                newChat: newChat
+
+            }
+            console.log(payload)
+            const response = await axios.post(API_GENERATE_QUESTION, payload, {
+                headers: { "Content-Type": "application/json" }
+            })
+
+            let question = ""
+            let answerChoices = []
+            let correctAnswer = ""
+            let explanation = ""
+
+            console.log("Raw data: ", response.data.ai_response)
+            const ai_response = response.data.ai_response
+
+            const questionRegex = /Question:\s(.*?)(?=\n[A-D])/
+            const answerChoicesRegex = /([A-D]\))(.*?)(?=\n[A-D]|Answer:|Explanation:)/g
+            const correctAnswerRegex = /Answer:\s([A-D])/
+            const explanationRegex = /Explanation:\s\{(.*?)\}/s
+
+            const matchQuestion = ai_response.match(questionRegex)
+            const matchAnswerChoices = [...ai_response.matchAll(answerChoicesRegex)]
+            const matchCorrectAnswer = ai_response.match(correctAnswerRegex)
+            const matchExplanation = ai_response.match(explanationRegex)
+
+            if (matchQuestion) {
+                question = matchQuestion[1].trim();
+            }
+
+            if (matchAnswerChoices) {
+                answerChoices = matchAnswerChoices.map(match => match[0].trim())
+            }
+
+            if (matchCorrectAnswer) {
+                correctAnswer = matchCorrectAnswer[1]
+            }
+
+            if (matchExplanation) {
+                explanation = matchExplanation[1].trim()
+            }
+
+            console.log("Question: ", question)
+            console.log("Answer Choices:", answerChoices)
+            console.log("Correct Answer:", correctAnswer)
+            console.log("Explanation:", explanation)
+
+            handleNewChatState(response.data.newChatState)
+
+        }
+        catch (error) {
+            console.error("Error generating question:", error)
+        }
+
+    }
 
     return (
         <>
@@ -72,25 +150,35 @@ function Study() {
 
                     {/* Footer */}
                     <div className='flex justify-between border-3 p-4 border-pwred rounded-xl items-center'>
-                        <form className='w-1/3 pl-17'>
-                            <label for="subjects" className="block mb-2 text-xl font-semibold text-gray-900">Select a subject:</label>
-                            <select id="subjects"
-                                name="subjects"
-                                className='bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-pwblue focus:border-blue-500 block w-full p-2.5'
-                                onChange={handleSubjectChange}>
-                                <option value="" hidden disabled selected>
-                                    {subjects.length === 0 ? 'Please add a subject in "Subjects".' : "Subjects"}
-                                </option>
-                                {subjects.map((subject, index) => (
-                                    <option key={index} value={subject.subjectName}>
-                                        {subject.subjectName}
+                        {subjects.length === 0 &&
+                            <div className="w-1/3 h-[71.77%] flex justify-center items-center 
+                                        text-shadow text-3xl font-bold text-[#F3F4F6] text-center gap-2">
+                                <Button text="Add a subject." onClick={() => navigate("/subjects")} />
+                            </div>
+                        }
+
+                        {subjects.length !== 0 &&
+                            <form className='w-1/3 pl-17'>
+                                <label for="subjects" className="block mb-2 text-xl font-semibold text-gray-900">Select a subject:</label>
+                                <select id="subjects"
+                                    name="subjects"
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-pwblue focus:border-blue-500 block w-full p-2.5'
+                                    onChange={handleSubjectChange}>
+                                    <option value="" hidden disabled selected>
+                                        {subjects.length === 0 ? 'Please add a subject in "Subjects".' : "Subjects"}
                                     </option>
-                                ))}
-                            </select>
-                        </form>
+                                    {subjects.map((subject, index) => (
+                                        <option key={index} value={subject.subjectName}>
+                                            {subject.subjectName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </form>
+                        }
+
                         <Button
                             text='Generate'
-                            onClick={() => handleGenerateQuestion(selectedSubject)} />
+                            onClick={() => { handleGenerateQuestion(selectedSubject) }} />
                         <div className="w-1/3 h-[71.77%] bg-pwblue rounded-xl shadow-xl flex justify-center items-center 
                                         text-shadow text-4xl font-bold text-[#F3F4F6] text-center">
                             {subjects.length === 0 ? (
