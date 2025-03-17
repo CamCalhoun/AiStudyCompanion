@@ -39,28 +39,41 @@ function Home() {
 
     return (
         <>
-            {/* Full Page Layout */}
-            <div className="grid grid-rows-[auto_1fr] min-h-screen">
-                <TopBar title={`${loading ? (delayed ? "Server is waking up... Please wait." : "Loading...") : message}`} />
-                {/* Buttons + Card */}
-                <div className="my-25 grid grid-cols-[53.75%_46.25%]">
-                    {/* Buttons */}
-                    <div className="flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
-                            <Button text="Study" onClick={() => navigate("/study")} />
-                            <Button text="Flashcards" />
-                            <Button text="Import" onClick={handleImport} />
-                            <Button text="Export" onClick={handleExport} />
-                            <Button text="Subjects" onClick={() => navigate("/subjects")} />
-                            <Button text="About" onClick={() => navigate("/about")} />
+            {loading &&
+                <div className="flex flex-col justify-center items-center text-center min-h-screen">
+                    <h1 className="text-pwblue text-6xl font-semibold py-10">ASC is loading, please wait</h1>
+                    <div class="col-3">
+                        <div class="snippet" data-title="dot-flashing">
+                            <div class="stage">
+                                <div class="dot-flashing"></div>
+                            </div>
                         </div>
                     </div>
-                    {/* Card */}
-                    <div className='flex items-center justify-center'>
-                        <Card text="Make a selection on the left to begin!" />
+                </div>}
+            {/* Full Page Layout */}
+            {!loading &&
+                <div className="grid grid-rows-[auto_1fr] min-h-screen">
+                    <TopBar title={`${loading ? (delayed ? "Server is waking up... Please wait." : "Loading...") : message}`} />
+                    {/* Buttons + Card */}
+                    <div className="my-25 grid grid-cols-[53.75%_46.25%]">
+                        {/* Buttons */}
+                        <div className="flex items-center justify-center">
+                            <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
+                                <Button text="Study" onClick={() => navigate("/study")} />
+                                <Button text="Flashcards" />
+                                <Button text="Import" onClick={handleImport} />
+                                <Button text="Export" onClick={handleExport} />
+                                <Button text="Subjects" onClick={() => navigate("/subjects")} />
+                                <Button text="About" onClick={() => navigate("/about")} />
+                            </div>
+                        </div>
+                        {/* Card */}
+                        <div className='flex items-center justify-center'>
+                            <Card text="Make a selection on the left to begin!" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </>
     )
 }

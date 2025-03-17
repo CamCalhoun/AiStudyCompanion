@@ -38,20 +38,20 @@ function Study() {
                     <div className="flex justify-center items-center">
                         <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center ">
                             <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] w-1/2 text-center">
-                                Question: Which event is considered the immediate cause of World War I?
+                                Question: This is an example question. Questions generated will go here.
                             </h1>
                             <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-1/2">
                                 <h1 className="py-1">
-                                    A) The Treaty of Versailles
+                                    A) Example answer choice A.
                                 </h1>
                                 <h1 className="py-1">
-                                    B) The assassination of Archduke Franz Ferdinand
+                                    B) Example answer choice B.
                                 </h1>
                                 <h1 className="py-1">
-                                    C) The rise of Adolf Hitler
+                                    C) Example Answer choice C.
                                 </h1>
                                 <h1 className="py-1">
-                                    D) The signing of the Molotov-Ribbentrop Pact
+                                    D) Example Answer choice D.
                                 </h1>
                             </div>
                         </div>
