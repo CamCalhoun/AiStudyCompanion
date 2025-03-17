@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Subjects from "./pages/Subjects";
 import Progress from "./pages/Progress"
+import Study from "./pages/Study";
 function App() {
     return (
         <Router>
@@ -11,6 +12,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/subjects" element={<Subjects />} />
                 <Route path="/progress" element={<Progress />} />
+                <Route path="/study" element={<Study />} />
             </Routes>
         </Router>
     )
