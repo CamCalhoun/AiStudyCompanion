@@ -19,6 +19,8 @@ function Study() {
         setNewChat(set)
     }
 
+    const [loading, setLoading] = useState(false)
+
     const [subjects, setSubjects] = useState([])
 
     const [question, setQuestion] = useState("")
@@ -73,6 +75,7 @@ function Study() {
 
         const currentSubjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || []
         try {
+            setLoading(true)
             const payload = {
                 subjects: currentSubjects,
                 curSubject: selectedSubject,
@@ -133,6 +136,7 @@ function Study() {
             setExplanation(explanation)
             setSubjectsRight(response.data.subjects_right)
             setSubjectsWrong(response.data.subjects_wrong)
+            setLoading(false)
         }
         catch (error) {
             console.error("Error generating question:", error)
@@ -243,6 +247,18 @@ function Study() {
                             )}
                         </div>
                     </div>
+                    {loading &&
+                        <div className='flex flex-col justify-center items-center pt-8'>
+                            <h1 className="text-pwblue text-6xl font-semibold py-10">Generating question</h1>
+                            <div className="col-3">
+                                <div className="snippet" data-title="dot-flashing">
+                                    <div className="stage">
+                                        <div className="dot-flashing"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </>
