@@ -72,14 +72,21 @@ function Subjects() {
                     {/* Subjects */}
                     <div className="p-10 max-w-6xl mx-auto">
                         <SubjectList onSubjectSelect={handleSubjectSelection} key={forceUpdate} />
-                        {/* Buttons */}
-                        <div className="mt-10 grid grid-cols-2 gap-4 items-center ">
-                            <div className='flex justify-center items-center'>
-                                <Button text="Add Subject"
-                                    className="w-1/2"
-                                    onClick={() => handleAddSubject(selectedSubject)} />
-                                <form className='max-w-sm mx-auto pl-17'>
-                                    <label for="subjects" className="block mb-2 text-xl font-semibold text-gray-900">Select a subject:</label>
+                        {/* REMOVE BUTTON */}
+                        <div className='h-12 w-1/5 ml-auto '>
+                            {selectedSubjects.size !== 0 &&
+                                <Button
+                                    text="Remove Subject"
+                                    onClick={handleRemoveSubjects}
+                                    className="" />
+                            }
+                        </div>
+                        {/* ADD BUTTON & LIST */}
+                        <div className="w-1/3 mt-10 flex justify-end relative -translate-y-23 translate-x-69 z-0">
+                            <div className=''>
+
+                                <form className='max-w-sm mx-auto '>
+                                    <label for="subjects" className=" text-center block mb-2 text-xl font-semibold text-gray-900">Add a subject:</label>
                                     <select id="subjects"
                                         name="subjects"
                                         className='bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-pwblue focus:border-blue-500 block w-full p-2.5'
@@ -91,10 +98,12 @@ function Subjects() {
                                         <option value="Computer Science">Computer Science</option>
                                     </select>
                                 </form>
+                                <div className='h-1/3 z-10 mt-2'>
+                                    <Button text="Add Subject"
+                                        className="mx-auto "
+                                        onClick={() => handleAddSubject(selectedSubject)} />
+                                </div>
                             </div>
-                            <Button
-                                text="Remove Subject"
-                                onClick={handleRemoveSubjects} />
                         </div>
                     </div>
                 </div>
