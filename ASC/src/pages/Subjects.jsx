@@ -20,9 +20,10 @@ function Subjects() {
     const handleRemoveSubjects = () => {
         let subjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || [];
         subjects = subjects.filter(sub => !selectedSubjects.has(sub.subjectName));
-
-        sessionStorage.setItem("importedSubjects", JSON.stringify(subjects));
+        
         setSelectedSubjects(new Set()); // Clear selection after removal
+        sessionStorage.setItem("importedSubjects", JSON.stringify(subjects));
+        
         window.dispatchEvent(new Event("subjectsUpdated"));
     };
 
