@@ -17,13 +17,15 @@ function Subjects() {
         });
     }
 
+    const [forceUpdate, setForceUpdate] = useState(false)
     const handleRemoveSubjects = () => {
         let subjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || [];
         subjects = subjects.filter(sub => !selectedSubjects.has(sub.subjectName));
-        
-        setSelectedSubjects(new Set()); // Clear selection after removal
+
         sessionStorage.setItem("importedSubjects", JSON.stringify(subjects));
-        
+        setSelectedSubjects(new Set()); // Clear selection after removal
+
+        setForceUpdate(prev => !prev)
         window.dispatchEvent(new Event("subjectsUpdated"));
     };
 
@@ -69,7 +71,7 @@ function Subjects() {
                 <div>
                     {/* Subjects */}
                     <div className="p-10 max-w-6xl mx-auto">
-                        <SubjectList onSubjectSelect={handleSubjectSelection} />
+                        <SubjectList onSubjectSelect={handleSubjectSelection} key={forceUpdate} />
                         {/* Buttons */}
                         <div className="mt-10 grid grid-cols-2 gap-4 items-center ">
                             <div className='flex justify-center items-center'>
