@@ -22,7 +22,12 @@ function Study() {
     const [subjects, setSubjects] = useState([])
 
     const [question, setQuestion] = useState("")
-    const [answers, setAnswers] = useState([])
+    const [answerChoices, setAnswerChoices] = useState([])
+    const [answerSelection, setAnswerSelection] = useState("")
+    const [correctAnswer, setCorrectAnswer] = useState("")
+    const [explanation, setExplanation] = useState("")
+    const [subjectsRight, setSubjectsRight] = useState([])
+    const [subjectsWrong, setSubjectsWrong] = useState([])
 
     useEffect(() => {
         const loadSubjects = () => {
@@ -38,11 +43,33 @@ function Study() {
         return () => window.removeEventListener("subjectsUpdated", handleUpdate)
     }, [])
 
+    useEffect(() => {
+        if (answerSelection != "") {
+            console.log("MADE IT TO USE EFFECT")
+            console.log("ANSWER SELECTION: ", answerSelection)
+            console.log("Correct Answer: ", correctAnswer)
+
+            if (answerSelection == correctAnswer) {
+                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsRight))
+            } else {
+                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsWrong))
+            }
+            window.dispatchEvent(new Event("subjectsUpdated"))
+        }
+    }, [answerSelection])
+
     const handleGenerateQuestion = async (selectedSubject) => {
         if (!selectedSubject) {
             console.error("No subject selected!")
             return
         }
+        setAnswerSelection("")
+        setQuestion("")
+        setAnswerChoices([])
+        setCorrectAnswer("")
+        setExplanation("")
+        setSubjectsRight([])
+        setSubjectsWrong([])
 
         const currentSubjects = JSON.parse(sessionStorage.getItem("importedSubjects")) || []
         try {
@@ -65,8 +92,10 @@ function Study() {
             console.log("Raw data: ", response.data.ai_response)
             const ai_response = response.data.ai_response
 
-            const questionRegex = /Question:\s(.*?)(?=\n[A-D])/
-            const answerChoicesRegex = /([A-D]\))(.*?)(?=\n[A-D]|Answer:|Explanation:)/g
+            const questionRegex = /^Question:\s(.+)/m;
+
+            const answerChoicesRegex = /([A-D])\)\s(.+)/g
+
             const correctAnswerRegex = /Answer:\s([A-D])/
             const explanationRegex = /Explanation:\s\{(.*?)\}/s
 
@@ -98,6 +127,12 @@ function Study() {
 
             handleNewChatState(response.data.newChatState)
 
+            setQuestion(question)
+            setAnswerChoices(answerChoices)
+            setCorrectAnswer(correctAnswer)
+            setExplanation(explanation)
+            setSubjectsRight(response.data.subjects_right)
+            setSubjectsWrong(response.data.subjects_wrong)
         }
         catch (error) {
             console.error("Error generating question:", error)
@@ -108,45 +143,55 @@ function Study() {
     return (
         <>
             {/* Full Page Layout */}
-            <div className="grid grid-rows-[auto_1fr_] min-h-screen">
+            <div className="grid grid-rows-[auto_1fr] min-h-screen">
                 <TopBar title="Study" />
-                <div className="flex flex-col p-4">
+                <div className="flex flex-col p-4 ">
 
                     {/* Question */}
-                    <div className="flex justify-center items-center">
-                        <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center ">
-                            <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] w-1/2 text-center">
-                                Question: This is an example question. Questions generated will go here.
-                            </h1>
-                            <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-1/2">
-                                <h1 className="py-1">
-                                    A) Example answer choice A.
-                                </h1>
-                                <h1 className="py-1">
-                                    B) Example answer choice B.
-                                </h1>
-                                <h1 className="py-1">
-                                    C) Example Answer choice C.
-                                </h1>
-                                <h1 className="py-1">
-                                    D) Example Answer choice D.
-                                </h1>
+                    {question && !answerSelection &&
+                        <div className="flex justify-center items-center">
+                            <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center justify-center gap-8 ">
+                                <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6]  w-1/2 text-center">{question}</h1>
+                                <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-1/2 text-left">
+                                    <h1 className="py-1">
+                                        {answerChoices[0]}
+                                    </h1>
+                                    <h1 className="py-1">
+                                        {answerChoices[1]}
+                                    </h1>
+                                    <h1 className="py-1">
+                                        {answerChoices[2]}
+                                    </h1>
+                                    <h1 className="py-1">
+                                        {answerChoices[3]}
+                                    </h1>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>}
+
+                    {answerSelection && explanation &&
+                        <div className="flex justify-center items-center p-12">
+                            <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex flex-col items-center justify-center gap-8 ">
+                                <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] text-center">{answerSelection == correctAnswer ? 'Correct!' : 'Incorrect.'}</h1>
+                                <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6] text-center">{explanation}</h1>
+                            </div>
+
+                        </div>}
 
                     {/* Answer choices */}
-                    <div className='border-3 border-pwred rounded-xl p-12 flex justify-between items-center w-3/5 m-auto'>
-                        <div className="flex flex-col gap-10">
-                            <Button text="A" />
-                            <Button text="C" />
+                    {answerChoices.length !== 0 && !answerSelection &&
+                        <div className='border-3 border-pwred rounded-xl p-12 flex justify-between items-center w-3/5 m-auto'>
+                            <div className="flex flex-col gap-10">
+                                <Button text="A" onClick={() => setAnswerSelection("A")} />
+                                <Button text="C" onClick={() => setAnswerSelection("C")} />
+                            </div>
+                            <div className="flex flex-col gap-10">
+                                <Button text="B" onClick={() => setAnswerSelection("B")} />
+                                <Button text="D" onClick={() => setAnswerSelection("D")} />
+                            </div>
                         </div>
-                        <div className="flex flex-col gap-10">
-                            <Button text="B" />
-                            <Button text="D" />
-                        </div>
-                    </div>
+                    }
 
                     {/* Footer */}
                     <div className='flex justify-between border-3 p-4 border-pwred rounded-xl items-center'>
