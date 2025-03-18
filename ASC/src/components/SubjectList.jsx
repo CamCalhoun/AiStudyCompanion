@@ -23,7 +23,7 @@ function SubjectList({ onSubjectSelect }) {
     return (
         <div>
             <h2 className="text-3xl text-center font-bold mb-4">Tracked subjects:</h2>
-            <div className="bg-blue-100 w-full h-full">
+            <div className={`${subjects.length > 0 && `bg-blue-100`} w-full h-full`}>
                 {subjects.length > 0 && (
                     <div className="border-4 border-pwblue font-bold text-4xl mb-2 flex justify-between p-4">
                         <span className="w-1/3">Subject:</span>
