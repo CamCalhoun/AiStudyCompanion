@@ -1,5 +1,5 @@
 const articles = {
-  about: `
+    about: `
   <div class="article-typography">
   <h1>About ASC</h1>
   <h2>What is ASC?</h2>
@@ -18,7 +18,7 @@ const articles = {
     </ul>
     <p>All members are students of Pennsylvania Western University studying Computer Science.</p>
   <h2>Gantt Chart</h2>
-    <h3>Updated 2/18/25</h3>
+    <h3>Updated 3/19/25</h3>
     
 <iframe 
   class="w-full h-[1000px] max-w-screen-lg mx-auto rounded-lg shadow-lg"
@@ -26,14 +26,14 @@ const articles = {
   title="Gantt Chart - Senior Project"
 ></iframe></div>
     `,
-  week1: `
+    week1: `
   <div class="article-typography">
   <h1>Week 1</h1>
   <h2>Summary:</h2>
     <p>Week 1 was entirely lectures, and thus no report was completed. Reports begin in week 2.</p>
 </div>
   `,
-  week2: `
+    week2: `
   <div class="article-typography">
   <h1>Week 2</h1>
   <h2>Summary:</h2>
@@ -67,7 +67,7 @@ const articles = {
     </ul>
   </div>
   `,
-  week3: `
+    week3: `
   <div class="article-typography">
   <h1>Week 3</h1>
   <h2>Summary:</h2>
@@ -102,7 +102,7 @@ const articles = {
     </ul>
   </div>
   `,
-  week4: `
+    week4: `
   <div class="article-typography">
   
   <h1>Week 4</h1>
@@ -136,7 +136,7 @@ const articles = {
     </ul>
 </div>
   `,
-  week5: `
+    week5: `
   <div class="article-typography">
   <h1>Week 5</h1>
   <h2>Summary:</h2>
@@ -171,7 +171,7 @@ const articles = {
     </ul>
   </div>
   `,
-  week6: `
+    week6: `
   <div class="article-typography">
   <h1>Week 6</h1>
   <h2>Summary:</h2>
@@ -197,12 +197,125 @@ const articles = {
     <ul>
       <li>Cameron Calhoun - Separated the logic and AI, Created frontend design, reorganized prompts, contributed to math subject class</li>
       <li>Gage Keslar - Weekly Report, PowerPoint presentation</li>
-      <li>Seth Morgan - Contributed to math subejct class</li>
+      <li>Seth Morgan - Contributed to math subject class</li>
       <li>Jonathan Buckel - Communicated some ideas, Sympy research</li>
     </ul>
 
   </div>
-  `
+  `,
+    week7: `
+  <div class="article-typography">
+  <h1>Week 7</h1>
+  <h2>Summary:</h2>
+    <p>This week had focus on further backend improvements including, separating user input and AI, fixing our prompts to limit token usage / more concise questions and answer options, improving our math subject class, and beginning our front end design. The user will now no longer be able to put answers no longer pertaining to the question. Instead they are limited to the labeled options. The subject class no longer sends a prompt with formatting instructions, subject, and skill level. All the subject needs to do is send the subject and skill level and OpenAI will generate the question. Our math class only generates the questions and tools implemented will ensure a correct answer. Finally, the construction of our front end has started. The main menu and subject menu has been designed but lack complete functionality as of right now.</p>
+  <h2>What was Accomplished:</h2>
+    <ul>
+      <li>Frontend Development</li>
+      <li>Hosting Frontend and Backend</li>
+      <li>Created Frontend / Backend interactivity</li>
+      <li>Changes to Math Subject class</li>
+      <li>Sympy</li>
+    </ul>
+  <h2>Problems Encountered:</h2>
+    <ul>
+      <li>Hosting Frontend / Backend</li>
+    </ul>
+  <h2>Plans to Overcome Problems:</h2>
+    <p>We always planned to keep OpenAI from answering math questions. This was due to the fact that ChatGPT has always had unreliable answers to math questions. Using sympy, we can have ChatGPT make the questions and then create the answers using that tool.</p>
+  <h2>Plans for this Week:</h2>
+    <ul>
+      <li>Continued work on Frontend</li>
+      <li>Creating APIs between front and backend</li>
+    </ul>
+  <h2>Member Contributions:</h2>
+    <ul>
+      <li>Cameron Calhoun - Creating frontend, Backend/Frontend Interactivity, Hosting platforms, PowerPoint presentation.</li>
+      <li>Gage Keslar - Communicated some ideas, weekly report</li>
+      <li>Seth Morgan - Further backend development</li>
+      <li>Jonathan Buckel - Further backend development, Sympy</li>
+    </ul>
+
+  </div>
+  `,
+    week8: `
+  <div class="article-typography">
+  <h1>Week 8</h1>
+  <h2>Summary:</h2>
+    <p>Week 8 was spring break, and thus there was no report. The work for week 8 will be included in week 9's report.</p>
+</div>
+  `,
+    week9: `
+  <div class="article-typography">
+  <h1>Week 9</h1>
+  <h2>Summary:</h2>
+    <p>The past two weeks were focused on fleshing out the front ends functionality. We began with redesigning the front end from our prototype, to a more finalized design that fits more modern user interface conventions, such as a smaller top bar, and a navigation bar for one click navigation to any page on the website. This design is substantially more user friendly, and easier to navigate when new to the website. A NavBar component was created and used in the program. Additionally, the Import and Export features were fully fleshed out in the program. This data is stored in a session, and is created in the back end using the User class defined earlier in the project. This will allow users to save their data for future uses of the program. Additionally, the Subjects page, Add Subject, and Remove Subject features have all been added and completed. This allows the users to visually track the progress of their subjects, add new subjects, and remove subjects from their tracking. These are obviously integral features, and having them up and running allows for very easy testing of the next phases of the program. Additionally, further work was done to the Math child class to smoothly implement into the program when it is complete</p>
+  <h2>What was Accomplished:</h2>
+    <ul>
+      <li>Frontend redesigned</li>
+      <li>Nav Bar created</li>
+      <li>Subjects Page created</li>
+      <li>Import feature added</li>
+      <li>Export feature added</li>
+      <li>Add subject feature added</li>
+      <li>Remove subject feature added</li>
+      <li>Math subject tidying</li>
+    </ul>
+  <h2>Problems Encountered:</h2>
+    <ul>
+      <li>Storage of User data</li>
+      <li>Obtuse front end design</li>
+    </ul>
+  <h2>Plans to Overcome Problems:</h2>
+    <p>We always planned to keep OpenAI from answering math questions. This was due to the fact that ChatGPT has always had unreliable answers to math questions. Using sympy, we can have ChatGPT make the questions and then create the answers using that tool.</p>
+  <h2>Plans for this Week:</h2>
+    <ul>
+      <li>Begin Study section</li>
+    </ul>
+  <h2>Member Contributions:</h2>
+    <ul>
+      <li>Cameron Calhoun - Weekly Report, Presentation, NavBar, front end redesign, Import/Export, Subjects page, Add/Remove Subject</li>
+      <li>Gage Keslar - Further tested Math class</li>
+      <li>Seth Morgan - Further tested Math class</li>
+      <li>Jonathan Buckel - Further tested Math class</li>
+    </ul>
+
+  </div>
+  `,
+    week10: `
+  <div class="article-typography">
+  <h1>Week 10</h1>
+  <h2>Summary:</h2>
+    <p>With this week, our focus was directed towards the study page. With this page being implemented, the question and answer communication demonstrated in our class demos from weeks prior is now online, and usable through the website. This is a massive chunk of our program, and the main deliverable which was promised in our design documents, and is thus something to be celebrated for coming online. Most of the work was done in creating the class demos in weeks prior, so all that really needed to be done was translating it to this client server call and response functionality. Additionally, some quality of life changes were added to the website. A loading page was added to the websites landing page such that when the client is connecting to the API, they cannot make requests to it until it has already connected. The subjects page was also cleaned up after feedback from last week to hopefully improve clarity of use for users.</p>
+  <h2>What was Accomplished:</h2>
+    <ul>
+      <li>Study page created</li>
+      <li>Study page functionality implemented</li>
+      <li>Loading screen added</li>
+      <li>Subjects page tidied up</li>
+    </ul>
+  <h2>Problems Encountered:</h2>
+    <ul>
+      <li>Testing of question generation, and overall website testing</li>
+    </ul>
+  <h2>Plans to Overcome Problems:</h2>
+    <p>We always planned to keep OpenAI from answering math questions. This was due to the fact that ChatGPT has always had unreliable answers to math questions. Using sympy, we can have ChatGPT make the questions and then create the answers using that tool.</p>
+  <h2>Plans for this Week:</h2>
+    <ul>
+      <li>Test website</li>
+      <li>Play with breakpoints / prompts / points gained / points lost values</li>
+      <li>Begin Flashcards</li>
+    </ul>
+  <h2>Member Contributions:</h2>
+    <ul>
+      <li>Cameron Calhoun - Weekly Report, Presentation, loading screen, study page, study page functionality, subject page redesign</li>
+      <li>Gage Keslar - Further tested Math class</li>
+      <li>Seth Morgan - Further tested Math class</li>
+      <li>Jonathan Buckel - Further tested Math class</li>
+    </ul>
+
+  </div>
+  `,
+
 }
 
 export default articles
