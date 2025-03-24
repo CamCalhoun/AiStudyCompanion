@@ -4,6 +4,7 @@ import About from "./pages/About";
 import Subjects from "./pages/Subjects";
 import Progress from "./pages/Progress"
 import Study from "./pages/Study";
+import Flashcards from "./pages/Flashcards"
 function App() {
     return (
         <Router>
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/subjects" element={<Subjects />} />
                 <Route path="/progress" element={<Progress />} />
                 <Route path="/study" element={<Study />} />
+                <Route path="/flashcards" element={<Flashcards />} />
             </Routes>
         </Router>
     )

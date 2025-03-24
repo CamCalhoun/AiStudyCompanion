@@ -8,7 +8,7 @@ function NavBar() {
             <div className="flex justify-center gap-1/2 w-full">
                 <NavButton text="Home" onClick={() => navigate("/")} />
                 <NavButton text="Study" onClick={() => navigate("/study")} />
-                <NavButton text="Flashcards" />
+                <NavButton text="Flashcards" onClick={() => navigate("/flashcards")} />
                 <NavButton text="Subjects" onClick={() => navigate("/subjects")} />
                 <NavButton text="Import" onClick={handleImport} />
                 <NavButton text="Export" onClick={handleExport} />
