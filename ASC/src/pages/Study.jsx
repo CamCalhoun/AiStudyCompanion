@@ -9,10 +9,25 @@ function Study() {
     const navigate = useNavigate()
 
     const answerToNumKey = { "A": 0, "B": 1, "C": 2, "D": 3 }
+    const [question, setQuestion] = useState("")
+    const [answerChoices, setAnswerChoices] = useState([])
+    const [answerSelection, setAnswerSelection] = useState("")
+    const [correctAnswer, setCorrectAnswer] = useState("")
+    const [explanation, setExplanation] = useState("")
+    const [subjectsRight, setSubjectsRight] = useState([])
+    const [subjectsWrong, setSubjectsWrong] = useState([])
+
 
     const [selectedSubject, setSelectedSubject] = useState("")
     const handleSubjectChange = (event) => {
         setSelectedSubject(event.target.value);
+        setAnswerSelection("")
+        setQuestion("")
+        setAnswerChoices([])
+        setCorrectAnswer("")
+        setExplanation("")
+        setSubjectsRight([])
+        setSubjectsWrong([])
         handleNewChatState(true)
     };
 
@@ -24,14 +39,6 @@ function Study() {
     const [loading, setLoading] = useState(false)
 
     const [subjects, setSubjects] = useState([])
-
-    const [question, setQuestion] = useState("")
-    const [answerChoices, setAnswerChoices] = useState([])
-    const [answerSelection, setAnswerSelection] = useState("")
-    const [correctAnswer, setCorrectAnswer] = useState("")
-    const [explanation, setExplanation] = useState("")
-    const [subjectsRight, setSubjectsRight] = useState([])
-    const [subjectsWrong, setSubjectsWrong] = useState([])
 
     useEffect(() => {
         const loadSubjects = () => {

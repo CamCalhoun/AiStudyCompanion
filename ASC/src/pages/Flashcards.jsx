@@ -17,12 +17,12 @@ function Flashcards() {
 
     const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0)
     const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0)
-    const [questionDisplayed, setQuestionDisplayed] = useState(Boolean)
+    const [answerDisplayed, setAnswerDisplayed] = useState(Boolean)
     const handleQuestionDisplayedState = () => {
-        if (questionDisplayed == false) {
-            setQuestionDisplayed(true)
+        if (answerDisplayed == false) {
+            setAnswerDisplayed(true)
         } else {
-            setQuestionDisplayed(false)
+            setAnswerDisplayed(false)
         }
     }
 
@@ -33,11 +33,13 @@ function Flashcards() {
 
 
     const prevSubject = () => {
+        if (answerDisplayed) { handleQuestionDisplayedState() }
         setCurrentSubjectIndex((prev) => (prev > 0 ? prev - 1 : subjects.length - 1));
         setCurrentFlashcardIndex(0)
     }
 
     const nextSubject = () => {
+        if (answerDisplayed) { handleQuestionDisplayedState() }
         setCurrentSubjectIndex((prev) => (prev < subjects.length - 1 ? prev + 1 : 0));
         setCurrentFlashcardIndex(0)
     }
@@ -45,11 +47,11 @@ function Flashcards() {
     const prevFlashcard = () => {
         const subject = subjects[currentSubjectIndex]
         setCurrentFlashcardIndex((prev) => (prev > 0 ? prev - 1 : flashcards[subject].length - 1))
-        if (!questionDisplayed) { handleQuestionDisplayedState() }
+        if (answerDisplayed) { handleQuestionDisplayedState() }
     };
 
     const nextFlashcard = () => {
-        if (!questionDisplayed) { handleQuestionDisplayedState() }
+        if (answerDisplayed) { handleQuestionDisplayedState() }
         const subject = subjects[currentSubjectIndex];
         setCurrentFlashcardIndex((prev) => (prev < flashcards[subject].length - 1 ? prev + 1 : 0));
     };
@@ -72,7 +74,7 @@ function Flashcards() {
             }
         }
 
-        if (!questionDisplayed) { handleQuestionDisplayedState() }
+        if (answerDisplayed) { handleQuestionDisplayedState() }
         setFlashcards(updatedFlashcards)
         sessionStorage.setItem("flashcards", JSON.stringify(updatedFlashcards))
     }
@@ -116,7 +118,7 @@ function Flashcards() {
                                     <div className="w-full p-5 border-3 border-pwred bg-pwblue text-[#F3F4F6] rounded-xl shadow-xl flex items-center justify-center gap-8
                                         hover:bg-[#0055a4] hover:border-[#ff4a3d] hover:text-[#ffffff] min-h-[200px] min-w-[700px]"
                                         onClick={handleQuestionDisplayedState}>
-                                        {questionDisplayed && (
+                                        {!answerDisplayed && (
                                             <>
                                                 <h1 className="text-shadow text-4xl font-bold  w-1/2 text-center">{currentFlashcard.question}</h1>
                                                 <div className="text-shadow text-2xl font-bold w-1/2 text-left">
@@ -134,7 +136,7 @@ function Flashcards() {
                                                     </h1>
                                                 </div>
                                             </>)}
-                                        {!questionDisplayed && (
+                                        {answerDisplayed && (
                                             <h1 className="text-shadow text-4xl font-bold  w-1/2 text-center">{currentFlashcard.answer}</h1>
                                         )}
                                     </div>
