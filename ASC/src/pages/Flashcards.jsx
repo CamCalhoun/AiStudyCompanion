@@ -5,7 +5,6 @@ import TopBar from '../components/TopBar.jsx'
 import SubjectList from '../components/SubjectList.jsx'
 import { API_ADD_SUBJECT } from '../config/api';
 import axios from 'axios';
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Icons for navigation
 
 
 function Flashcards() {
@@ -20,10 +19,12 @@ function Flashcards() {
 
     const prevCategory = () => {
         setCurrentCategoryIndex((prev) => (prev > 0 ? prev - 1 : categories.length - 1));
+        setCurrentFlashcardIndex(0)
     }
 
     const nextCategory = () => {
         setCurrentCategoryIndex((prev) => (prev < categories.length - 1 ? prev + 1 : 0));
+        setCurrentFlashcardIndex(0)
     }
 
     const prevFlashcard = () => {
