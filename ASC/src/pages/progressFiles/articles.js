@@ -18,7 +18,7 @@ const articles = {
     </ul>
     <p>All members are students of Pennsylvania Western University studying Computer Science.</p>
   <h2>Gantt Chart</h2>
-    <h3>Updated 3/19/25</h3>
+    <h3>Updated 3/26/25</h3>
     
 <iframe 
   class="w-full h-[1000px] max-w-screen-lg mx-auto rounded-lg shadow-lg"
@@ -311,6 +311,40 @@ const articles = {
       <li>Gage Keslar - Further tested Math class</li>
       <li>Seth Morgan - Further tested Math class</li>
       <li>Jonathan Buckel - Further tested Math class</li>
+    </ul>
+
+  </div>
+  `,
+    week11: `
+  <div class="article-typography">
+  <h1>Week 11</h1>
+  <h2>Summary:</h2>
+    <p>This week, a few main goals were accomplished. To begin, part of the flashcards page was created. Users can now save questions generated in Study to a flashcard. These flashcards are stored in their saved data, and can be accessed in Flashcards. These flashcards are grouped by subject, and allow the user to go back and review questions they specifically chose to save. This is not exactly fitting our design document, but we believe it to be a substantially more valuable addition to the program. The legacy flashcards feature will be added next week. Additionally, the subjects prompts were tweaked to allow for more engaging levels of difficulty. Computer Science benefits the most from this, given its wide range of topics. Finally, some more work for Math was completed. Math will have the AI generate the expressions in a format that can be displayed in markdown, and sent to sympy to be solved / verified. All in all, a majority of the website is completed at this point. The remaining time will be dedicated to implementing math, implementing the legacy flashcards feature, and further tweaking of AI prompting.</p>
+  <h2>What was Accomplished:</h2>
+    <ul>
+      <li>Flashcards created</li>
+      <li>Subjects further tweaked</li>
+      <li>Math further troubleshooted</li>
+    </ul>
+  <h2>Problems Encountered:</h2>
+    <ul>
+      <li>How to display math problems</li>
+    </ul>
+  <h2>Plans to Overcome Problems:</h2>
+    <p>Math problems are a little unique, and must be displayed a certain way due to their use of symbols. We will be working around this by displaying a markdown renderer on the web page, and placing the math expressions inside of it.</p>
+  <h2>Plans for this Week:</h2>
+    <ul>
+      <li>Further test website</li>
+      <li>Play more with breakpoints / prompts / points gained / points lost values</li>
+      <li>Create legacy Flashcards</li>
+      <li>Get Math online</li>
+    </ul>
+  <h2>Member Contributions:</h2>
+    <ul>
+      <li>Cameron Calhoun - Weekly Report, Presentation, Flashcards, Math, bug-fixing, prompt engineering.</li>
+      <li>Gage Keslar - Further tested Math class</li>
+      <li>Seth Morgan - Further tested Math class</li>
+      <li>Jonathan Buckel - Further tested Math class, experimented with markdown</li>
     </ul>
 
   </div>
