@@ -20,7 +20,7 @@ currentSubject = testUser.subjects["English"]
 #client between open AI and user
 sillybot = Chatbot()
 #currentElo set by user
-currentElo = currentSubject.subjectElo
+currentElo = currentSubject.getSubjectElo()
 #demo user class object
 #demoUser = User()
 
@@ -41,7 +41,7 @@ print("------------------------------")
 while not quit:
 
     #menu options
-    print("\nCurrent subject: "+currentSubject.subjectName+"\n")
+    print("\nCurrent subject: " + currentSubject.getSubjectName() + "\n")
     print("\nSet Subject: 1\nSet Elo: 2\nPrint Current Prompt: 3\nStart Demo: 4\nQuit = 5\n")
     menuChoice = int(input("User: "))
 
@@ -73,7 +73,9 @@ while not quit:
     elif (menuChoice == 4):
         print("Enter q to quit")
         while True:
-            sillybot.generateQuestion(currentSubject.currentPrompt)
+            response = sillybot.generateQuestion(currentSubject.currentPrompt)
+
+            print(response)
              
             user_input = input("Generate another question? (Enter to continue, 'q' to quit): ").strip().upper()
             if user_input == 'Q':
