@@ -77,7 +77,8 @@ async def generate_question(payload: QuestionPayload):
     subjects = payload.subjects
     curSubject = payload.curSubject
     newChat = payload.newChat
-
+    
+    # if curSubject == math : set some bool to search for equations
     # Store user data in a User object
     user.importSubjects(subjects)
     
@@ -96,8 +97,8 @@ async def generate_question(payload: QuestionPayload):
     userIfWrong = copy.deepcopy(user)
     ifWrongSubject = userIfWrong.subjects[curSubject]
 
-    ifWrongSubject.setSubjectElo(-20)
-    currentSubject.setSubjectElo(20)
+    ifWrongSubject.setSubjectElo(-50)
+    currentSubject.setSubjectElo(50)
 
     updated_subjects_right = user.exportSubjects()
     updated_subjects_wrong = userIfWrong.exportSubjects()

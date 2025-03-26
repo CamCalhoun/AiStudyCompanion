@@ -60,7 +60,7 @@ function Home() {
                         <div className="flex items-center justify-center">
                             <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
                                 <Button text="Study" onClick={() => navigate("/study")} />
-                                <Button text="Flashcards" />
+                                <Button text="Flashcards" onClick={() => navigate("/flashcards")} />
                                 <Button text="Import" onClick={handleImport} />
                                 <Button text="Export" onClick={handleExport} />
                                 <Button text="Subjects" onClick={() => navigate("/subjects")} />

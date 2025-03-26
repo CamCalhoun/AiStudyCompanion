@@ -8,9 +8,26 @@ import { API_GENERATE_QUESTION } from '../config/api';
 function Study() {
     const navigate = useNavigate()
 
+    const answerToNumKey = { "A": 0, "B": 1, "C": 2, "D": 3 }
+    const [question, setQuestion] = useState("")
+    const [answerChoices, setAnswerChoices] = useState([])
+    const [answerSelection, setAnswerSelection] = useState("")
+    const [correctAnswer, setCorrectAnswer] = useState("")
+    const [explanation, setExplanation] = useState("")
+    const [subjectsRight, setSubjectsRight] = useState([])
+    const [subjectsWrong, setSubjectsWrong] = useState([])
+
+
     const [selectedSubject, setSelectedSubject] = useState("")
     const handleSubjectChange = (event) => {
         setSelectedSubject(event.target.value);
+        setAnswerSelection("")
+        setQuestion("")
+        setAnswerChoices([])
+        setCorrectAnswer("")
+        setExplanation("")
+        setSubjectsRight([])
+        setSubjectsWrong([])
         handleNewChatState(true)
     };
 
@@ -22,14 +39,6 @@ function Study() {
     const [loading, setLoading] = useState(false)
 
     const [subjects, setSubjects] = useState([])
-
-    const [question, setQuestion] = useState("")
-    const [answerChoices, setAnswerChoices] = useState([])
-    const [answerSelection, setAnswerSelection] = useState("")
-    const [correctAnswer, setCorrectAnswer] = useState("")
-    const [explanation, setExplanation] = useState("")
-    const [subjectsRight, setSubjectsRight] = useState([])
-    const [subjectsWrong, setSubjectsWrong] = useState([])
 
     useEffect(() => {
         const loadSubjects = () => {
@@ -142,8 +151,43 @@ function Study() {
             console.error("Error generating question:", error)
         }
 
+
     }
 
+    const handleSaveAsFlashcard = async (question, answerChoices, correctAnswer, selectedSubject) => {
+        console.log(question)
+        console.log(answerChoices[answerToNumKey[correctAnswer]])
+        let answer = answerChoices[answerToNumKey[correctAnswer]]
+
+        let choices = answerChoices.slice(0, 4)
+
+        try {
+            const flashcardsData = sessionStorage.getItem("flashcards")
+            let flashcards = flashcardsData ? JSON.parse(flashcardsData) : {}
+
+            if (!flashcards[selectedSubject]) {
+                flashcards[selectedSubject] = []
+            }
+
+            const exists = flashcards[selectedSubject].some(flashcard => flashcard.question === question)
+            if (exists) {
+                alert("Flashcard already exists!")
+                return
+            }
+
+            const newFlashcard = { question, choices, answer }
+
+            flashcards[selectedSubject].push(newFlashcard)
+
+            sessionStorage.setItem("flashcards", JSON.stringify(flashcards))
+
+            console.log("Flashcard added")
+            alert("Flashcard added")
+        } catch (error) {
+            console.error("ERROR adding flashcard: ", error)
+            alert("Failed to add flashcard.")
+        }
+    }
     return (
         <>
             {/* Full Page Layout */}
@@ -241,15 +285,6 @@ function Study() {
 
                         </div>}
 
-                    {answerSelection && explanation &&
-                        <div className="flex justify-center items-center p-12">
-                            <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex flex-col items-center justify-center gap-8 ">
-                                <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] text-center">{answerSelection == correctAnswer ? 'Correct!' : 'Incorrect.'}</h1>
-                                <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6] text-center">{explanation}</h1>
-                            </div>
-
-                        </div>}
-
                     {/* Answer choices */}
                     {answerChoices.length !== 0 && !answerSelection &&
                         <div className='border-3 border-pwred rounded-xl p-12 grid grid-cols-2 gap-20 w-3/5 m-auto'>
@@ -263,6 +298,22 @@ function Study() {
                             </div>
                         </div>
                     }
+
+                    {answerSelection && explanation &&
+                        <div className="flex flex-col justify-center items-center gap-12 p-12">
+                            <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex flex-col items-center justify-center gap-8 ">
+                                <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] text-center">{answerSelection == correctAnswer ? 'Correct!' : 'Incorrect.'}</h1>
+                                <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6] text-center">{explanation}</h1>
+                                {console.log(selectedSubject)}
+                            </div>
+                            <div className='w-1/3 h-20'>
+                                <Button text="Save question as Flashcard"
+                                    onClick={() => handleSaveAsFlashcard(question, answerChoices, correctAnswer, selectedSubject)} />
+                            </div>
+                        </div>
+
+                    }
+
 
 
                 </div>
