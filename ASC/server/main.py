@@ -47,6 +47,8 @@ class QuestionPayload(BaseModel):
     subjects: List[Dict]
     curSubject: str
     newChat: bool
+    delta: float
+    answerStatus: str
 
 
 @app.post("/api/add_subject")
@@ -77,6 +79,11 @@ async def generate_question(payload: QuestionPayload):
     subjects = payload.subjects
     curSubject = payload.curSubject
     newChat = payload.newChat
+    delta = payload.delta
+    answerStatus = payload.answerStatus
+    points: int
+
+    basePoints = 15
     
     # if curSubject == math : set some bool to search for equations
     # Store user data in a User object
@@ -85,20 +92,35 @@ async def generate_question(payload: QuestionPayload):
     # Store current subject, elo, and set prompt
     currentSubject = user.subjects[curSubject]
     currentSubject.updatePrompt()
+    
+    # if prev question was answered correctly, increase delta to a max of 2.0
+    # if incorrect, decrease by 10%, to a min of .6
+    # if no string was provided, that means:
+    #     question was unanswered, 
+    #     or a newChat was started,
+    # so delta should remain unchanged
+    if answerStatus == "Correct":
+        delta = min(2.0, delta + .1)
+    elif answerStatus == "Incorrect":
+        delta = max(.6, delta * .9)
 
 
     # If this is a new chat, create a new instance of chatbot
     # removing context from old chat.
+    # Additionally, reset delta back to 1
     if newChat:
         chatbot = Chatbot()
+        delta = 1
 
     response = chatbot.generateQuestion(currentSubject.currentPrompt)
 
     userIfWrong = copy.deepcopy(user)
     ifWrongSubject = userIfWrong.subjects[curSubject]
 
-    ifWrongSubject.setSubjectElo(-50)
-    currentSubject.setSubjectElo(50)
+    points = int(round(basePoints * delta))
+
+    ifWrongSubject.setSubjectElo(-points)
+    currentSubject.setSubjectElo(points)
 
     updated_subjects_right = user.exportSubjects()
     updated_subjects_wrong = userIfWrong.exportSubjects()
@@ -106,8 +128,8 @@ async def generate_question(payload: QuestionPayload):
     return {
         "ai_response": response, 
         "subjects_right": updated_subjects_right, 
-        "subjects_wrong": updated_subjects_wrong, 
-        "newChatState": False 
+        "subjects_wrong": updated_subjects_wrong,
+        "delta": delta
     }
 
 @app.get("/api/hello")
