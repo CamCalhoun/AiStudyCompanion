@@ -3,6 +3,22 @@ import { useNavigate } from "react-router-dom";
 import '../styles.css'
 import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
+
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import "katex/dist/katex.min.css"
+
+const markdown = `
+Here is an inline equation: $E = mc^2$
+
+And a block equation:
+
+$$
+\\int_0^1 x^2 \\,dx = \\frac{1}{3}
+$$
+`;
+
 function About() {
     const navigate = useNavigate();
 
@@ -45,6 +61,15 @@ function About() {
                             Need to study on the go? Just export your progress to a portable file and import it on any other machine.
                         </p>
 
+                        <h2 className="text-3xl font-bold mt-8 mb-4">Math Example for testing</h2>
+                        <div className='text-pwblue text-2xl w-1/2'>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkMath]}
+                                rehypePlugins={[rehypeKatex]}
+                            >
+                                {markdown}
+                            </ReactMarkdown>
+                        </div>
                         {/* Back Button */}
                         <div className="mt-10 flex justify-center">
                             <Button text="Back" onClick={() => navigate("/")} />
@@ -52,6 +77,8 @@ function About() {
                     </div>
                 </div>
             </div>
+
+
         </>
     );
 }

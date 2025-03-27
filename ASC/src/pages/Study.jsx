@@ -5,6 +5,16 @@ import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
 import axios from 'axios';
 import { API_GENERATE_QUESTION } from '../config/api';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import "katex/dist/katex.min.css"
+
+const markdown = `
+$$
+\\int_0^1 x^2 \\,dx = \\frac{1}{3}
+$$
+`
 function Study() {
     const navigate = useNavigate()
 
@@ -275,7 +285,14 @@ function Study() {
                     {question && !answerSelection &&
                         <div className="flex justify-center items-center m-auto">
                             <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center justify-center gap-8 ">
-                                <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6]  w-1/2 text-center">{question}</h1>
+                                <div className="text-shadow text-4xl font-bold text-[#F3F4F6]  w-1/2 text-center">
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkMath]}
+                                        rehypePlugins={[rehypeKatex]}
+                                    >
+                                        {question}
+                                    </ReactMarkdown>
+                                </div>
                                 <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-1/2 text-left">
                                     <h1 className="py-1">
                                         {answerChoices[0]}
