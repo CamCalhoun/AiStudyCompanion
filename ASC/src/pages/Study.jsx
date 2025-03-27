@@ -16,6 +16,8 @@ function Study() {
     const [explanation, setExplanation] = useState("")
     const [subjectsRight, setSubjectsRight] = useState([])
     const [subjectsWrong, setSubjectsWrong] = useState([])
+    const [answerStatus, setAnswerStatus] = useState("")
+    const [delta, setDelta] = useState(1)
 
 
     const [selectedSubject, setSelectedSubject] = useState("")
@@ -56,14 +58,12 @@ function Study() {
 
     useEffect(() => {
         if (answerSelection != "") {
-            console.log("MADE IT TO USE EFFECT")
-            console.log("ANSWER SELECTION: ", answerSelection)
-            console.log("Correct Answer: ", correctAnswer)
-
             if (answerSelection == correctAnswer) {
                 sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsRight))
+                setAnswerStatus("Correct")
             } else {
                 sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsWrong))
+                setAnswerStatus("Incorrect")
             }
             window.dispatchEvent(new Event("subjectsUpdated"))
         }
@@ -74,6 +74,11 @@ function Study() {
             console.error("No subject selected!")
             return
         }
+
+        if (answerSelection != "") {
+            setAnswerStatus("")
+        }
+
         setAnswerSelection("")
         setQuestion("")
         setAnswerChoices([])
@@ -88,7 +93,9 @@ function Study() {
             const payload = {
                 subjects: currentSubjects,
                 curSubject: selectedSubject,
-                newChat: newChat
+                newChat: newChat,
+                delta: delta,
+                answerStatus: answerStatus
 
             }
             console.log(payload)
@@ -136,9 +143,11 @@ function Study() {
             console.log("Answer Choices:", answerChoices)
             console.log("Correct Answer:", correctAnswer)
             console.log("Explanation:", explanation)
+            console.log("Delta: ", response.data.delta)
 
-            handleNewChatState(response.data.newChatState)
+            handleNewChatState(false)
 
+            setDelta(response.data.delta)
             setQuestion(question)
             setAnswerChoices(answerChoices)
             setCorrectAnswer(correctAnswer)
