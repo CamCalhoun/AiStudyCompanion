@@ -8,6 +8,8 @@ from SubjectClasses.history_subject import History
 from SubjectClasses.math_subject import Math
 from user import User
 
+from expressions import *
+
 testUser = User()
 testUser.addSubject(English())
 testUser.addSubject(Geography())
@@ -74,8 +76,12 @@ while not quit:
         print("Enter q to quit")
         while True:
             response = sillybot.generateQuestion(currentSubject.currentPrompt)
-
             print(response)
+            exprs_txt = findExpressions(response)
+            target_var = findTargetVariable(response)
+
+            for e in exprs_txt:
+                print(solve(e, target_var))
              
             user_input = input("Generate another question? (Enter to continue, 'q' to quit): ").strip().upper()
             if user_input == 'Q':
