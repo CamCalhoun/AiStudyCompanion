@@ -10,7 +10,6 @@ from SubjectClasses.history_subject import History
 from user import User
 from pydantic import BaseModel
 from typing import List, Dict
-import json
 from APITools import Chatbot
 import copy
 
@@ -50,6 +49,11 @@ class QuestionPayload(BaseModel):
     delta: float
     answerStatus: str
 
+class FlashcardsPayload(BaseModel):
+    subjects: List[Dict]
+    curSubject: str
+    newChat: bool
+ 
 
 @app.post("/api/add_subject")
 async def add_subject(payload: AddSubjectPayload):
@@ -130,6 +134,30 @@ async def generate_question(payload: QuestionPayload):
         "subjects_right": updated_subjects_right, 
         "subjects_wrong": updated_subjects_wrong,
         "delta": delta
+    }
+
+@app.post("/api/generate_flashcards")
+async def generate_flashcards(payload: FlashcardsPayload):
+    print("LOL")
+    global chatbot
+    subjects = payload.subjects
+    curSubject = payload.curSubject
+    newChat = payload.newChat
+    flashcards = []
+
+    user.importSubjects(subjects)
+    currentSubject = user.subjects[curSubject]
+    currentSubject.updatePrompt()
+
+    if newChat:
+        chatbot = Chatbot()
+    
+    for _ in range(5):
+        flashcards.append(chatbot.generateQuestion(currentSubject.currentPrompt))
+    user.exportSubjects()
+
+    return {
+        "ai_response": flashcards
     }
 
 @app.get("/api/hello")
