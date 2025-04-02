@@ -5,6 +5,8 @@ import Subjects from "./pages/Subjects";
 import Progress from "./pages/Progress"
 import Study from "./pages/Study";
 import Flashcards from "./pages/Flashcards"
+import NewFlashcards from "./pages/NewFlashcards";
+import LegacyFlashcards from "./pages/LegacyFlashcards";
 function App() {
     return (
         <Router>
@@ -15,6 +17,8 @@ function App() {
                 <Route path="/progress" element={<Progress />} />
                 <Route path="/study" element={<Study />} />
                 <Route path="/flashcards" element={<Flashcards />} />
+                <Route path="/interactive_flashcards" element={<NewFlashcards />} />
+                <Route path="/legacy_flashcards" element={<LegacyFlashcards />} />
             </Routes>
         </Router>
     )
