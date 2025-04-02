@@ -131,7 +131,7 @@ function LegacyFlashcards() {
             doc.text(q.correctAnswer, centerX + margin + 5, margin + 25)
         })
 
-        doc.save("flashcards.pdf")
+        doc.save(selectedSubject.toLowerCase() + "Flashcards.pdf")
     }
 
 
