@@ -55,11 +55,16 @@ function LegacyFlashcards() {
             })
             const ai_responses = response.data.ai_response
             console.log(ai_responses)
-            const questionRegex = /^Question:\s(.+)/m
+
+
+
+            const questionRegex = /^Question:\s([\s\S]+?)^(?=[A-D]\))/m;
+
             const answerChoicesRegex = /([A-D])\)\s(.+)/g
             const correctAnswerRegex = /Answer:\s([A-D])/
 
             const parsedFlashcards = ai_responses.map(ai_response => {
+
                 const matchQuestion = ai_response.match(questionRegex)
                 const matchAnswerChoices = [...ai_response.matchAll(answerChoicesRegex)]
                     .map(m => `${m[1]}) ${m[2].trim()}`)
