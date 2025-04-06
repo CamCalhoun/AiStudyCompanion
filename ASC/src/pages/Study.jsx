@@ -174,25 +174,37 @@ function Study() {
                 console.log("Var: ", varToSolveFor)
                 console.log("Expression: ", expression)
 
-                const acregex = /([A-D])\)\s*\$\$(\w+)\s*=\s*(\d+)\$\$/
+
+
+                const acregex = /([A-D])\)\s*\${1,2}(\w+)\s*=\s*([-\w\\{}\/^+\d]+)\${1,2}/
                 const answers = []
-                for (let i = 0; i < 4; i++) {
+
+                for (let i = 0; i < answerChoices.length; i++) {
                     const match = answerChoices[i].match(acregex)
                     if (match) {
                         const letter = match[1]
-                        const value = match[3]
+                        let value = match[3]
+
+                        // Optional LaTeX cleanup
+                        value = value.replace(/\\frac{(\d+)}{(\d+)}/, "$1/$2")
                         answers.push({ letter, value })
                     }
                 }
+
                 console.log("Answers: ", answers)
                 const jsExpression = latex2js(expression).toString()
                 console.log("JS Expr: ", jsExpression)
 
-                const jssolution = nerdamer.solveEquations(jsExpression, varToSolveFor).toString()
-                console.log("JS Solution: ", jssolution)
+                let solution
+                try {
+                    const jssolution = nerdamer.solveEquations(jsExpression, varToSolveFor).toString()
+                    console.log("JS Solution: ", jssolution)
 
-                const solution = convertToLatex(jssolution)
-                console.log("Solution: ", solution)
+                    solution = convertToLatex(jssolution)
+                    console.log("Solution: ", solution)
+                } catch {
+                    solution = "No solution"
+                }
                 let validAnswerFound = false
                 for (let i = 0; i < answers.length; i++) {
                     // If the valid answer is found
