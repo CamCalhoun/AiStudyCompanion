@@ -18,31 +18,52 @@ Class member functions: generateQuestion(), generateFlashcards(), solveMathEquat
 load_dotenv()
 
 class Chatbot:
-    def __init__(self):
+    def __init__(self, subject=None):
         # Client between user and OpenAI
         self.client = OpenAI()
         # Messages to be used for creations
         self.context = [
-            {"role": "system", "content": (
-                "You are an educational assistant that provides multiple-choice questions "
-                "to help users learn different subjects. Each question should have exactly four "
-                "answer choices labeled A, B, C, and D. You may not provide any number of answer choices other than 4. Exactly one of these choices can be the correct answer. "
-                "One choice MUST be the correct answer, and the other three MUST be incorrect."
-                "NONE is not a valid answer. "
-                "You must indicate the correct answer clearly "
-                "and provide an explanation for why the answer is correct."
-                "For this explanation, please surround the entire explanation in {}."
-                "A format for your response will be described. Do not respond with anything other than the exact format."
-                "The format of your response must be as follows:\n"
-                "Question: <Insert question here>\n"
-                "A) <Option A>\n"
-                "B) <Option B>\n"
-                "C) <Option C>\n"
-                "D) <Option D>\n"
-                "Answer: <Correct answer letter>\n"
-                "Explanation: {<Detailed explanation of why the correct answer is correct and why the others are not>}"
-            )},
+            {"role": "system", "content": self.build_sys_prompt(subject)},
         ]
+    def build_sys_prompt(self, subject=None):
+        base_prompt = (
+            "You are an educational assistant that provides multiple-choice questions "
+            "to help users learn different subjects. Each question should have exactly four "
+            "answer choices labeled A, B, C, and D. You may not provide any number of answer choices other than 4. Exactly one of these choices can be the correct answer. "
+            "One choice MUST be the correct answer, and the other three MUST be incorrect."
+            "NONE is not a valid answer. "
+            "You must indicate the correct answer clearly "
+            "and provide an explanation for why the answer is correct."
+            "For this explanation, please surround the entire explanation in {}."
+            "A format for your response will be described. Do not respond with anything other than the exact format."
+            "The format of your response must be as follows:\n"
+            "Question: <Insert question here>\n"
+            "A) <Option A>\n"
+            "B) <Option B>\n"
+            "C) <Option C>\n"
+            "D) <Option D>\n"
+            "Answer: <Correct answer letter>\n"
+            "Explanation: {<Detailed explanation of why the correct answer is correct and why the others are not>}"
+        )
+        if subject == "Math":
+            return (
+            f"{base_prompt}\n\n"
+            "For Math questions, use the following additional rules:\n"
+            "- Format every question as:\n"
+            "  Question: Solve for $$<variable>$$\n"
+            "  $$<expression>$$\n"
+            "- Provide answer choices as single-line equations in the form:\n"
+            "  A) $$<variable> = <value>$$\n"
+            "  B) $$<variable> = <value>$$\n"
+            "  C) $$<variable> = <value>$$\n"
+            "  D) $$<variable> = <value>$$\n"
+            "- Use only one of the following variables: a, b, c, x, y, z.\n"
+            "- All expressions must be solvable with exactly one rational solution.\n"
+            "- Do NOT use expressions with multiple valid solutions (e.g., sqrt(x^4)).\n"
+            "- Do NOT use irrational or undefined solutions.\n"
+            "- Ensure that the correct answer satisfies the given expression."        )
+        else:
+            return base_prompt
     
     # Send and receive messages to and from OpenAI
     def generateQuestion(self, message: str):
@@ -56,38 +77,6 @@ class Chatbot:
         # Store response
         response_content = response.choices[0].message.content
         
-        # Commented out statement for testing raw output
-        # print(f"\nRaw Response Content:\n{response_content}")
-        #
-        # # Extract the correct answer using regex
-        # match = re.search(r'Answer:\s*([A-D])', response_content)
-        # correct_answer = match.group(1) if match else None
-        #
-        # # Remove the answer line for the displayed question
-        # displayed_question = re.sub(r'\nAnswer:.*', '', response_content)
-        # displayed_question = re.sub(r'\nExplanation:.*', '', displayed_question)
-        #
-        # print(f"\nOpenAI Response:\n{displayed_question}")
-        #
-        # # Extract the answer choices using regex
-        # choices = re.findall(r'([A-D])\)\s(.+)', displayed_question)
-        #
-        # # Prompt the user for their answer
-        # user_answer = self.get_user_answer(choices)
-        #
-        # # Extract the explanation in case the user answers wrong, and remove it from the displayed question.
-        # explanation_match = re.search(r'Explanation:\s*{\s*(.*?)\s*}', response_content, re.DOTALL)
-        # explanation = explanation_match.group(1).strip() if explanation_match else "No explanation provided."
-        #
-        # # Check if the answer is correct
-        # if user_answer == correct_answer:
-        #     print("Correct!")
-        # else:
-        #     print(f"Incorrect! The correct answer was {correct_answer}")
-        #     print(f"Explanation: {explanation}")
-        #
-        # Append response to the context
-
         self.context.append({"role": "assistant", "content": response_content})
 
         return response_content

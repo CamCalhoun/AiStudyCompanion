@@ -9,6 +9,12 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import "katex/dist/katex.min.css"
+import latex2js from 'latex-to-js/dist';
+import nerdamer from 'nerdamer/all';
+import 'nerdamer/Algebra';
+import 'nerdamer/Solve';
+import 'nerdamer/Calculus';
+import { convertToLatex } from '../utils/convertLatex';
 
 const markdown = `
 $$
@@ -121,7 +127,11 @@ function Study() {
             console.log("Raw data: ", response.data.ai_response)
             const ai_response = response.data.ai_response
 
-            const questionRegex = /^Question:\s(.+)/m;
+
+
+
+
+            const questionRegex = /^Question:\s([\s\S]+?)^(?=[A-D]\))/m;
 
             const answerChoicesRegex = /([A-D])\)\s(.+)/g
 
@@ -154,6 +164,94 @@ function Study() {
             console.log("Correct Answer:", correctAnswer)
             console.log("Explanation:", explanation)
             console.log("Delta: ", response.data.delta)
+
+            if (selectedSubject == "Math") {
+                try {
+                    const qregex = /Solve for \$\$(\w+)\$\$\s*\$\$([^\n]+)\$\$/
+                    const match = question.match(qregex)
+                    const varToSolveFor = match[1]
+                    const expression = match[2]
+                    console.log("Var: ", varToSolveFor)
+                    console.log("Expression: ", expression)
+
+
+
+                    const acregex = /([A-D])\)\s*\${1,2}(\w+)\s*=\s*([-\w\\{}\/^+\d]+)\${1,2}/
+                    const answers = []
+
+                    for (let i = 0; i < answerChoices.length; i++) {
+                        const match = answerChoices[i].match(acregex)
+                        if (match) {
+                            const letter = match[1]
+                            let value = match[3]
+
+                            // Optional LaTeX cleanup
+                            value = value.replace(/\\frac{(\d+)}{(\d+)}/, "$1/$2")
+                            answers.push({ letter, value })
+                        }
+                    }
+
+                    console.log("Answers: ", answers)
+                    const jsExpression = latex2js(expression).toString()
+                    console.log("JS Expr: ", jsExpression)
+
+                    let solution
+                    let solutionFound = true
+                    try {
+                        const jssolution = nerdamer.solveEquations(jsExpression, varToSolveFor).toString()
+                        console.log("JS Solution: ", jssolution)
+
+                        solution = convertToLatex(jssolution)
+                        console.log("Solution: ", solution)
+                    } catch {
+                        solution = "No solution"
+                        solutionFound = false
+                    }
+                    let validAnswerFound = false
+                    for (let i = 0; i < answers.length; i++) {
+                        // If the valid answer is found
+                        if (answers[i].value === solution) {
+                            validAnswerFound = true
+
+                            // If the correctAnswer matches, change nothing
+                            if (answers[i].letter === correctAnswer) {
+                                console.log('Correct answer alr set, no change needed')
+                                break
+                            }
+
+                            // If correctAnswer doesnt match, swap values
+                            if (answers[i].letter !== correctAnswer) {
+                                console.log('Correct answer found but in the wrong spot')
+                                correctAnswer = answers[i].letter
+                            }
+                        }
+                    }
+
+                    if (!validAnswerFound) {
+                        // Find the answer corresponding to the correctAnswer letter and update its value
+                        console.log('Correct answer not found, replacing correct answers value')
+                        for (let i = 0; i < answers.length; i++) {
+                            if (answers[i].letter === correctAnswer) {
+                                answers[i].value = solution;  // Update the value to the solution
+                                if (solutionFound) {
+                                    answerChoices[i] = `${correctAnswer}) $$${varToSolveFor} = ${solution}$$`
+                                } else {
+                                    answerChoices[i] = `${correctAnswer}) $$${varToSolveFor} =$$ No Solution`
+                                }
+
+
+                                break;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    //GEN NEW QUESTION
+                    console.error("Catastrophic error, genning new question with newchat true", error)
+                    handleNewChatState(true)
+                    handleGenerateQuestion(selectedSubject)
+                }
+                console.log(correctAnswer)
+            }
 
             handleNewChatState(false)
 
@@ -283,29 +381,52 @@ function Study() {
 
                     {/* Question */}
                     {question && !answerSelection &&
-                        <div className="flex justify-center items-center m-auto">
-                            <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center justify-center gap-8 ">
+                        <div className="flex justify-center items-center m-auto ">
+                            <div className="w-full min-w-300 h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center justify-center gap-8 ">
                                 <div className="text-shadow text-4xl font-bold text-[#F3F4F6]  w-1/2 text-center">
                                     <ReactMarkdown
+                                        style={{ whiteSpace: "pre-wrap" }}
                                         remarkPlugins={[remarkMath]}
                                         rehypePlugins={[rehypeKatex]}
                                     >
                                         {question}
                                     </ReactMarkdown>
                                 </div>
-                                <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-1/2 text-left">
-                                    <h1 className="py-1">
-                                        {answerChoices[0]}
-                                    </h1>
-                                    <h1 className="py-1">
-                                        {answerChoices[1]}
-                                    </h1>
-                                    <h1 className="py-1">
-                                        {answerChoices[2]}
-                                    </h1>
-                                    <h1 className="py-1">
-                                        {answerChoices[3]}
-                                    </h1>
+                                <div className='flex flex-col w-1/2 items-center'>
+                                    <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-2/3 text-left">
+                                        <div className="py-1">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {answerChoices[0]}
+                                            </ReactMarkdown>
+                                        </div>
+                                        <div className="py-1">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {answerChoices[1]}
+                                            </ReactMarkdown>
+                                        </div>
+                                        <div className="py-1">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {answerChoices[2]}
+                                            </ReactMarkdown>
+                                        </div>
+                                        <div className="py-1">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {answerChoices[3]}
+                                            </ReactMarkdown>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -329,7 +450,9 @@ function Study() {
                         <div className="flex flex-col justify-center items-center gap-12 p-12">
                             <div className="w-full h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex flex-col items-center justify-center gap-8 ">
                                 <h1 className="text-shadow text-4xl font-bold text-[#F3F4F6] text-center">{answerSelection == correctAnswer ? 'Correct!' : 'Incorrect.'}</h1>
-                                <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6] text-center">{explanation}</h1>
+                                {selectedSubject != "Math" &&
+                                    <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6] text-center">{explanation}</h1>
+                                }
                                 {console.log(selectedSubject)}
                             </div>
                             <div className='w-1/3 h-20'>
