@@ -26,6 +26,7 @@ function Study() {
 
     const answerToNumKey = { "A": 0, "B": 1, "C": 2, "D": 3 }
     const [question, setQuestion] = useState("")
+    const [lines, setLines] = useState("")
     const [answerChoices, setAnswerChoices] = useState([])
     const [answerSelection, setAnswerSelection] = useState("")
     const [correctAnswer, setCorrectAnswer] = useState("")
@@ -41,6 +42,7 @@ function Study() {
         setSelectedSubject(event.target.value);
         setAnswerSelection("")
         setQuestion("")
+        setLines("")
         setAnswerChoices([])
         setCorrectAnswer("")
         setExplanation("")
@@ -97,6 +99,7 @@ function Study() {
 
         setAnswerSelection("")
         setQuestion("")
+        setLines("")
         setAnswerChoices([])
         setCorrectAnswer("")
         setExplanation("")
@@ -232,7 +235,8 @@ function Study() {
                         console.log('Correct answer not found, replacing correct answers value')
                         for (let i = 0; i < answers.length; i++) {
                             if (answers[i].letter === correctAnswer) {
-                                answers[i].value = solution;  // Update the value to the solution
+                                answers[i].value = solution  // Update the value to the solution
+
                                 if (solutionFound) {
                                     answerChoices[i] = `${correctAnswer}) $$${varToSolveFor} = ${solution}$$`
                                 } else {
@@ -240,10 +244,18 @@ function Study() {
                                 }
 
 
-                                break;
+                            }
+                            else {
+                                if (solution.includes('/')) {
+                                    const index = solution.indexOf('/')
+                                    answerChoices[i] = `${answers[i].letter}) $$${varToSolveFor} = ${answers[i].value}/${solution.charAt(index + 1)}$$`
+                                }
                             }
                         }
                     }
+
+                    const lines = question.split('\n')
+                    setLines(lines)
                 } catch (error) {
                     //GEN NEW QUESTION
                     console.error("Catastrophic error, genning new question with newchat true", error)
@@ -384,13 +396,30 @@ function Study() {
                         <div className="flex justify-center items-center m-auto ">
                             <div className="w-full min-w-300 h-full p-5 border-3 border-pwred bg-pwblue rounded-xl shadow-xl flex items-center justify-center gap-8 ">
                                 <div className="text-shadow text-4xl font-bold text-[#F3F4F6]  w-1/2 text-center">
-                                    <ReactMarkdown
-                                        style={{ whiteSpace: "pre-wrap" }}
-                                        remarkPlugins={[remarkMath]}
-                                        rehypePlugins={[rehypeKatex]}
-                                    >
-                                        {question}
-                                    </ReactMarkdown>
+                                    {selectedSubject != 'Math' &&
+                                        <ReactMarkdown
+                                            remarkPlugins={[remarkMath]}
+                                            rehypePlugins={[rehypeKatex]}
+                                        >
+                                            {question}
+                                        </ReactMarkdown>
+                                    }
+                                    {selectedSubject == 'Math' &&
+                                        <>
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {lines[0]}
+                                            </ReactMarkdown>
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {lines[1]}
+                                            </ReactMarkdown>
+                                        </>
+                                    }
                                 </div>
                                 <div className='flex flex-col w-1/2 items-center'>
                                     <div className="text-shadow text-2xl font-bold text-[#F3F4F6] w-2/3 text-left">

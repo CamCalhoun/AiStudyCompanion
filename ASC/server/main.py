@@ -153,7 +153,7 @@ async def generate_flashcards(payload: FlashcardsPayload):
     currentSubject.updatePrompt()
 
     if newChat:
-        chatbot = Chatbot()
+        chatbot = Chatbot(curSubject)
     
     for _ in range(5):
         flashcards.append(chatbot.generateQuestion(currentSubject.currentPrompt))
