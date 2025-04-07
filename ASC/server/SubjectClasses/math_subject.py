@@ -6,10 +6,10 @@ class Math(Subject):
     #override subject variables
     subjectName : str = 'Math'
     subjectElo : int = 800
-    subjectBreakpoints : List[int] = [0, 800, 1600]
+    subjectBreakpoints : List[int] = [400, 800, 1000]
     subjectPrompts : Dict[int, str] = {
         400: 'Easy algebra questions',
         800: 'Harder Algebra questions',
-        1000: 'Integrals and derivatives'
+        1000: 'Advanced Algebra questions'
     }
     currentPrompt : str = subjectPrompts[800]

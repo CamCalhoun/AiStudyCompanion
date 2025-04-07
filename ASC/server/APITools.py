@@ -47,19 +47,21 @@ class Chatbot:
         )
         if subject == "Math":
             return (
-            f"{base_prompt}\n"
-            "All questions should be of the form:\n"
-            "Question: Solve for $$<variable>$$\n"
-            "$$<expression>$$\n"
-            "The expression should be written in LaTeX format, beginning and ending with a $. "
-            "The questions and answers must each be a single expression. "
-            "All questions must be solvable problems written as expressions. "
-            "All questions must have exactly one solution, do not generate questions where more than one number is a valid solution"
-            "All solutions must be rational numbers"
-            "Add a new line after stating what variable to solve for. "
-            "The only variables that may be used are a, b, c, x, y, z. "
-            "The correct answer must satisfy the given expression."
-        )
+            f"{base_prompt}\n\n"
+            "For Math questions, use the following additional rules:\n"
+            "- Format every question as:\n"
+            "  Question: Solve for $$<variable>$$\n"
+            "  $$<expression>$$\n"
+            "- Provide answer choices as single-line equations in the form:\n"
+            "  A) $$<variable> = <value>$$\n"
+            "  B) $$<variable> = <value>$$\n"
+            "  C) $$<variable> = <value>$$\n"
+            "  D) $$<variable> = <value>$$\n"
+            "- Use only one of the following variables: a, b, c, x, y, z.\n"
+            "- All expressions must be solvable with exactly one rational solution.\n"
+            "- Do NOT use expressions with multiple valid solutions (e.g., sqrt(x^4)).\n"
+            "- Do NOT use irrational or undefined solutions.\n"
+            "- Ensure that the correct answer satisfies the given expression."        )
         else:
             return base_prompt
     
