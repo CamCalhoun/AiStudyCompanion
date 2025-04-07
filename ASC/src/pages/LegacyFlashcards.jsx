@@ -73,12 +73,12 @@ function LegacyFlashcards() {
                 const limitedAnswerChoices = matchAnswerChoices.slice(0, 4)
                 return {
                     question: matchQuestion ? matchQuestion[1].trim() : "",
-                    answerChoices: limitedAnswerChoices,
-                    correctAnswer: matchCorrectAnswer ? matchCorrectAnswer[1] : "",
+                    choices: limitedAnswerChoices,
+                    answer: matchCorrectAnswer ? matchCorrectAnswer[1] : "",
                 }
             })
             console.log(parsedFlashcards)
-            generatePDF(parsedFlashcards)
+            generatePDF(parsedFlashcards, selectedSubject)
             setLoading(false)
 
         }
@@ -87,7 +87,7 @@ function LegacyFlashcards() {
         }
     }
 
-    function generatePDF(questions) {
+    function generatePDF(questions, selectedSubject) {
         const doc = new jsPDF({
             orientation: "landscape",
             unit: "mm",
@@ -123,7 +123,7 @@ function LegacyFlashcards() {
             yPosition += wrappedQuestion.length * 6 + 4
 
             doc.setFontSize(12)
-            q.answerChoices.forEach((choice) => {
+            q.choices.forEach((choice) => {
                 const wrappedChoice = doc.splitTextToSize(choice, sectionWidth - 10)
                 doc.text(wrappedChoice, margin + 5, yPosition)
                 yPosition += wrappedChoice.length * 6
@@ -133,7 +133,7 @@ function LegacyFlashcards() {
             doc.setFontSize(14)
             doc.text("Correct Answer:", centerX + margin + 5, margin + 10)
             doc.setFontSize(16)
-            doc.text(q.correctAnswer, centerX + margin + 5, margin + 25)
+            doc.text(q.answer, centerX + margin + 5, margin + 25)
         })
 
         doc.save(selectedSubject.toLowerCase() + "Flashcards.pdf")

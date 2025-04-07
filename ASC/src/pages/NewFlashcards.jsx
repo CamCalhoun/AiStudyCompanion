@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles.css'
 import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
-import SubjectList from '../components/SubjectList.jsx'
-import { API_ADD_SUBJECT } from '../config/api';
-import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import "katex/dist/katex.min.css"
 
+// EXPORT CUR SUBJECTS FLASHCARDS TO PDF SIMILAR TO LEGACY FLASHCARDS
+//
+// for flashcards[currentSubject] {
+//  generatePdf()?
+//  may need to tweek legacy flashcards syntax such that the same function can be used
+// }
 
 function NewFlashcards() {
     const [flashcards, setFlashcards] = useState(() => {
@@ -15,6 +22,7 @@ function NewFlashcards() {
 
     const subjects = Object.keys(flashcards)
 
+    const [lines, setLines] = useState("")
     const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0)
     const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0)
     const [answerDisplayed, setAnswerDisplayed] = useState(Boolean)
@@ -76,8 +84,18 @@ function NewFlashcards() {
 
         if (answerDisplayed) { handleQuestionDisplayedState() }
         setFlashcards(updatedFlashcards)
+        console.log(flashcards)
         sessionStorage.setItem("flashcards", JSON.stringify(updatedFlashcards))
     }
+
+    useEffect(() => {
+        if (currentSubject === "Math" && currentFlashcard?.question) {
+            const splitLines = currentFlashcard.question.split('\n')
+            setLines([splitLines[0] || "", splitLines[1] || ""])
+        } else {
+            setLines("")
+        }
+    }, [currentFlashcard, currentSubject])
 
     return (
         <>
@@ -106,7 +124,7 @@ function NewFlashcards() {
                         )}
 
                         {currentFlashcard ? (
-                            <div classname="w-full">
+                            <div className="w-full">
                                 <div className="grid grid-cols-[1fr_3fr_1fr] gap-4">
 
                                     <div className="flex justify-end items-center w-full h-full">
@@ -120,24 +138,75 @@ function NewFlashcards() {
                                         onClick={handleQuestionDisplayedState}>
                                         {!answerDisplayed && (
                                             <>
-                                                <h1 className="text-shadow text-4xl font-bold  w-1/2 text-center">{currentFlashcard.question}</h1>
+                                                <div className="text-shadow text-4xl font-bold  w-1/2 text-center">
+                                                    {currentSubject != 'Math' &&
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {currentFlashcard.question}
+                                                        </ReactMarkdown>
+                                                    }
+                                                    {currentSubject == 'Math' &&
+                                                        <>
+                                                            <ReactMarkdown
+                                                                remarkPlugins={[remarkMath]}
+                                                                rehypePlugins={[rehypeKatex]}
+                                                            >
+                                                                {lines[0]}
+                                                            </ReactMarkdown>
+                                                            <ReactMarkdown
+                                                                remarkPlugins={[remarkMath]}
+                                                                rehypePlugins={[rehypeKatex]}
+                                                            >
+                                                                {lines[1]}
+                                                            </ReactMarkdown>
+                                                        </>
+                                                    }
+
+                                                </div>
                                                 <div className="text-shadow text-2xl font-bold w-1/2 text-left">
-                                                    <h1 className="py-1">
-                                                        {choices[0]}
-                                                    </h1>
-                                                    <h1 className="py-1">
-                                                        {choices[1]}
-                                                    </h1>
-                                                    <h1 className="py-1">
-                                                        {choices[2]}
-                                                    </h1>
-                                                    <h1 className="py-1">
-                                                        {choices[3]}
-                                                    </h1>
+                                                    <div className="py-1">
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {choices[0]}
+                                                        </ReactMarkdown>
+                                                    </div>
+                                                    <div className="py-1">
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {choices[1]}
+                                                        </ReactMarkdown>
+                                                    </div>
+                                                    <div className="py-1">
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {choices[2]}
+                                                        </ReactMarkdown>
+                                                    </div>
+                                                    <div className="py-1">
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkMath]}
+                                                            rehypePlugins={[rehypeKatex]}
+                                                        >
+                                                            {choices[3]}
+                                                        </ReactMarkdown>
+                                                    </div>
                                                 </div>
                                             </>)}
                                         {answerDisplayed && (
-                                            <h1 className="text-shadow text-4xl font-bold  w-1/2 text-center">{currentFlashcard.answer}</h1>
+                                            <div className="text-shadow text-4xl font-bold  w-1/2 text-center"><ReactMarkdown
+                                                remarkPlugins={[remarkMath]}
+                                                rehypePlugins={[rehypeKatex]}
+                                            >
+                                                {choices[3]}
+                                            </ReactMarkdown></div>
                                         )}
                                     </div>
 

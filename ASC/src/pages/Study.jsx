@@ -334,7 +334,7 @@ function Study() {
                         }
 
                         {subjects.length !== 0 &&
-                            <form className='w-1/3 pl-17'>
+                            <div className='w-1/3 pl-17'>
                                 <label for="subjects" className="block mb-2 text-xl font-semibold text-gray-900"></label>
                                 <select id="subjects"
                                     name="subjects"
@@ -349,7 +349,7 @@ function Study() {
                                         </option>
                                     ))}
                                 </select>
-                            </form>
+                            </div>
 
                         }
                         <div className="w-1/3 h-full flex justify-center items-center 
