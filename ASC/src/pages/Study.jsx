@@ -284,8 +284,10 @@ function Study() {
     }
 
     const handleSaveAsFlashcard = async (question, answerChoices, correctAnswer, selectedSubject) => {
-        console.log(question)
-        console.log(answerChoices[answerToNumKey[correctAnswer]])
+
+        console.log("Correct Answer Letter:", correctAnswer);
+        console.log("Index from answerToNumKey:", answerToNumKey[correctAnswer]);
+        console.log("Answer Choices:", answerChoices);
         let answer = answerChoices[answerToNumKey[correctAnswer]]
 
         let choices = answerChoices.slice(0, 4)
@@ -311,6 +313,7 @@ function Study() {
             sessionStorage.setItem("flashcards", JSON.stringify(flashcards))
 
             console.log("Flashcard added")
+            console.log(newFlashcard)
             alert("Flashcard added")
         } catch (error) {
             console.error("ERROR adding flashcard: ", error)

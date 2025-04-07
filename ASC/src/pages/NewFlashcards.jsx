@@ -205,7 +205,7 @@ function NewFlashcards() {
                                                 remarkPlugins={[remarkMath]}
                                                 rehypePlugins={[rehypeKatex]}
                                             >
-                                                {choices[3]}
+                                                {currentFlashcard.answer}
                                             </ReactMarkdown></div>
                                         )}
                                     </div>
