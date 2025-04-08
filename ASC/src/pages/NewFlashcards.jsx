@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import "katex/dist/katex.min.css"
+import { generatePDF } from '../utils/pdfHandlers';
 
 // EXPORT CUR SUBJECTS FLASHCARDS TO PDF SIMILAR TO LEGACY FLASHCARDS
 //
@@ -63,6 +64,7 @@ function NewFlashcards() {
         const subject = subjects[currentSubjectIndex];
         setCurrentFlashcardIndex((prev) => (prev < flashcards[subject].length - 1 ? prev + 1 : 0));
     };
+
 
     const removeFlashcard = () => {
         const subject = subjects[currentSubjectIndex]
@@ -222,6 +224,9 @@ function NewFlashcards() {
                                     <h3>Click on Flashcard to flip sides.</h3>
                                     <div className="w-1/3 h-12">
                                         <Button text="Remove Flashcard" onClick={removeFlashcard} />
+                                    </div>
+                                    <div className="w-1/3 h-12">
+                                        <Button text={`Save ${currentSubject} cards to PDF`} onClick={() => generatePDF(flashcards[currentSubject], currentSubject)} />
                                     </div>
 
                                 </div>
