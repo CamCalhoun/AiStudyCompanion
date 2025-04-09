@@ -110,13 +110,14 @@ function NewFlashcards() {
                         {/* Display subjects if available */}
                         {subjects.length > 0 ? (
                             <div className='w-full flex justify-center pb-4'>
-                                <div className="w-1/3 flex">
-
-                                    <Button text="<" onClick={prevSubject} />
-
-                                    <h2 className="text-5xl font-semibold text-pwblue">{subjects[currentSubjectIndex]}</h2>
-
-                                    <Button text=">" onClick={nextSubject} />
+                                <div className="w-3/5 gap-20 flex items-center justify-between">
+                                    <div className='w-[180px]'>
+                                        <Button text="<" onClick={prevSubject} />
+                                    </div>
+                                    <h2 className="text-4xl font-semibold text-pwblue  whitespace-nowrap">{subjects[currentSubjectIndex]}</h2>
+                                    <div className='w-[180px]'>
+                                        <Button text=">" onClick={nextSubject} />
+                                    </div>
 
                                 </div>
                             </div>
