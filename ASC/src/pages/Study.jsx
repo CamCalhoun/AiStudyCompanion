@@ -199,9 +199,10 @@ function Study() {
                     console.log("JS Expr: ", jsExpression)
 
                     let solution
+                    let jssolution
                     let solutionFound = true
                     try {
-                        const jssolution = nerdamer.solveEquations(jsExpression, varToSolveFor).toString()
+                        jssolution = nerdamer.solveEquations(jsExpression, varToSolveFor).toString()
                         console.log("JS Solution: ", jssolution)
 
                         solution = convertToLatex(jssolution)
@@ -211,7 +212,7 @@ function Study() {
                         solutionFound = false
                     }
                     let validAnswerFound = false
-                    for (let i = 0; i < answers.length; i++) {
+                    for (let i = 0; i < 4; i++) {
                         // If the valid answer is found
                         if (answers[i].value === solution) {
                             validAnswerFound = true
@@ -226,6 +227,7 @@ function Study() {
                             if (answers[i].letter !== correctAnswer) {
                                 console.log('Correct answer found but in the wrong spot')
                                 correctAnswer = answers[i].letter
+
                             }
                         }
                     }
@@ -238,7 +240,8 @@ function Study() {
                                 answers[i].value = solution  // Update the value to the solution
 
                                 if (solutionFound) {
-                                    answerChoices[i] = `${correctAnswer}) $$${varToSolveFor} = ${solution}$$`
+                                    const beforelatex = `${correctAnswer}) $$${varToSolveFor} = ${solution}$$`
+                                    answerChoices[i] = convertToLatex(beforelatex)
                                 } else {
                                     answerChoices[i] = `${correctAnswer}) $$${varToSolveFor} =$$ No Solution`
                                 }
@@ -246,14 +249,17 @@ function Study() {
 
                             }
                             else {
-                                if (solution.includes('/')) {
-                                    const index = solution.indexOf('/')
-                                    answerChoices[i] = `${answers[i].letter}) $$${varToSolveFor} = ${answers[i].value}/${solution.charAt(index + 1)}$$`
+                                if (jssolution.includes('/') && !answers[i].value.includes('/')) {
+                                    const [, denominator] = jssolution.match(/\/\s*(-?\d+)/) || []
+                                    if (denominator) {
+                                        const fakeFraction = `${answers[i].value}/${denominator}`
+                                        const beforeLatex = `${answers[i].letter}) $$${varToSolveFor} = ${fakeFraction}$$`
+                                        answerChoices[i] = convertToLatex(beforeLatex)
+                                    }
                                 }
                             }
                         }
                     }
-
                     const lines = question.split('\n')
                     setLines(lines)
                 } catch (error) {
