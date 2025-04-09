@@ -1,13 +1,18 @@
+export function convertToLatex(input) {
+    let latex = input;
 
-export function convertToLatex(solution) {
-    let latex = solution
-        .replace(/i/g, '\\i') // Handle imaginary unit 'i'
-        .replace(/sqrt/g, '\\sqrt') // Ensure 'sqrt' is properly formatted
-        .replace(/(\d)([a-zA-Z])/g, '$1 $2') // Ensure proper space between numbers and variables
-        .replace(/(\d)(\+)/g, '$1 +') // Ensure proper formatting for the plus sign
-        .replace(/(\d)(\-)/g, '$1 -') // Ensure proper formatting for the minus sign
-        .replace(/\*/g, '') // Optional: remove multiplication signs if desired
+    latex = latex.replace(/\b(-?\d+)\s*\/\s*(-?\d+)\b/g, '\\frac{$1}{$2}')
 
-    // Convert the real and imaginary parts to LaTeX
-    return latex
+    latex = latex
+        .replace(/i/g, '\\i')
+        .replace(/sqrt/g, '\\sqrt')
+        .replace(/(\d)([a-zA-Z])/g, '$1 $2')
+        .replace(/(\d)([+\-])/g, '$1 $2')
+        .replace(/\*/g, '')
+
+    return latex;
 }
+
+
+
+
