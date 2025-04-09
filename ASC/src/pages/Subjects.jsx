@@ -96,6 +96,7 @@ function Subjects() {
                                         <option value="History">History</option>
                                         <option value="Geography">Geography</option>
                                         <option value="Computer Science">Computer Science</option>
+                                        <option value="Math">Math</option>
                                     </select>
                                 </form>
                                 <div className='h-1/3 z-10 mt-2'>

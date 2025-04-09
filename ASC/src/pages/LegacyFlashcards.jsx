@@ -4,7 +4,7 @@ import Button from '../components/Button.jsx'
 import TopBar from '../components/TopBar.jsx'
 import { API_GENERATE_FLASHCARDS } from '../config/api'
 import axios from 'axios';
-import jsPDF from 'jspdf'
+import { generatePDF } from '../utils/pdfHandlers'
 import { useNavigate } from 'react-router-dom'
 
 function LegacyFlashcards() {
@@ -55,11 +55,16 @@ function LegacyFlashcards() {
             })
             const ai_responses = response.data.ai_response
             console.log(ai_responses)
-            const questionRegex = /^Question:\s(.+)/m
+
+
+
+            const questionRegex = /^Question:\s([\s\S]+?)^(?=[A-D]\))/m;
+
             const answerChoicesRegex = /([A-D])\)\s(.+)/g
             const correctAnswerRegex = /Answer:\s([A-D])/
 
             const parsedFlashcards = ai_responses.map(ai_response => {
+
                 const matchQuestion = ai_response.match(questionRegex)
                 const matchAnswerChoices = [...ai_response.matchAll(answerChoicesRegex)]
                     .map(m => `${m[1]}) ${m[2].trim()}`)
@@ -68,12 +73,12 @@ function LegacyFlashcards() {
                 const limitedAnswerChoices = matchAnswerChoices.slice(0, 4)
                 return {
                     question: matchQuestion ? matchQuestion[1].trim() : "",
-                    answerChoices: limitedAnswerChoices,
-                    correctAnswer: matchCorrectAnswer ? matchCorrectAnswer[1] : "",
+                    choices: limitedAnswerChoices,
+                    answer: matchCorrectAnswer ? matchCorrectAnswer[1] : "",
                 }
             })
             console.log(parsedFlashcards)
-            generatePDF(parsedFlashcards)
+            generatePDF(parsedFlashcards, selectedSubject)
             setLoading(false)
 
         }
@@ -82,57 +87,7 @@ function LegacyFlashcards() {
         }
     }
 
-    function generatePDF(questions) {
-        const doc = new jsPDF({
-            orientation: "landscape",
-            unit: "mm",
-            format: "a4"
-        })
 
-        const pageWidth = doc.internal.pageSize.width
-        const pageHeight = doc.internal.pageSize.height
-        const margin = 10
-        const centerX = pageWidth / 2
-        const sectionWidth = (pageWidth / 2) - (margin * 1.5)
-
-        questions.forEach((q, index) => {
-            if (index > 0) doc.addPage()
-
-            // Draw center line for folding
-            doc.setDrawColor(0)
-            doc.setLineWidth(0.5)
-            doc.line(centerX, margin, centerX, pageHeight - margin)
-
-            // Draw left and right section borders
-            doc.rect(margin, margin, sectionWidth, pageHeight - 2 * margin)
-            doc.rect(centerX + margin / 2, margin, sectionWidth, pageHeight - 2 * margin)
-
-            // Left Side: Question and Answer Choices
-            doc.setFontSize(14)
-            let yPosition = margin + 10
-
-            const wrappedQuestion = doc.splitTextToSize(q.question, sectionWidth - 10)
-            doc.text(`Q${index + 1}:`, margin + 5, yPosition)
-            yPosition += 6
-            doc.text(wrappedQuestion, margin + 5, yPosition)
-            yPosition += wrappedQuestion.length * 6 + 4
-
-            doc.setFontSize(12)
-            q.answerChoices.forEach((choice) => {
-                const wrappedChoice = doc.splitTextToSize(choice, sectionWidth - 10)
-                doc.text(wrappedChoice, margin + 5, yPosition)
-                yPosition += wrappedChoice.length * 6
-            })
-
-            // Right Side: Correct Answer
-            doc.setFontSize(14)
-            doc.text("Correct Answer:", centerX + margin + 5, margin + 10)
-            doc.setFontSize(16)
-            doc.text(q.correctAnswer, centerX + margin + 5, margin + 25)
-        })
-
-        doc.save(selectedSubject.toLowerCase() + "Flashcards.pdf")
-    }
 
 
     return (

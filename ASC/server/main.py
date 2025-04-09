@@ -6,6 +6,7 @@ from SubjectClasses.english_subject import English
 from SubjectClasses.geography_subject import Geography
 from SubjectClasses.computerScience_subject import ComputerScience
 from SubjectClasses.history_subject import History
+from SubjectClasses.math_subject import Math
 
 from user import User
 from pydantic import BaseModel
@@ -70,6 +71,8 @@ async def add_subject(payload: AddSubjectPayload):
             user.addSubject(ComputerScience())
         case "History":
             user.addSubject(History())
+        case "Math":
+            user.addSubject(Math())
         case _:
             print("Subject not found")
 
@@ -113,7 +116,7 @@ async def generate_question(payload: QuestionPayload):
     # removing context from old chat.
     # Additionally, reset delta back to 1
     if newChat:
-        chatbot = Chatbot()
+        chatbot = Chatbot(curSubject)
         delta = 1
 
     response = chatbot.generateQuestion(currentSubject.currentPrompt)
@@ -150,7 +153,7 @@ async def generate_flashcards(payload: FlashcardsPayload):
     currentSubject.updatePrompt()
 
     if newChat:
-        chatbot = Chatbot()
+        chatbot = Chatbot(curSubject)
     
     for _ in range(5):
         flashcards.append(chatbot.generateQuestion(currentSubject.currentPrompt))
