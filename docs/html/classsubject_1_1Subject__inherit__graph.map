@@ -1,0 +1,9 @@
+<map id="subject.Subject" name="subject.Subject">
+<area shape="rect" id="node1" title=" " alt="" coords="140,122,252,149"/>
+<area shape="rect" id="node3" href="$classcomputerScience__subject_1_1ComputerScience.html" title=" " alt="" coords="311,5,487,47"/>
+<area shape="rect" id="node4" href="$classenglish__subject_1_1English.html" title=" " alt="" coords="320,71,479,98"/>
+<area shape="rect" id="node5" href="$classgeography__subject_1_1Geography.html" title=" " alt="" coords="300,122,499,149"/>
+<area shape="rect" id="node6" href="$classhistory__subject_1_1History.html" title=" " alt="" coords="321,173,477,199"/>
+<area shape="rect" id="node7" href="$classmath__subject_1_1Math.html" title=" " alt="" coords="333,223,466,250"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,122,92,149"/>
+</map>
