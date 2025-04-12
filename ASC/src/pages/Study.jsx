@@ -331,7 +331,7 @@ function Study() {
             {/* Full Page Layout */}
             <div className="grid grid-rows-[auto_1fr] min-h-screen">
                 <TopBar title="Study" />
-                <div className="flex flex-col p-4 ">
+                <div className="flex flex-col p-4">
 
                     {/* Header */}
                     <div className='flex justify-between border-3 p-4 border-pwred rounded-xl items-center mb-8 gap-5'>
@@ -364,7 +364,7 @@ function Study() {
                         <div className="w-1/3 h-full flex justify-center items-center 
                                         text-shadow text-3xl font-bold text-[#F3F4F6] text-center gap-2">
                             <Button
-                                text='Generate'
+                                text='Generate question'
                                 onClick={() => { handleGenerateQuestion(selectedSubject) }} />
                         </div>
 
