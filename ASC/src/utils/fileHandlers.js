@@ -1,11 +1,10 @@
-
-export const handleExport = () => {
+export const handleExport = (addToast) => {
     try {
         const subjectsData = sessionStorage.getItem("importedSubjects");
         const flashcardsData = sessionStorage.getItem("flashcards");
 
         if (!subjectsData || subjectsData === "null") {
-            alert("No subjects to export!");
+            addToast("No subjects to export!");
             return;
         }
 
@@ -33,11 +32,11 @@ export const handleExport = () => {
         window.URL.revokeObjectURL(url);
     } catch (error) {
         console.error("ERROR exporting subjects: ", error);
-        alert("Failed to export subjects.");
+        addToast("Failed to export subjects.");
     }
 };
 
-export const handleImport = () => {
+export const handleImport = (addToast) => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = ".json";
@@ -62,10 +61,10 @@ export const handleImport = () => {
                 sessionStorage.setItem("flashcards", JSON.stringify(jsonData.flashcards || {}));
 
                 window.dispatchEvent(new Event("subjectsUpdated"));
-                alert("Subjects and flashcards successfully imported!");
+                addToast("Subjects and flashcards successfully imported!");
             } catch (error) {
                 console.error("ERROR importing data: ", error);
-                alert("Failed to import subjects.");
+                addToast("Failed to import subjects.");
             }
         };
         reader.readAsText(file);

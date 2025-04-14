@@ -15,6 +15,7 @@ import 'nerdamer/Algebra';
 import 'nerdamer/Solve';
 import 'nerdamer/Calculus';
 import { convertToLatex } from '../utils/convertLatex';
+import { useToast } from '../contexts/ToastContext';
 
 const markdown = `
 $$
@@ -23,6 +24,7 @@ $$
 `
 function Study() {
     const navigate = useNavigate()
+    const { addToast } = useToast()
 
     const answerToNumKey = { "A": 0, "B": 1, "C": 2, "D": 3 }
     const [question, setQuestion] = useState("")
@@ -90,6 +92,7 @@ function Study() {
     const handleGenerateQuestion = async (selectedSubject) => {
         if (!selectedSubject) {
             console.error("No subject selected!")
+            addToast("No subject selected!")
             return
         }
 
@@ -308,7 +311,7 @@ function Study() {
 
             const exists = flashcards[selectedSubject].some(flashcard => flashcard.question === question)
             if (exists) {
-                alert("Flashcard already exists!")
+                addToast("Flashcard already exists!")
                 return
             }
 
@@ -320,10 +323,10 @@ function Study() {
 
             console.log("Flashcard added")
             console.log(newFlashcard)
-            alert("Flashcard added")
+            addToast("Flashcard added")
         } catch (error) {
             console.error("ERROR adding flashcard: ", error)
-            alert("Failed to add flashcard.")
+            addToast("Failed to add flashcard.")
         }
     }
     return (
