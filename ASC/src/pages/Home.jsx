@@ -56,7 +56,7 @@ function Home() {
             {/* Full Page Layout */}
             {!loading &&
                 <div className="grid grid-rows-[auto_1fr] min-h-screen">
-                    <TopBar title={`${loading ? (delayed ? "Server is waking up... Please wait." : "Loading...") : message}`} />
+                    <TopBar title={`Welcome to ASC!`} />
                     {/* Buttons + Card */}
                     <div className="my-25 grid grid-cols-[53.75%_46.25%]">
                         {/* Buttons */}
