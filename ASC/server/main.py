@@ -48,7 +48,7 @@ class QuestionPayload(BaseModel):
     curSubject: str
     newChat: bool
     delta: float
-    answerStatus: str
+    streak: bool
 
 class FlashcardsPayload(BaseModel):
     subjects: List[Dict]
@@ -87,7 +87,7 @@ async def generate_question(payload: QuestionPayload):
     curSubject = payload.curSubject
     newChat = payload.newChat
     delta = payload.delta
-    answerStatus = payload.answerStatus
+    streak = payload.streak
     points: int
 
     basePoints = 15
@@ -100,15 +100,15 @@ async def generate_question(payload: QuestionPayload):
     currentSubject = user.subjects[curSubject]
     currentSubject.updatePrompt()
     
-    # if prev question was answered correctly, increase delta to a max of 2.0
-    # if incorrect, decrease by 10%, to a min of .6
+    # if the user is streaking correct or incorrect answers, increase delta to a max of 2.0
+    # if they are not streaking, decrease by 10%, to a min of .6
     # if no string was provided, that means:
     #     question was unanswered, 
     #     or a newChat was started,
     # so delta should remain unchanged
-    if answerStatus == "Correct":
+    if streak == True:
         delta = min(2.0, delta + .1)
-    elif answerStatus == "Incorrect":
+    elif streak == False:
         delta = max(.6, delta * .9)
 
 

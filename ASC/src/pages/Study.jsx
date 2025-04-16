@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles.css'
 import Button from '../components/Button.jsx'
@@ -36,6 +36,8 @@ function Study() {
     const [subjectsRight, setSubjectsRight] = useState([])
     const [subjectsWrong, setSubjectsWrong] = useState([])
     const [answerStatus, setAnswerStatus] = useState("")
+    const prevAnswerStatusRef = useRef("")
+    const [streak, setStreak] = useState(false)
     const [delta, setDelta] = useState(1)
 
 
@@ -51,6 +53,7 @@ function Study() {
         setSubjectsRight([])
         setSubjectsWrong([])
         handleNewChatState(true)
+        setStreak(false)
     };
 
     const [newChat, setNewChat] = useState(Boolean)
@@ -77,17 +80,36 @@ function Study() {
     }, [])
 
     useEffect(() => {
-        if (answerSelection != "") {
-            if (answerSelection == correctAnswer) {
-                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsRight))
-                setAnswerStatus("Correct")
+        if (answerSelection !== "") {
+            const isCorrect = answerSelection === correctAnswer;
+
+            if (isCorrect) {
+                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsRight));
+
+                if (prevAnswerStatusRef.current === "Correct") {
+                    setStreak(true);
+                } else {
+                    setStreak(false);
+                }
+
+                setAnswerStatus("Correct");
+                prevAnswerStatusRef.current = "Correct";
             } else {
-                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsWrong))
-                setAnswerStatus("Incorrect")
+                sessionStorage.setItem("importedSubjects", JSON.stringify(subjectsWrong));
+
+                if (prevAnswerStatusRef.current === "Incorrect") {
+                    setStreak(true);
+                } else {
+                    setStreak(false);
+                }
+
+                setAnswerStatus("Incorrect");
+                prevAnswerStatusRef.current = "Incorrect";
             }
-            window.dispatchEvent(new Event("subjectsUpdated"))
+
+            window.dispatchEvent(new Event("subjectsUpdated"));
         }
-    }, [answerSelection])
+    }, [answerSelection]);
 
     const handleGenerateQuestion = async (selectedSubject) => {
         if (!selectedSubject) {
@@ -117,7 +139,7 @@ function Study() {
                 curSubject: selectedSubject,
                 newChat: newChat,
                 delta: delta,
-                answerStatus: answerStatus
+                streak: streak
 
             }
             console.log(payload)

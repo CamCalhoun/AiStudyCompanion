@@ -32,12 +32,14 @@ export default function Progress() {
 
                     {/* Home Button */}
                     <button
-                        className="w-full mb-4 bg-pwblue rounded-full shadow-2xl flex items-center justify-center py-3
-                   hover:bg-red-400 hover:shadow-3xl hover:scale-105
-                   active:bg-pwred active:scale-95 active:shadow-md transition-all duration-300"
+                        className="w-full mb-4 bg-transparent border-3 border-pwblue rounded-full shadow-2xl flex items-center justify-center py-3
+               hover:border-pwred hover:shadow-3xl hover:scale-105
+               active:border-pwblue active:scale-95 active:shadow-md transition-all duration-300"
                         onClick={() => navigate("/")}
-                    >
-                        <h1 className="text-2xl font-bold text-white">Home</h1>
+                    >                        <h1 className="text-2xl font-bold text-white">
+                            <span className="text-pwred">A</span>
+                            <span className="text-pwblue">SC</span>
+                        </h1>
                     </button>
 
                     {/* Section Buttons */}
