@@ -5,9 +5,11 @@ import TopBar from '../components/TopBar.jsx'
 import SubjectList from '../components/SubjectList.jsx'
 import { API_ADD_SUBJECT } from '../config/api';
 import axios from 'axios';
+import { useToast } from '../contexts/ToastContext'
 
 function Subjects() {
     const [selectedSubjects, setSelectedSubjects] = useState(new Set())
+    const { addToast } = useToast()
 
     const handleSubjectSelection = (subjectName, isChecked) => {
         setSelectedSubjects(prev => {
@@ -33,6 +35,7 @@ function Subjects() {
     const handleAddSubject = async (newSubject) => {
         if (!selectedSubject) {
             console.error("No subject selected!")
+            addToast("No subject selected!")
             return
         }
 

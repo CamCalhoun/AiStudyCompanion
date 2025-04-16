@@ -15,6 +15,7 @@ import 'nerdamer/Algebra';
 import 'nerdamer/Solve';
 import 'nerdamer/Calculus';
 import { convertToLatex } from '../utils/convertLatex';
+import { useToast } from '../contexts/ToastContext';
 
 const markdown = `
 $$
@@ -23,6 +24,7 @@ $$
 `
 function Study() {
     const navigate = useNavigate()
+    const { addToast } = useToast()
 
     const answerToNumKey = { "A": 0, "B": 1, "C": 2, "D": 3 }
     const [question, setQuestion] = useState("")
@@ -90,6 +92,7 @@ function Study() {
     const handleGenerateQuestion = async (selectedSubject) => {
         if (!selectedSubject) {
             console.error("No subject selected!")
+            addToast("No subject selected!")
             return
         }
 
@@ -308,7 +311,7 @@ function Study() {
 
             const exists = flashcards[selectedSubject].some(flashcard => flashcard.question === question)
             if (exists) {
-                alert("Flashcard already exists!")
+                addToast("Flashcard already exists!")
                 return
             }
 
@@ -320,10 +323,10 @@ function Study() {
 
             console.log("Flashcard added")
             console.log(newFlashcard)
-            alert("Flashcard added")
+            addToast("Flashcard added")
         } catch (error) {
             console.error("ERROR adding flashcard: ", error)
-            alert("Failed to add flashcard.")
+            addToast("Failed to add flashcard.")
         }
     }
     return (
@@ -331,7 +334,7 @@ function Study() {
             {/* Full Page Layout */}
             <div className="grid grid-rows-[auto_1fr] min-h-screen">
                 <TopBar title="Study" />
-                <div className="flex flex-col p-4 ">
+                <div className="flex flex-col p-4">
 
                     {/* Header */}
                     <div className='flex justify-between border-3 p-4 border-pwred rounded-xl items-center mb-8 gap-5'>
@@ -364,7 +367,7 @@ function Study() {
                         <div className="w-1/3 h-full flex justify-center items-center 
                                         text-shadow text-3xl font-bold text-[#F3F4F6] text-center gap-2">
                             <Button
-                                text='Generate'
+                                text='Generate question'
                                 onClick={() => { handleGenerateQuestion(selectedSubject) }} />
                         </div>
 

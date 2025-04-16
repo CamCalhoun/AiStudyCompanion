@@ -1,6 +1,6 @@
 import '../styles.css'
 
-function Button({ text, onClick, className }) {
+function Button({ text, onClick, onMouseEnter, onMouseLeave, className }) {
 
     return (
         <div
@@ -8,6 +8,8 @@ function Button({ text, onClick, className }) {
 			hover:bg-[#3DAEF9]
 			active:scale-95 active:shadow-md transition-all duration-300`}
             onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         >
             <h1 className="text-shadow text-2xl font-bold text-[#F3F4F6]">{text}</h1>
         </div>

@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,107,92,133"/>
+<area shape="rect" id="node2" href="$classmain_1_1AddSubjectPayload.html" title=" " alt="" coords="140,5,308,32"/>
+<area shape="rect" id="node3" href="$classmain_1_1FlashcardsPayload.html" title=" " alt="" coords="141,56,307,83"/>
+<area shape="rect" id="node4" href="$classmain_1_1QuestionPayload.html" title=" " alt="" coords="147,107,301,133"/>
+<area shape="rect" id="node5" href="$classsubject_1_1Subject.html" title=" " alt="" coords="168,157,280,184"/>
+<area shape="rect" id="node11" href="$classuser_1_1User.html" title=" " alt="" coords="185,208,263,235"/>
+<area shape="rect" id="node6" href="$classcomputerScience__subject_1_1ComputerScience.html" title=" " alt="" coords="367,41,543,82"/>
+<area shape="rect" id="node7" href="$classenglish__subject_1_1English.html" title=" " alt="" coords="376,107,535,133"/>
+<area shape="rect" id="node8" href="$classgeography__subject_1_1Geography.html" title=" " alt="" coords="356,157,555,184"/>
+<area shape="rect" id="node9" href="$classhistory__subject_1_1History.html" title=" " alt="" coords="377,208,533,235"/>
+<area shape="rect" id="node10" href="$classmath__subject_1_1Math.html" title=" " alt="" coords="389,259,522,285"/>
+</map>

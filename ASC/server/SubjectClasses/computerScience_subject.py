@@ -1,6 +1,8 @@
 from subject import Subject
 from typing import List, Dict
 
+#@file computerScience_subject.py
+#@brief This is the subject that manages everything for Computer Science.
 
 class ComputerScience(Subject):
     #override subject variables

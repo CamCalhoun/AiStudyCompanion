@@ -126,7 +126,7 @@ function LegacyFlashcards() {
                         <div className="w-1/3 h-full flex justify-center items-center 
                                         text-shadow text-3xl font-bold text-[#F3F4F6] text-center gap-2">
                             <Button
-                                text='Generate'
+                                text='Generate Flashcards'
                                 onClick={() => { handleGenerateFlashcards(selectedSubject) }} />
                         </div>
 

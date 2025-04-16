@@ -1,141 +1,46 @@
+# What is AI Study Companion?
 
-# Project Setup Guide
+AI Study Companion (ASC) is a collaborative project spawned from PennWest California's Senior Project: Software Engineering course.  
+This project is headed by four Computer Science students of PennWest California:
 
-This guide will walk you through setting up the development environment on your machine. The numbered headings are the steps you need to take, with explanations and exact commands provided below each.
+- Cameron Calhoun  
+- Gage Keslar  
+- Jonathan Buckel  
+- Seth Morgan
 
----
-
-## Frontend Setup
-
-### 1. Navigate to the frontend directory
-
-```bash
-cd ASC
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-Run `npm install` to install missing dependencies listed in `package.json`.
-
-### 3. Start the development server
-
-```bash
-npm run dev
-```
-
-Run `npm run dev` to verify that the dependencies installed correctly. This is also how you will run the frontend.
+AI Study Companion is a website built to utilize the latest large language model capabilities to provide a convenient solution to studying given subjects. AI Study Companion provides users with a set of subjects in which they can interactively test their skills in, with ASC adjusting the difficulty based on your individual progress.
 
 ---
 
-## Backend Setup
+## Project Progress
 
-### 4. Navigate to the backend directory
+Curious about how ASC has developed over time? We maintain a transparent development log to track our goals, updates, and milestones.
 
-```bash
-cd server
-```
-
-### 5. Create a Python virtual environment
-
-```bash
-python -m venv venv
-```
-
-Create a Python virtual environment named `venv` in the `backend` directory.
-
-### 6. Activate the virtual environment
-
-- **For Linux or macOS:**
-
-  ```bash
-  source venv/bin/activate
-  ```
-
-  On Linux or macOS, use the `source` command, and the activation script is located in `venv/bin/`.
-
-- **For Windows:**
-
-  ```bash
-  venv/Scripts/activate
-  ```
-
-  On Windows, the `source` command is not needed, and the script is located in `venv\Scripts\`.
-
-### 7. Install backend dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-Install the required Python packages listed in `requirements.txt` into the virtual environment.
-
-### 8. Verify backend installation
-
-```bash
-python main.py
-```
-
-This will run run the Python backend. With the frontend still open, send a request to the backend by adding a fruit, if the fruit pops up in the list, the backend is functional.
-Alternatively, go to (localhost:8000/fruits), and verify that the fruits object is present.
-
+You can follow along with the journey and see how the site has evolved since its inception.
 
 ---
 
-# Running the Project
+## Why Use AI Study Companion?
 
-This section details running the project with dependencies installed.
-
----
-
-## Frontend
-
-### 1. Navigate to the frontend directory
-
-```bash
-cd ASC
-```
-
-### 2. Start the development server
-
-```bash
-npm run dev
-```
+- Personalized learning paths based on your progress.  
+- Instant explanations and interactive problem-solving.  
+- Access to a vast library of study materials.  
+- Time-efficient and engaging study sessions.
 
 ---
 
-## Backend
+## How It Works
 
-### 3. Navigate to the backend directory
+Simply visit the website, select your subject of interest, and start interacting with AI to get step-by-step guidance.  
+The more you use the tool, the better it adapts to your learning style.  
+Need to study on the go? Just export your progress to a portable file and import it on any other machine.
 
-```bash
-cd ASC/server
-```
+---
 
-### 4. Activate the virtual environment
+## Explore the Features
 
-- **For Linux or macOS:**
-
-  ```bash
-  source venv/bin/activate
-  ```
-
-  On Linux or macOS, use the `source` command, and the activation script is located in `venv/bin/`.
-
-- **For Windows:**
-
-  ```bash
-  venv/Scripts/activate
-  ```
-
-  On Windows, the `source` command is not needed, and the script is located in `venv\Scripts\`.
-
-### 5. Run the backend
-
-```bash
-python main.py
-```
+- **Study:** Practice with AI-generated questions tailored to your progress and performance.  
+- **Flashcards:** Create and study randomized flashcards, or review ones you've saved for targeted practice.  
+- **Subjects:** Manage your subjects, add new topics, and view detailed scores for each to track your growth.  
+- **Import & Export:** Use the navbar buttons to save your progress as a portable file or load existing progress easily.
 

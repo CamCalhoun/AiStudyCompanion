@@ -5,6 +5,7 @@ import '../styles.css'
 import Button from '../components/Button.jsx'
 import Card from '../components/Card.jsx'
 import TopBar from '../components/TopBar.jsx'
+import { useToast } from "../contexts/ToastContext"
 
 import { API_HELLO } from "../config/api.js"
 import { handleExport, handleImport } from "../utils/fileHandlers"
@@ -12,10 +13,12 @@ import { handleExport, handleImport } from "../utils/fileHandlers"
 
 function Home() {
     const navigate = useNavigate()
+    const { addToast } = useToast()
 
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(true)
     const [delayed, setDelayed] = useState(false)
+    const [cardMessage, setCardMessage] = useState("Make a selection on the left to begin!")
 
 
     useEffect(() => {
@@ -59,17 +62,35 @@ function Home() {
                         {/* Buttons */}
                         <div className="flex items-center justify-center">
                             <div className="grid grid-cols-2 gap-20 w-full h-full p-20">
-                                <Button text="Study" onClick={() => navigate("/study")} />
-                                <Button text="Flashcards" onClick={() => navigate("/flashcards")} />
-                                <Button text="Import" onClick={handleImport} />
-                                <Button text="Export" onClick={handleExport} />
-                                <Button text="Subjects" onClick={() => navigate("/subjects")} />
-                                <Button text="About" onClick={() => navigate("/about")} />
+                                <Button text="Study"
+                                    onClick={() => navigate("/study")}
+                                    onMouseEnter={() => setCardMessage("Study your tracked subjects with the help of AI!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
+                                <Button text="Flashcards"
+                                    onClick={() => navigate("/flashcards")}
+                                    onMouseEnter={() => setCardMessage("Review saved questions in flashcard format, or let ASC generate some for you!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
+                                <Button text="Import"
+                                    onClick={() => handleImport(addToast)}
+                                    onMouseEnter={() => setCardMessage("Import your saved data to pick up where you left off!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
+                                <Button text="Export"
+                                    onClick={() => handleExport(addToast)}
+                                    onMouseEnter={() => setCardMessage("Export your data to study on the go!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
+                                <Button text="Subjects"
+                                    onClick={() => navigate("/subjects")}
+                                    onMouseEnter={() => setCardMessage("Add new subjects, and track your progress!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
+                                <Button text="About"
+                                    onClick={() => navigate("/about")}
+                                    onMouseEnter={() => setCardMessage("Learn more about this app!")}
+                                    onMouseLeave={() => setCardMessage("Make a selection on the left to begin!")} />
                             </div>
                         </div>
                         {/* Card */}
                         <div className='flex items-center justify-center'>
-                            <Card text="Make a selection on the left to begin!" />
+                            <Card text={cardMessage} />
                         </div>
                     </div>
                 </div>
