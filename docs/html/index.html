@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AI Study Companion (ASC): Project Setup Guide</title>
+<title>AI Study Companion (ASC): What is AI Study Companion?</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,89 +63,57 @@ $(function() {
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Project Setup Guide </div>  </div>
+<div class="title">What is AI Study Companion? </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> This guide will walk you through setting up the development environment on your machine. The numbered headings are the steps you need to take, with explanations and exact commands provided below each.</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> AI Study Companion (ASC) is a collaborative project spawned from PennWest California's Senior Project: Software Engineering course. <br  />
+ This project is headed by four Computer Science students of PennWest California:</p>
+<ul>
+<li>Cameron Calhoun <br  />
+</li>
+<li>Gage Keslar <br  />
+</li>
+<li>Jonathan Buckel <br  />
+</li>
+<li>Seth Morgan</li>
+</ul>
+<p>AI Study Companion is a website built to utilize the latest large language model capabilities to provide a convenient solution to studying given subjects. AI Study Companion provides users with a set of subjects in which they can interactively test their skills in, with ASC adjusting the difficulty based on your individual progress.</p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md2"></a>
-Frontend Setup</h1>
-<h2><a class="anchor" id="autotoc_md3"></a>
-1. Navigate to the frontend directory</h2>
-<div class="fragment"><div class="line">cd ASC</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
-2. Install dependencies</h2>
-<div class="fragment"><div class="line">npm install</div>
-</div><!-- fragment --><p>Run <code>npm install</code> to install missing dependencies listed in <code>package.json</code>.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
-3. Start the development server</h2>
-<div class="fragment"><div class="line">npm run dev</div>
-</div><!-- fragment --><p>Run <code>npm run dev</code> to verify that the dependencies installed correctly. This is also how you will run the frontend.</p>
+Project Progress</h1>
+<p>Curious about how ASC has developed over time? We maintain a transparent development log to track our goals, updates, and milestones.</p>
+<p>You can follow along with the journey and see how the site has evolved since its inception.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md7"></a>
-Backend Setup</h1>
-<h2><a class="anchor" id="autotoc_md8"></a>
-4. Navigate to the backend directory</h2>
-<div class="fragment"><div class="line">cd server</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
-5. Create a Python virtual environment</h2>
-<div class="fragment"><div class="line">python -m venv venv</div>
-</div><!-- fragment --><p>Create a Python virtual environment named <code>venv</code> in the <code>backend</code> directory.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
-6. Activate the virtual environment</h2>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Why Use AI Study Companion?</h1>
 <ul>
-<li><b>For Linux or macOS:</b></li>
+<li>Personalized learning paths based on your progress. <br  />
+</li>
+<li>Instant explanations and interactive problem-solving. <br  />
+</li>
+<li>Access to a vast library of study materials. <br  />
+</li>
+<li>Time-efficient and engaging study sessions.</li>
 </ul>
-<div class="fragment"><div class="line">source venv/bin/activate</div>
-</div><!-- fragment --><p>On Linux or macOS, use the <code>source</code> command, and the activation script is located in <code>venv/bin/</code>.</p>
-<ul>
-<li><b>For Windows:</b></li>
-</ul>
-<div class="fragment"><div class="line">venv/Scripts/activate</div>
-</div><!-- fragment --><p>On Windows, the <code>source</code> command is not needed, and the script is located in <code>venv\Scripts\</code>.</p>
-<h2><a class="anchor" id="autotoc_md11"></a>
-7. Install backend dependencies</h2>
-<div class="fragment"><div class="line">pip install -r requirements.txt</div>
-</div><!-- fragment --><p>Install the required Python packages listed in <code>requirements.txt</code> into the virtual environment.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
-8. Verify backend installation</h2>
-<div class="fragment"><div class="line">python main.py</div>
-</div><!-- fragment --><p>This will run run the Python backend. With the frontend still open, send a request to the backend by adding a fruit, if the fruit pops up in the list, the backend is functional. Alternatively, go to (localhost:8000/fruits), and verify that the fruits object is present.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md14"></a>
-Running the Project</h1>
-<p>This section details running the project with dependencies installed.</p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+How It Works</h1>
+<p>Simply visit the website, select your subject of interest, and start interacting with AI to get step-by-step guidance. <br  />
+ The more you use the tool, the better it adapts to your learning style. <br  />
+ Need to study on the go? Just export your progress to a portable file and import it on any other machine.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md16"></a>
-Frontend</h2>
-<h3><a class="anchor" id="autotoc_md17"></a>
-1. Navigate to the frontend directory</h3>
-<div class="fragment"><div class="line">cd ASC</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
-2. Start the development server</h3>
-<div class="fragment"><div class="line">npm run dev</div>
-</div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md20"></a>
-Backend</h2>
-<h3><a class="anchor" id="autotoc_md21"></a>
-3. Navigate to the backend directory</h3>
-<div class="fragment"><div class="line">cd ASC/server</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md22"></a>
-4. Activate the virtual environment</h3>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Explore the Features</h1>
 <ul>
-<li><b>For Linux or macOS:</b></li>
+<li><b>Study:</b> Practice with AI-generated questions tailored to your progress and performance. <br  />
+</li>
+<li><b>Flashcards:</b> Create and study randomized flashcards, or review ones you've saved for targeted practice. <br  />
+</li>
+<li><b>Subjects:</b> Manage your subjects, add new topics, and view detailed scores for each to track your growth. <br  />
+</li>
+<li><b>Import &amp; Export:</b> Use the navbar buttons to save your progress as a portable file or load existing progress easily. </li>
 </ul>
-<div class="fragment"><div class="line">source venv/bin/activate</div>
-</div><!-- fragment --><p>On Linux or macOS, use the <code>source</code> command, and the activation script is located in <code>venv/bin/</code>.</p>
-<ul>
-<li><b>For Windows:</b></li>
-</ul>
-<div class="fragment"><div class="line">venv/Scripts/activate</div>
-</div><!-- fragment --><p>On Windows, the <code>source</code> command is not needed, and the script is located in <code>venv\Scripts\</code>.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
-5. Run the backend</h3>
-<div class="fragment"><div class="line">python main.py</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
