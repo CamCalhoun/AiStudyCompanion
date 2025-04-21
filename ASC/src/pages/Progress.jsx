@@ -99,10 +99,9 @@ export default function Progress() {
                         Design Document
                     </a>
                     <a
-                        //href="/pdfs/user_manual.pdf"
+                        href="/pdfs/user_manual.pdf"
                         download
-                        //className="text-pwblue underline hover:text-pwred transition-colors duration-300"
-                        className="text-gray-400 cursor-not-allowed"
+                        className="text-pwblue underline hover:text-pwred transition-colors duration-300"
                     >
                         User Manual
                     </a>

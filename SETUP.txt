@@ -1,0 +1,84 @@
+AI STUDY COMPANION INSTALL GUIDE
+
+Cameron Calhoun
+
+PRE-REQUISITES
+--------------
+Please ensure you have Node.js, npm, and Python installed.
+
+https://nodejs.org/en/download
+
+https://www.python.org/downloads/
+
+
+INSTALL GUIDE
+-------------
+
+1. Extract the contents of the AiStudyCompanion/ zip file.
+
+NOTE: The rest of this tutorial will assume that you are working with this file structure:
+AiStudyCompanion/ASC/
+
+2. Navigate to the folder AiStudyCompanion/ASC/
+
+3. Open your terminal in this directory. With Node.js and npm installed, run:
+	npm install
+	
+	If this is successful, you should see some packages added.
+	npm will throw a warning about vulnerable packages, you can disregard this.
+	These packages are not used in our program, but come bundled with some of the other utilities, so they are safe.
+
+4. Navigate to the folder AiStudyCompanion/ASC/server
+
+5. Create a python virtual environment:
+   python -m venv venv
+   This command reads:
+		python, make, a virtual environment, named venv
+
+6. Activate the virtual environment:
+   This is where we will install our python packages.
+   This command is slightly different based on your operating system.
+
+   Windows:
+   		venv/Scripts/activate
+   Mac/Linux:
+   		source venv/bin/activate
+	
+   You will know this has worked by some marker appearing in your command line
+   that signifies you are in a virtual environment. For me, this is the string
+   (venv) read before my directory line.
+
+7. Install python dependencies
+   With your virtual environment activated, run this command:
+
+   pip install -r requirements.txt
+
+   This will install dependencies from the requirements.txt file
+
+8. Acquire an OPENAI Api key.
+   IMPORTANT!
+   For the sake of this demo, a temporary API Key has been provided.
+   This can be found in the .env file.
+
+   Please note:
+   This key will expire some time after graduation. This is purely provided for demo purposes.
+   If you wish to use ASC independently after our graduation, you will need to source an API key from OpenAI
+   Then, replace the .env file provided with one of your own.
+   Inside of .env the contents should be the following:
+   OPENAI_API_KEY = <API_KEY>
+
+9. Run the website:
+   There are two steps to run the website.
+
+   1. Run the frontend
+	a. Navigate to: AiStudyCompanion/ASC/
+	b. Run the command: npm run dev
+	c. Click on the local host link provided
+
+   2. Run the backend
+	a. IN A SEPERATE TERMINAL INSTANCE
+	   Navigate to: AiStudyCompanion/ASC/server
+	b. Activate your virtual environment ( see step 6 for help )
+	c. Run the command: uvicorn main:app --reload
+
+You should now have ASC running in your browser window.
