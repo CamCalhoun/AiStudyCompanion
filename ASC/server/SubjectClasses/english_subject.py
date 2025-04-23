@@ -11,7 +11,7 @@ class English(Subject):
         400: 'Elementary level English',
         600: 'Middle School level English',
         800: 'High school level English',
-        1200: 'College level English'
+        1000: 'College level English'
     }
     currentPrompt : str = subjectPrompts[800]
     
