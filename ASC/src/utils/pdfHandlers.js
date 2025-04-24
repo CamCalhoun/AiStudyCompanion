@@ -42,11 +42,17 @@ export function generatePDF(questions, selectedSubject) {
         })
 
         // Right Side: Correct Answer
-        const wrappedAnswer = doc.splitTextToSize(q.answer, sectionWidth - 10)
         doc.setFontSize(14)
         doc.text("Correct Answer:", centerX + margin + 5, margin + 10)
+
+        const wrappedAnswer = doc.splitTextToSize(q.answer, sectionWidth - 10)
         doc.setFontSize(16)
-        doc.text(wrappedAnswer, centerX + margin + 5, margin + 25)
+        let answerY = margin + 18
+
+        wrappedAnswer.forEach((line) => {
+            doc.text(line, centerX + margin + 5, answerY)
+            answerY += 6 // adjust line spacing if needed
+        })
     })
 
     doc.save(selectedSubject.toLowerCase() + "Flashcards.pdf")
