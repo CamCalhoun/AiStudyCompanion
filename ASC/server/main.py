@@ -169,3 +169,6 @@ async def hello():
     return {"message": "Hello from FastAPI!"}
 
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "AI Study Companion backend is alive 🚀"}
