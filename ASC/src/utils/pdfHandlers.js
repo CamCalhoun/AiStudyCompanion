@@ -41,18 +41,26 @@ export function generatePDF(questions, selectedSubject) {
             yPosition += wrappedChoice.length * 6
         })
 
+
+
+
         // Right Side: Correct Answer
         doc.setFontSize(14)
-        doc.text("Correct Answer:", centerX + margin + 5, margin + 10)
+        let answerYPosition = margin + 10
 
-        const wrappedAnswer = doc.splitTextToSize(q.answer, sectionWidth - 10)
+        doc.text("Correct Answer:", centerX + margin + 5, answerYPosition)
+        answerYPosition += 6 // spacing under the label
+
         doc.setFontSize(16)
-        let answerY = margin + 18
+        const wrappedAnswer = doc.splitTextToSize(q.answer, sectionWidth - 10)
 
+        // Render each line of the wrapped answer like you do for choices
         wrappedAnswer.forEach((line) => {
-            doc.text(line, centerX + margin + 5, answerY)
-            answerY += 6 // adjust line spacing if needed
+            doc.text(line, centerX + margin + 5, answerYPosition)
+            answerYPosition += 6
         })
+
+
     })
 
     doc.save(selectedSubject.toLowerCase() + "Flashcards.pdf")
